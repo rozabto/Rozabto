@@ -21,5 +21,31 @@ namespace Rozabto {
         public MainWindow() {
             InitializeComponent();
         }
+
+        private void ButtonFechar_Click(object sender, RoutedEventArgs e) {
+            Application.Current.Shutdown();
+        }
+
+        private void Proxima_Click(object sender, RoutedEventArgs e) {
+            if (c1.Offset >= 0) {
+                c1.Offset -= 0.01;
+                c2.Offset -= 0.01;
+            }
+            else {
+                c1.Offset = 1;
+                c2.Offset = 0.89;
+            }
+        }
+
+        private void Anterior_Click(object sender, RoutedEventArgs e) {
+            if (c2.Offset <= 1) {
+                c1.Offset += 0.01;
+                c2.Offset += 0.01;
+            }
+            else {
+                c1.Offset = 0.11;
+                c2.Offset = 0;
+            }
+        }
     }
 }
