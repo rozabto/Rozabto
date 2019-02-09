@@ -47,5 +47,10 @@ namespace Rozabto {
                 c2.Offset = 0;
             }
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
