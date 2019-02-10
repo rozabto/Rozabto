@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace Rozabto.ViewModel {
     public class MySongsNotify : INotifyPropertyChanged {
-        public List<Band> Bands;
-        public List<Album> Albums;
-        public List<Song> Songs;
+        public Collection Collection;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
