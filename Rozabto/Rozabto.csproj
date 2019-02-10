@@ -101,6 +101,7 @@
     <Compile Include="Model\Collection.cs" />
     <Compile Include="Model\Data\Json.cs" />
     <Compile Include="Model\Data\MusicInformation.cs" />
+    <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\Song.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

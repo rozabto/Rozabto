@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Rozabto.Model
 {
-    public class Band
+     public class Playlist
     {
         public List<int> IDsongs { get; set; }
         public string Name { get; set; }
-        public object songs { get; internal set; }
-
-        public Band ()
+        public Playlist()
         {
             IDsongs = new List<int>();
+
         }
+
     }
 }
