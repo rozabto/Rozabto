@@ -78,10 +78,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MySongsNotify.cs" />
-    <Compile Include="ViewModel\NowPlayingNotify.cs" />
-    <Compile Include="ViewModel\PlayListsNotify.cs" />
-    <Compile Include="ViewModel\SettingsNotify.cs" />
+    <Compile Include="ViewModel\Notify\MySongsNotify.cs" />
+    <Compile Include="ViewModel\Notify\NowPlayingNotify.cs" />
+    <Compile Include="ViewModel\Notify\PlayListsNotify.cs" />
+    <Compile Include="ViewModel\Notify\SettingsNotify.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -6,9 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rozabto.ViewModel {
+namespace Rozabto.ViewModel.Notify {
     public class MySongsNotify : INotifyPropertyChanged {
-        public Collection Collection;
+        public virtual Collection Collection { get; }
+
+        public MySongsNotify(Collection collection) {
+            Collection = collection;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
