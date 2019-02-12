@@ -6,11 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rozabto.ViewModel {
-    public class MySongsNotify : INotifyPropertyChanged {
-        public List<Band> Bands;
-        public List<Album> Albums;
-        public List<Song> Songs;
+namespace Rozabto.ViewModel.Notify {
+    public class PlayListsNotify : INotifyPropertyChanged {
+        public List<Playlist> Playlists { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rozabto.ViewModel {
-    public class PlayListsNotify : INotifyPropertyChanged {
+namespace Rozabto.ViewModel.Notify {
+    public class SettingsNotify : INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string property) {

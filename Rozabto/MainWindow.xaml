@@ -6,6 +6,7 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="PLAYER" Height="500" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="LightSteelBlue">
+
     <Window.Resources>
         <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
@@ -104,7 +105,60 @@
         </EventTrigger>
     </Window.Triggers>
     <Grid Background="Black">
-        <Grid x:Name="GridMenu" Width="250" Panel.ZIndex="1000" HorizontalAlignment="Left" Margin="-250 0 0 0" Background="Black" RenderTransformOrigin="0.5,0.5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid VerticalAlignment="Stretch">
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,20,20" >
+                <materialDesign:PackIcon Kind="Minus" VerticalAlignment="Center" Width="20" Height="20">
+                    <materialDesign:PackIcon.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FF009CBF"/>
+                            <GradientStop Color="#FF0000B9" Offset="0.747"/>
+                            <GradientStop Color="#FF002470" Offset="0.807"/>
+                        </LinearGradientBrush>
+                    </materialDesign:PackIcon.Foreground>
+                </materialDesign:PackIcon>
+            </Button>
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,260,20"  >
+                <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Width="20" Height="20">
+                    <materialDesign:PackIcon.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FF009CBF"/>
+                            <GradientStop Color="#FF0000B9" Offset="0.747"/>
+                            <GradientStop Color="#FF002470" Offset="0.807"/>
+                        </LinearGradientBrush>
+                    </materialDesign:PackIcon.Foreground>
+                </materialDesign:PackIcon>
+            </Button>
+
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Click="ButtonFechar_Click" Margin="0,0,0,20">
+                <materialDesign:PackIcon Kind="Power" VerticalAlignment="Center" Width="20" Height="20">
+                    <materialDesign:PackIcon.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FF009CBF"/>
+                            <GradientStop Color="#FF0000B9" Offset="0.747"/>
+                            <GradientStop Color="#FF002470" Offset="0.807"/>
+                        </LinearGradientBrush>
+                    </materialDesign:PackIcon.Foreground>
+                </materialDesign:PackIcon>
+
+            </Button>
+            <Button Name="ButtonOpen" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,280,20" >
+                <materialDesign:PackIcon Kind="Menu" VerticalAlignment="Center" Width="20" Height="20">
+                    <materialDesign:PackIcon.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FF009CBF"/>
+                            <GradientStop Color="#FF0000B9" Offset="0.747"/>
+                            <GradientStop Color="#FF002470" Offset="0.807"/>
+                        </LinearGradientBrush>
+                    </materialDesign:PackIcon.Foreground>
+                </materialDesign:PackIcon>
+            </Button>
+        </Grid>
+        <Grid x:Name="GridMenu" Width="250" Panel.ZIndex="1000" HorizontalAlignment="Left" Margin="-250 0 0 0" Background="Black" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
+
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -153,81 +207,12 @@
             </StackPanel>
         </Grid>
 
-        <Grid Background="#44444444" Margin="10" Height="300" VerticalAlignment="Top">
+        <Grid Background="#44444444" Margin="10" Height="300" VerticalAlignment="Top" Grid.Row="1">
             <Grid VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="29*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="ButtonFechar" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Height="Auto" Margin="252,0,0,25" Click="ButtonFechar_Click" Width="Auto" Grid.RowSpan="2">
-                    <materialDesign:PackIcon Kind="Power" VerticalAlignment="Center" Width="25" Height="25">
-                        <materialDesign:PackIcon.Foreground>
-                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                <GradientStop Color="#FF009CBF"/>
-                                <GradientStop Color="#FF0000B9" Offset="0.747"/>
-                                <GradientStop Color="#FF002470" Offset="0.807"/>
-                            </LinearGradientBrush>
-                        </materialDesign:PackIcon.Foreground>
-                    </materialDesign:PackIcon>
-                </Button>
-                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Width="63" Height="Auto" Margin="10,-17,0,0" Grid.RowSpan="2">
-                    <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Width="25" Height="25" RenderTransformOrigin="0.5,0.5">
-                        <materialDesign:PackIcon.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-0.19"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </materialDesign:PackIcon.RenderTransform>
-                        <materialDesign:PackIcon.Foreground>
-                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                <GradientStop Color="#FF1717EE"/>
-                                <GradientStop Color="#FF464CD4" Offset="0.747"/>
-                                <GradientStop Color="#FF086BBD" Offset="0.807"/>
-                            </LinearGradientBrush>
-                        </materialDesign:PackIcon.Foreground>
-                    </materialDesign:PackIcon>
-                </Button>
-                <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Width="51" Height="Auto" Margin="205,0,0,17" Grid.RowSpan="2">
-                    <materialDesign:PackIcon Kind="Minus" VerticalAlignment="Center" Width="25" Height="25" RenderTransformOrigin="0.5,0.5">
-                        <materialDesign:PackIcon.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-0.19"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </materialDesign:PackIcon.RenderTransform>
-                        <materialDesign:PackIcon.Foreground>
-                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                <GradientStop Color="#FF1717EE"/>
-                                <GradientStop Color="#FF464CD4" Offset="0.747"/>
-                                <GradientStop Color="#FF086BBD" Offset="0.807"/>
-                            </LinearGradientBrush>
-                        </materialDesign:PackIcon.Foreground>
-                    </materialDesign:PackIcon>
-                </Button>
-                <Button Name="ButtonOpen" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Width="Auto" Height="Auto" Margin="0,-17,0,0" Grid.RowSpan="2">
-                    <materialDesign:PackIcon Kind="Menu" VerticalAlignment="Center" Width="25" Height="25" RenderTransformOrigin="0.5,0.5">
-                        <materialDesign:PackIcon.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-0.19"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </materialDesign:PackIcon.RenderTransform>
-                        <materialDesign:PackIcon.Foreground>
-                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                <GradientStop Color="#FF1717EE"/>
-                                <GradientStop Color="#FF464CD4" Offset="0.747"/>
-                                <GradientStop Color="#FF086BBD" Offset="0.807"/>
-                            </LinearGradientBrush>
-                        </materialDesign:PackIcon.Foreground>
-                    </materialDesign:PackIcon>
-                </Button>
-                <TextBlock Text="Tocando Agora" Margin="96,21,103,-19" HorizontalAlignment="Center" Grid.Row="1" />
             </Grid>
             <TextBlock Text="Witt Lowry - Around Your Heart" Margin="51,57,62,0" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Cross"/>
             <Grid VerticalAlignment="Top" Margin="0,50">
@@ -272,7 +257,7 @@
                         </materialDesign:PackIcon.Foreground>
                     </materialDesign:PackIcon>
                 </Button>
-                <Button x:Name="Anterior" Background="{x:Null}" BorderBrush="{x:Null}"  HorizontalAlignment="Left" Margin="50,0" Click="Anterior_Click">
+                <Button x:Name="Anterior" Background="{x:Null}" BorderBrush="{x:Null}"  HorizontalAlignment="Left" Margin="50,0" Click="PreviousSong">
                     <materialDesign:PackIcon Kind="ChevronLeftBox" VerticalAlignment="Center" Width="30" Height="30">
                         <materialDesign:PackIcon.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -297,7 +282,7 @@
                         </materialDesign:PackIcon.Foreground>
                     </materialDesign:PackIcon>
                 </Button>
-                <Button x:Name="Proxima" Background="{x:Null}" BorderBrush="{x:Null}"  HorizontalAlignment="Right" Margin="50,0" Click="Proxima_Click">
+                <Button x:Name="Proxima" Background="{x:Null}" BorderBrush="{x:Null}"  HorizontalAlignment="Right" Margin="50,0" Click="NextSong">
                     <materialDesign:PackIcon Kind="ChevronRightBox" VerticalAlignment="Center" Width="30" Height="30">
                         <materialDesign:PackIcon.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -319,24 +304,32 @@
                         </materialDesign:PackIcon.Foreground>
                     </materialDesign:PackIcon>
                 </Button>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="79*"/>
+                        <ColumnDefinition Width="48*"/>
+                        <ColumnDefinition Width="143*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox VerticalAlignment="Bottom" Height="150" Margin="-36,0,46,-80" Foreground="LightSteelBlue" SelectionChanged="ListView_SelectionChanged" Grid.ColumnSpan="3">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="01" Margin="5" VerticalAlignment="Center"/>
+                                    <Ellipse Width="30" Height="30">
+                                        <Ellipse.Fill>
+                                            <ImageBrush/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <TextBlock Text="Abstract - Neverland (ft. Ruth B) (Prod. Blulake)" Margin="10,0" VerticalAlignment="Center" Width="100" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="2017" VerticalAlignment="Center"/>
+                                    <TextBlock Text="3:45" Margin="10,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </Grid>
         </Grid>
-        <ListBox VerticalAlignment="Bottom" Height="150" Margin="5" Foreground="LightSteelBlue" SelectionChanged="ListView_SelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="01" Margin="5" VerticalAlignment="Center"/>
-                    <Ellipse Width="30" Height="30">
-                        <Ellipse.Fill>
-                            <ImageBrush/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <TextBlock Text="Abstract - Neverland (ft. Ruth B) (Prod. Blulake)" Margin="10,0" VerticalAlignment="Center" Width="100" TextTrimming="CharacterEllipsis"/>
-                    <TextBlock Text="2017" VerticalAlignment="Center"/>
-                    <TextBlock Text="3:45" Margin="10,0" VerticalAlignment="Center"/>
-                </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+
     </Grid>
 </Window>

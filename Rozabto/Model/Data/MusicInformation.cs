@@ -55,9 +55,8 @@ namespace Rozabto.Model.Data
                 Title = tag.Title;
             }
         }
-        public static Collection SearchMusic(string[] paths)
+        public static void SearchMusic(string[] paths, Collection collection) 
         {
-            var collection = new Collection();
             Random random = new Random();
 
             foreach (var path in paths)
@@ -120,7 +119,6 @@ namespace Rozabto.Model.Data
                     collection.Songs.Add(song);
                 }
             }
-            return collection;
         }
     }
 }

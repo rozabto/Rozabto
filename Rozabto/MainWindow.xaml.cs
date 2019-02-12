@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Rozabto.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,26 +25,26 @@ namespace Rozabto {
             Application.Current.Shutdown();
         }
 
-        private void Proxima_Click(object sender, RoutedEventArgs e) {
-            if (c1.Offset >= 0) {
-                c1.Offset -= 0.01;
-                c2.Offset -= 0.01;
-            }
-            else {
-                c1.Offset = 1;
-                c2.Offset = 0.89;
-            }
+        private void NextSong(object sender, RoutedEventArgs e) {
+
         }
 
-        private void Anterior_Click(object sender, RoutedEventArgs e) {
-            if (c2.Offset <= 1) {
-                c1.Offset += 0.01;
-                c2.Offset += 0.01;
-            }
-            else {
-                c1.Offset = 0.11;
-                c2.Offset = 0;
-            }
+        private void PreviousSong(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void GetNewSongs(object sender, RoutedEventArgs e) {
+            var fileDialog = new OpenFileDialog {
+                Filter = "mp3|*.mp3",
+                Multiselect = true,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Title = "Select Music Files"
+            };
+            var result = fileDialog.ShowDialog();
+            if (result == true && string.IsNullOrWhiteSpace(fileDialog.FileName) || result == false)
+                return;
+            MainViewModel.AddSongs(fileDialog.FileNames);
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
