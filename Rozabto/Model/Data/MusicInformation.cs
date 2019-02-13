@@ -8,16 +8,10 @@ using TagLib;
 
 namespace Rozabto.Model.Data
 {
-    public class MusicInformation
+    public static class MusicInformation
     {
         public static readonly string BandNameIsUnknown = "Unknown";
-        private static readonly object information;
-
-        public MusicInformation(string path)
-        {
-        }
-
-        public static string libFile { get; private set; }
+        
 
         public class FileTagLib : TagLib.File.IFileAbstraction
         {
@@ -61,12 +55,12 @@ namespace Rozabto.Model.Data
 
             foreach (var path in paths)
             {
-                var music = new MusicInformation(path);
+                MusicInformation.SearchMusic(paths, collection);
                 var file = new FileInfo(path);
                 TagLib.File tagLibFile = null;
                 try
                 {
-                    tagLibFile = TagLib.File.Create(libFile);
+                    tagLibFile = TagLib.File.Create(path);
                 }
                 catch (Exception)
                 {
