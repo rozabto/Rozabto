@@ -12,25 +12,24 @@ using System.Windows.Media;
 namespace Rozabto.ViewModel {
     public static class MainViewModel {
         private static readonly MediaPlayer _player;
-        private static readonly MySongsNotify _mysongs;
-        private static readonly NowPlayingNotify _nowplaying;
-        private static readonly PlayListsNotify _playlists;
-        private static readonly SettingsNotify _settings;
         private static readonly Collection _collection;
+        public static MySongsNotify MySongs { get; }
+        public static NowPlayingNotify NowPlaying { get; }
+        public static PlayListsNotify PlayList { get; }
+        public static SettingsNotify Settings { get; }
 
         static MainViewModel() {
             _player = new MediaPlayer();
             _collection = new Collection();
             //add logic
-            _settings = new SettingsNotify();
-            _mysongs = new MySongsNotify(_collection);
-            _nowplaying = new NowPlayingNotify();
-            _playlists = new PlayListsNotify();
+            Settings = new SettingsNotify();
+            MySongs = new MySongsNotify(_collection);
+            NowPlaying = new NowPlayingNotify(_collection.Songs);
+            PlayList = new PlayListsNotify();
         }
 
         public static void AddSongs(string[] songs) {
             MusicInformation.SearchMusic(songs, _collection);
-            
         }
     }
 }
