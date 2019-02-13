@@ -19,6 +19,7 @@ namespace Rozabto {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            DataContext = MainViewModel.NowPlaying;
         }
 
         private void ButtonFechar_Click(object sender, RoutedEventArgs e) {
@@ -49,6 +50,10 @@ namespace Rozabto {
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
 
+        }
+
+        private void ChangeWindowPosition(object sender, MouseButtonEventArgs e) {
+            DragMove();
         }
     }
 }

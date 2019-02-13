@@ -6,7 +6,6 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="PLAYER" Height="500" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="LightSteelBlue">
-
     <Window.Resources>
         <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
@@ -109,7 +108,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid VerticalAlignment="Stretch">
+        <Grid VerticalAlignment="Stretch" Background="Black" MouseLeftButtonDown="ChangeWindowPosition">
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,20,20" >
                 <materialDesign:PackIcon Kind="Minus" VerticalAlignment="Center" Width="20" Height="20">
                     <materialDesign:PackIcon.Foreground>
@@ -121,7 +120,7 @@
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
             </Button>
-            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,260,20"  >
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,260,20" Click="GetNewSongs">
                 <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Width="20" Height="20">
                     <materialDesign:PackIcon.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -132,7 +131,6 @@
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
             </Button>
-
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Click="ButtonFechar_Click" Margin="0,0,0,20">
                 <materialDesign:PackIcon Kind="Power" VerticalAlignment="Center" Width="20" Height="20">
                     <materialDesign:PackIcon.Foreground>
@@ -157,8 +155,7 @@
                 </materialDesign:PackIcon>
             </Button>
         </Grid>
-        <Grid x:Name="GridMenu" Width="250" Panel.ZIndex="1000" HorizontalAlignment="Left" Margin="-250 0 0 0" Background="Black" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
-
+        <Grid x:Name="GridMenu" Width="250" Panel.ZIndex="1000" HorizontalAlignment="Left" Margin="-250 -40 0 0" Background="Black" Opacity="0.9" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -167,9 +164,7 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
-
             <StackPanel>
-
                 <ListView Foreground="#FF313131" FontFamily="Champagne &amp; Limousines" FontSize="18">
                     <ListViewItem Height="45" Padding="0">
                         <DockPanel Margin="10 0">
@@ -196,7 +191,6 @@
                             <TextBlock Text="Now playing" Margin="10" Foreground="LightSteelBlue"/>
                         </StackPanel>
                     </ListViewItem>
-
                     <ListViewItem Height="45" Padding="0">
                         <StackPanel Orientation="Horizontal" Margin="10 0">
                             <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" Foreground="#FF0069C1" Margin="5" VerticalAlignment="Center"/>
@@ -206,7 +200,6 @@
                 </ListView>
             </StackPanel>
         </Grid>
-
         <Grid Background="#44444444" Margin="10" Height="300" VerticalAlignment="Top" Grid.Row="1">
             <Grid VerticalAlignment="Top">
                 <Grid.RowDefinitions>
@@ -310,7 +303,7 @@
                         <ColumnDefinition Width="48*"/>
                         <ColumnDefinition Width="143*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox VerticalAlignment="Bottom" Height="150" Margin="-36,0,46,-80" Foreground="LightSteelBlue" SelectionChanged="ListView_SelectionChanged" Grid.ColumnSpan="3">
+                    <ListBox VerticalAlignment="Bottom" Height="150" Margin="0,0,0,-155" ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentSong, Mode=OneWay}" Foreground="LightSteelBlue" SelectionChanged="ListView_SelectionChanged" Grid.ColumnSpan="3">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -320,9 +313,9 @@
                                             <ImageBrush/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <TextBlock Text="Abstract - Neverland (ft. Ruth B) (Prod. Blulake)" Margin="10,0" VerticalAlignment="Center" Width="100" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding Name}" Margin="10,0" VerticalAlignment="Center" Width="100" TextTrimming="CharacterEllipsis"/>
                                     <TextBlock Text="2017" VerticalAlignment="Center"/>
-                                    <TextBlock Text="3:45" Margin="10,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Duration}" Margin="10,0" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

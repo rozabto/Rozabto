@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace Rozabto.ViewModel.Notify {
     public class NowPlayingNotify : INotifyPropertyChanged {
-        public List<Song> Songs { get; }
+        public virtual List<Song> Songs { get; }
         public Song CurrentSong { get; set; }
+
+        public NowPlayingNotify(List<Song> songs) {
+            Songs = songs;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
