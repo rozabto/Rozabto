@@ -15,40 +15,24 @@ namespace Rozabto.Model.Data
 
         public class FileTagLib : TagLib.File.IFileAbstraction
         {
-            private FileInfo file;
+            private readonly FileInfo file;
             public FileTagLib(FileInfo file)
             {
                 this.file = file;
             }
-            public void OpenCloseStream(Stream stream)
-            {
-                stream.Close();
-            }
+
 
             public void CloseStream(Stream stream)
             {
-                throw new NotImplementedException();
+                stream.Close();
             }
 
             public string Name => file.Name;
             public Stream ReadStream => file.OpenRead();
             public Stream WriteStream => file.OpenWrite();
 
-            string TagLib.File.IFileAbstraction.Name => throw new NotImplementedException();
-
-            Stream TagLib.File.IFileAbstraction.ReadStream => throw new NotImplementedException();
-
-            Stream TagLib.File.IFileAbstraction.WriteStream => throw new NotImplementedException();
         }
-        public struct TagInformation
-        {
-            public string Band, Title;
-            public TagInformation(TagLib.Tag tag)
-            {
-                Band = tag.FirstAlbumArtist ?? tag.FirstComposer ?? tag.FirstPerformer ?? BandNameIsUnknown;
-                Title = tag.Title;
-            }
-        }
+   
         public static void SearchMusic(string[] paths, Collection collection) 
         {
             Random random = new Random();

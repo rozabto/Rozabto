@@ -10,7 +10,7 @@ namespace Rozabto.Model
     {
         public List<int> IDsongs { get; set; }
         public string Name { get; set; }
-        public object songs { get; internal set; }
+       
 
         public Band ()
         {

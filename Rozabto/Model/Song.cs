@@ -13,5 +13,9 @@ namespace Rozabto.Model
         public TimeSpan Duration { get; set; }
         public string Location { get; set; }
 
+       //JasonIgnore public string duration => duration.ToString
+
+       
+
     }
 }
