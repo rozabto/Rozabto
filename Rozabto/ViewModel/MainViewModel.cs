@@ -24,12 +24,13 @@ namespace Rozabto.ViewModel {
             //add logic
             Settings = new SettingsNotify();
             MySongs = new MySongsNotify(_collection);
-            NowPlaying = new NowPlayingNotify(_collection.Songs);
+            NowPlaying = new NowPlayingNotify(_collection);
             PlayList = new PlayListsNotify();
         }
 
         public static void AddSongs(string[] songs) {
             MusicInformation.SearchMusic(songs, _collection);
+            NowPlaying.OnPropertyChanged("Songs");
         }
     }
 }
