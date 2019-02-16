@@ -11,7 +11,7 @@
             <ListBoxItem/>
             <StackPanel Orientation = "Horizontal" Margin="0 0 10 10">
                 <Image DockPanel.Dock="Top" Width="40" Height="40"/>
-                <Label Content="Ariana Grande-Dangerous woman" DockPanel.Dock="Bottom" FontSize="10"/>
+                <Label Content="Ariana Grande-Dangerous woman" DockPanel.Dock="Bottom" FontSize="10" Foreground="LightSteelBlue"/>
 
             </StackPanel>
         </ListBox>

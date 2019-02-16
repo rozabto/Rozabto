@@ -27,7 +27,7 @@
                         </LinearGradientBrush>
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
-                <Label Content="Add songs" Height="20" HorizontalAlignment="Left" VerticalAlignment="Stretch" DockPanel.Dock="Left"/>
+                <Label Content="Add songs" Height="24" HorizontalAlignment="Left" VerticalAlignment="Stretch" DockPanel.Dock="Left" Margin="0 -3 0 0" FontSize="10" Foreground="LightSteelBlue" Width="62"/>
             </DockPanel>
         </Button>
 
@@ -35,8 +35,8 @@
             <ListBoxItem>
                 <DockPanel Width="60">
                     <Image DockPanel.Dock="Top" Width="40" Height="40"/>
-                    <Label Content="Songs" DockPanel.Dock="Bottom" FontSize="8"/>
-                    <Label Content="10" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8"/>
+                    <Label Content="Songs" DockPanel.Dock="Bottom" FontSize="8" Foreground="LightSteelBlue"/>
+                    <Label Content="10" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="LightSteelBlue"/>
 
                 </DockPanel>
             </ListBoxItem>
