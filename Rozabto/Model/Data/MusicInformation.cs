@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagLib;
+using TagFile = TagLib.File;
 
 namespace Rozabto.Model.Data
 {
@@ -13,7 +14,7 @@ namespace Rozabto.Model.Data
         public static readonly string BandNameIsUnknown = "Unknown";
         
 
-        public class FileTagLib : TagLib.File.IFileAbstraction
+        public class FileTagLib : TagFile.IFileAbstraction
         {
             private readonly FileInfo file;
             public FileTagLib(FileInfo file)
@@ -35,16 +36,16 @@ namespace Rozabto.Model.Data
    
         public static void SearchMusic(string[] paths, Collection collection) 
         {
-            Random random = new Random();
+            
 
             foreach (var path in paths)
             {
-                MusicInformation.SearchMusic(paths, collection);
+                
                 var file = new FileInfo(path);
-                TagLib.File tagLibFile = null;
+                TagFile tagLibFile = null;
                 try
                 {
-                    tagLibFile = TagLib.File.Create(path);
+                    tagLibFile = TagFile.Create(path);
                 }
                 catch (Exception)
                 {
@@ -82,18 +83,18 @@ namespace Rozabto.Model.Data
                     song = collection.Songs.FirstOrDefault(s => s.Name == tag.Title);
                     if (song != null)
                         tag.Title += "_";
-                    int rnd = random.Next(int.MinValue, int.MaxValue);
-                    while (collection.Songs.FirstOrDefault(f => f.ID == rnd) != null)
-                        rnd = random.Next(int.MinValue, int.MaxValue);
+                    
+                 
+                       
                     song = new Song
                     {
-                        ID = rnd ,
+                   
                         Name = tag.Title,
                         Location = file.FullName , 
                         Duration = tagLibFile.Properties.Duration
                     };
-                    band.IDsongs.Add(rnd);
-                    album.IDsongs.Add(rnd);
+                    band.Songs.Add(song);
+                    album.Songs.Add(song);
                     collection.Songs.Add(song);
                 }
             }

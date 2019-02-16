@@ -8,12 +8,12 @@ namespace Rozabto.Model
 {
     public class Album
     {
-        public List<int> IDsongs { get; set; }
+        public List<Song> Songs { get; set; }
         public string Name { get; set; }
         
         public Album ()
         {
-            IDsongs = new List<int>();
+           Songs = new List<Song>();
          
         }
 
