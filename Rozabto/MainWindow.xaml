@@ -166,8 +166,8 @@
             </Grid.RenderTransform>
             <StackPanel>
                 <DockPanel Margin="10 0">
-                    <Button Name="ButtonClose" Background="{x:Null}" BorderBrush="{x:Null}">
-                        <materialDesign:PackIcon DockPanel.Dock="Right" Kind="Menu" Width="20" Height="20" Foreground="Gray" Margin="5" VerticalAlignment="Center"/>
+                    <Button Name="ButtonClose" Background="{x:Null}" BorderBrush="{x:Null}" DockPanel.Dock="Left">
+                        <materialDesign:PackIcon Kind="Menu" Width="21" Height="20" Foreground="Gray" Margin="-110 0 0 0" VerticalAlignment="Center" RenderTransformOrigin="-2.55,0.55"/>
                     </Button>
                 </DockPanel>
                 <ListView Foreground="#FF313131" FontFamily="Champagne &amp; Limousines" FontSize="18" SelectionChanged="ListView_Selected">
