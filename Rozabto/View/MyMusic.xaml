@@ -17,9 +17,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Album" FontSize="15" Margin="10"/>
-            <TextBlock Grid.Column="1" Text="Songs" FontSize="15" Margin="10"/>
-            <TextBlock Grid.Column="2" Text="Bands" FontSize="15" Margin="10"/>
+            <TextBlock Text="Album" FontSize="15" Margin="10" MouseLeftButtonDown="Album"/>
+            <TextBlock Grid.Column="1" Text="Songs" FontSize="15" Margin="10" MouseLeftButtonDown="Song"/>
+            <TextBlock Grid.Column="2" Text="Bands" FontSize="15" Margin="10" MouseLeftButtonDown="Band"/>
         </Grid>
+        <Grid Name="GridPrincipal" Grid.Row="1"/>
     </Grid>
 </UserControl>
