@@ -13,12 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Rozabto.View
-{
-    public partial class MyMusic : UserControl
-    {
-        public MyMusic()
-        {
+namespace Rozabto.View {
+    public partial class MyMusic : UserControl {
+        public MyMusic() {
             InitializeComponent();
         }
 
