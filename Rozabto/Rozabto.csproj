@@ -88,6 +88,9 @@
     <Compile Include="View\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Empty.xaml.cs">
+      <DependentUpon>Empty.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MyMusic.xaml.cs">
       <DependentUpon>MyMusic.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Bands.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Empty.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
