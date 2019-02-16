@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Rozabto.View;
 using Rozabto.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Rozabto {
         public MainWindow() {
             InitializeComponent();
             DataContext = MainViewModel.NowPlaying;
+            GridPrincipal.Children.Add(new Nowplaying());
         }
 
         private void ButtonFechar_Click(object sender, RoutedEventArgs e) {
@@ -54,6 +56,28 @@ namespace Rozabto {
 
         private void ChangeWindowPosition(object sender, MouseButtonEventArgs e) {
             DragMove();
+        }
+
+        private void ListView_Selected(object sender, RoutedEventArgs e) {
+            var list = sender as ListView;
+            switch (list.SelectedIndex) {
+                case 0:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new MyMusic());
+                    break;
+                case 1:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new Playlists());
+                    break;
+                case 2:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new Nowplaying());
+                    break;
+                case 3:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new Settings());
+                    break;
+            }
         }
     }
 }
