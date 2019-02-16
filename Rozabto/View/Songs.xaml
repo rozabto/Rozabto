@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Rozabto.View.Songs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Rozabto.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" Width="300" Height="500" d:DesignWidth="800">
+    <Grid>
+        <ListBox>
+            <ListBoxItem Selected="ListBoxItem_Selected"/>
+            <StackPanel Orientation = "Horizontal" Margin="0 0 10 10">
+                <Image DockPanel.Dock="Top" Width="40" Height="40"/>
+                <Label Content="Ariana Grande-Dangerous woman" DockPanel.Dock="Bottom" FontSize="10"/>
+
+            </StackPanel>
+        </ListBox>
+    </Grid>
+</UserControl>
