@@ -11,15 +11,17 @@ using System.Windows.Media;
 
 namespace Rozabto.ViewModel {
     public static class MainViewModel {
-        private static readonly MediaPlayer _player;
         private static readonly Collection _collection;
+
+        public static MediaPlayer Player { get; private set; }
         public static MySongsNotify MySongs { get; }
         public static NowPlayingNotify NowPlaying { get; }
         public static PlayListsNotify PlayList { get; }
         public static SettingsNotify Settings { get; }
+        public static SongStatus Status { get; set; }
 
         static MainViewModel() {
-            _player = new MediaPlayer();
+            Player = new MediaPlayer();
             _collection = new Collection();
             //add logic
             Settings = new SettingsNotify();
@@ -31,6 +33,25 @@ namespace Rozabto.ViewModel {
         public static void AddSongs(string[] songs) {
             MusicInformation.SearchMusic(songs, _collection);
             NowPlaying.OnPropertyChanged("Songs");
+        }
+
+        public static void Play() {
+            if (Status == SongStatus.Stopped) {
+                Player.Close();
+                if (NowPlaying.CurrentSong != Song.EmptySong) {
+                    Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
+                    Player.Play();
+                    Status = SongStatus.Playing;
+                }
+            }
+            else if (Status == SongStatus.Playing) {
+                Player.Pause();
+                Status = SongStatus.Paused;
+            }
+            else if (Status == SongStatus.Paused) {
+                Player.Play();
+                Status = SongStatus.Playing;
+            }
         }
     }
 }

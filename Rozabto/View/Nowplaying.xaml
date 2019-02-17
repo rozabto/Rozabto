@@ -8,8 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"  Height="500" Width="300">
     <Grid Background="#44444444" Height="300" VerticalAlignment="Top">
-        <TextBlock Text="Witt Lowry - Around Your Heart" Margin="64,45,68,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBlock Text="Boi" Margin="138,29,145,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding CurrentSong.Band.Name}" Margin="64,45,68,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding CurrentSong.Name}" Margin="138,29,145,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Grid VerticalAlignment="Top" Margin="10,40,-10,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="211*"/>
@@ -55,7 +55,7 @@
                 <ColumnDefinition Width="193*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Grid.ColumnSpan="6" Grid.RowSpan="2">
+            <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" Background="#202020" IsChecked="{Binding RepeatSong, Mode=OneWay}" BorderBrush="{x:Null}" Click="Repeater" HorizontalAlignment="Left" Grid.ColumnSpan="6" Grid.RowSpan="2">
                 <materialDesign:PackIcon Kind="Rotate3d" VerticalAlignment="Center" Width="30" Height="30">
                     <materialDesign:PackIcon.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -65,8 +65,8 @@
                         </LinearGradientBrush>
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
-            </Button>
-            <Button x:Name="Anterior" Background="{x:Null}" BorderBrush="{x:Null}"  HorizontalAlignment="Left" Margin="23,0,0,0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="3">
+            </ToggleButton>
+            <Button x:Name="Anterior" Background="{x:Null}" BorderBrush="{x:Null}"  HorizontalAlignment="Left" Margin="23,0,0,0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="3" Click="MoveBackSong">
                 <materialDesign:PackIcon Kind="ChevronLeftBox" VerticalAlignment="Center" Width="30" Height="30">
                     <materialDesign:PackIcon.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -77,11 +77,11 @@
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
             </Button>
-            <Button Background="#00000000" BorderBrush="#FF2859C1" HorizontalAlignment="Center" Grid.Column="6" Margin="29,0,102,0" Grid.RowSpan="2">
+            <Button Background="#00000000" BorderBrush="#FF2859C1" HorizontalAlignment="Center" Grid.Column="6" Margin="29,0,102,0" Grid.RowSpan="2" Click="PlayPause">
                 <Button.Effect>
                     <DropShadowEffect Color="#FF2859C1" RenderingBias="Quality" BlurRadius="40" Direction="0"/>
                 </Button.Effect>
-                <materialDesign:PackIcon Kind="Pause" VerticalAlignment="Center" Width="30" Height="30">
+                <materialDesign:PackIcon Kind="{Binding PauseButton}" VerticalAlignment="Center" Width="30" Height="30">
                     <materialDesign:PackIcon.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                             <GradientStop Color="#FF1717EE"/>
@@ -91,7 +91,7 @@
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
             </Button>
-            <Button x:Name="Proxima" Background="{x:Null}" BorderBrush="{x:Null}"  HorizontalAlignment="Right" Margin="0,0,38,0" Grid.Column="6" Grid.RowSpan="2">
+            <Button x:Name="Proxima" Background="{x:Null}" BorderBrush="{x:Null}"  HorizontalAlignment="Right" Margin="0,0,38,0" Grid.Column="6" Grid.RowSpan="2" Click="MoveSongForward">
                 <materialDesign:PackIcon Kind="ChevronRightBox" VerticalAlignment="Center" Width="30" Height="30">
                     <materialDesign:PackIcon.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -102,7 +102,7 @@
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
             </Button>
-            <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" Background="#202020" IsChecked="{Binding ShuffleSongs, Mode=OneWay}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="2" Click="Randomizer">
                 <materialDesign:PackIcon Kind="ShuffleVariant" VerticalAlignment="Center" Width="30" Height="30">
                     <materialDesign:PackIcon.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -112,21 +112,20 @@
                         </LinearGradientBrush>
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
-            </Button>
-
+            </ToggleButton>
             <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" HorizontalAlignment="Stretch" Margin="163,20,13,-25" Grid.Column="6" Grid.Row="1">
                 <materialDesign:PopupBox.ToggleContent>
-                    <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="LightSteelBlue" Height="19" Width="20"/>
+                    <materialDesign:PackIcon Kind="DotsHorizontal" Height="19" Width="20">
+                        <materialDesign:PackIcon.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FF009CBF"/>
+                                <GradientStop Color="#FF0000B9" Offset="0.747"/>
+                                <GradientStop Color="#FF002470" Offset="0.807"/>
+                            </LinearGradientBrush>
+                        </materialDesign:PackIcon.Foreground>
+                    </materialDesign:PackIcon>
                 </materialDesign:PopupBox.ToggleContent>
-                <materialDesign:PopupBox.Foreground>
-                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                        <GradientStop Color="#FF009CBF"/>
-                        <GradientStop Color="#FF0000B9" Offset="0.747"/>
-                        <GradientStop Color="#FF002470" Offset="0.807"/>
-                    </LinearGradientBrush>
-                </materialDesign:PopupBox.Foreground>
                 <StackPanel Width="100" Background="Black">
-                  
                     <DockPanel>
                         <Button DockPanel.Dock="Left" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,20,20" >
                             <materialDesign:PackIcon Kind="VolumeHigh" VerticalAlignment="Center" Width="20" Height="20">
@@ -139,14 +138,12 @@
                                 </materialDesign:PackIcon.Foreground>
                             </materialDesign:PackIcon>
                         </Button>
-                        <Slider Value="1" DockPanel.Dock="Left" Minimum="0" Maximum="100" IsSnapToTickEnabled="True"/>
+                        <Slider Name="VolumeSlider" Value="1" DockPanel.Dock="Left" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" ValueChanged="VolumeSlider_ValueChanged"/>
                     </DockPanel>
                 </StackPanel>
             </materialDesign:PopupBox>
-            <Label Content="00:00" Margin="0,27,2,-20" Grid.Row="1" Grid.ColumnSpan="3" FontSize="8" Foreground="LightSteelBlue" Grid.Column="2"/>
-
-
-            <Slider Value="1" Grid.ColumnSpan="3" Grid.Column="4" Margin="17,28,43,-30" Grid.Row="1">
+            <Label Name="SongTime" Content="00:00" Margin="0,27,2,-20" Grid.Row="1" Grid.ColumnSpan="3" FontSize="8" Foreground="LightSteelBlue" Grid.Column="2"/>
+            <Slider Name="MusicSlider" Value="{Binding Player.Position}" Grid.ColumnSpan="3" Grid.Column="4" Margin="17,28,43,-30" Grid.Row="1" MouseLeftButtonDown="SliderControl_PreviewMouseLeftButtonDown" Thumb.DragCompleted="MusicSlider_DragCompleted" Thumb.DragStarted="MusicSlider_DragStarted">
                 <Slider.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                         <GradientStop Color="#FF009CBF"/>
@@ -156,7 +153,7 @@
                 </Slider.Foreground>
             </Slider>
         </Grid>
-        <ListBox VerticalAlignment="Bottom" Height="150" Margin="0,0,0,-155" ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentSong, Mode=OneWay}" Foreground="LightSteelBlue">
+        <ListBox VerticalAlignment="Bottom" Height="150" Margin="0,0,0,-155" ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentSong, Mode=OneWay}" MouseDoubleClick="ListBox_MouseDoubleClick" Foreground="LightSteelBlue">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

@@ -1,4 +1,5 @@
-﻿using Rozabto.Model;
+﻿using MaterialDesignThemes.Wpf;
+using Rozabto.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,30 @@ namespace Rozabto.ViewModel.Notify {
     public class NowPlayingNotify : INotifyPropertyChanged {
         public virtual Collection Collection { get; }
         public ObservableCollection<Song> Songs => new ObservableCollection<Song>(Collection.Songs);
-        public Song CurrentSong { get; set; }
+
+        private Song _currentSong;
+
+        public Song CurrentSong {
+            get => _currentSong;
+            set {
+                _currentSong = value;
+                OnPropertyChanged("CurrentSong");
+            }
+        }
+
+        private PackIconKind _pauseButton;
+
+        public PackIconKind PauseButton {
+            get => _pauseButton;
+            set {
+                _pauseButton = value;
+                OnPropertyChanged("PauseButton");
+            }
+        }
+
+        public bool RepeatSong { get; set; }
+        public bool ShuffleSongs { get; set; }
+        public int CurrentSongPos { get; set; }
 
         public NowPlayingNotify(Collection collection) {
             Collection = collection;
