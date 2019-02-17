@@ -12,10 +12,11 @@ namespace Rozabto.Model
         public string Name { get; set; }
         public TimeSpan Duration { get; set; }
         public string Location { get; set; }
+        public static Song EmptySong = new Song { Name = "", Duration = default(TimeSpan), Location = "" };
 
-       //JasonIgnore public string duration => duration.ToString
+        //JasonIgnore public string duration => duration.ToString
 
-       
+
 
     }
 }
