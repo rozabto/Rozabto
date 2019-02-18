@@ -76,6 +76,7 @@ namespace Rozabto.ViewModel {
             MusicSlider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
             MusicSlider.Minimum = 0;
             player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
+            MainViewModel.NowPlaying.OnPropertyChanged("SongBand");
         }
 
         public static void Play() {
