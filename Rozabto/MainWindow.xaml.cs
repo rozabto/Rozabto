@@ -24,16 +24,8 @@ namespace Rozabto {
             GridPrincipal.Children.Add(new Nowplaying());
         }
 
-        private void ButtonFechar_Click(object sender, RoutedEventArgs e) {
+        private void CloseApplication(object sender, RoutedEventArgs e) {
             Application.Current.Shutdown();
-        }
-
-        private void NextSong(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void PreviousSong(object sender, RoutedEventArgs e) {
-
         }
 
         private void GetNewSongs(object sender, RoutedEventArgs e) {
@@ -50,15 +42,11 @@ namespace Rozabto {
             MainViewModel.AddSongs(fileDialog.FileNames);
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-
-        }
-
         private void ChangeWindowPosition(object sender, MouseButtonEventArgs e) {
             DragMove();
         }
 
-        private void ListView_Selected(object sender, RoutedEventArgs e) {
+        private void ChangePage(object sender, RoutedEventArgs e) {
             var list = sender as ListView;
             switch (list.SelectedIndex) {
                 case 0:
