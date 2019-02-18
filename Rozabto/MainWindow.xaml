@@ -131,7 +131,7 @@
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
             </Button>
-            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Click="ButtonFechar_Click" Margin="0,0,0,20">
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Click="CloseApplication" Margin="0,0,0,20">
                 <materialDesign:PackIcon Kind="Power" VerticalAlignment="Center" Width="20" Height="20">
                     <materialDesign:PackIcon.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -170,7 +170,7 @@
                         <materialDesign:PackIcon Kind="Menu" Width="21" Height="20" Foreground="Gray" Margin="-110 0 0 0" VerticalAlignment="Center" RenderTransformOrigin="-2.55,0.55"/>
                     </Button>
                 </DockPanel>
-                <ListView Foreground="#FF313131" FontFamily="Champagne &amp; Limousines" FontSize="18" SelectionChanged="ListView_Selected">
+                <ListView Foreground="#FF313131" FontFamily="Champagne &amp; Limousines" FontSize="18" SelectionChanged="ChangePage">
                     <ListViewItem Height="45" Padding="0">
                         <StackPanel Orientation="Horizontal" Margin="10 0">
                             <materialDesign:PackIcon Kind="Music" Width="20" Height="20" Foreground="#FF086BBD" Margin="5" VerticalAlignment="Center"/>

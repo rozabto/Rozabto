@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ namespace Rozabto.Model
         public string Location { get; set; }
         public static Song EmptySong = new Song { Name = "", Duration = default(TimeSpan), Location = "" };
 
-        //JasonIgnore public string duration => duration.ToString
+        [JsonIgnore]
+        public string DurationString => Duration.Hours > 0 ? Duration.ToString(@"hh\:mm\:ss") : Duration.ToString(@"mm\:ss");
 
 
 

@@ -13,6 +13,8 @@ namespace Rozabto.ViewModel.Notify {
         public virtual Collection Collection { get; }
         public ObservableCollection<Song> Songs => new ObservableCollection<Song>(Collection.Songs);
 
+        public string SongBand => Collection.Bands.FirstOrDefault(f => f.Songs.Contains(_currentSong))?.Name;
+
         private Song _currentSong;
 
         public Song CurrentSong {
@@ -39,6 +41,7 @@ namespace Rozabto.ViewModel.Notify {
 
         public NowPlayingNotify(Collection collection) {
             Collection = collection;
+            PauseButton = PackIconKind.Pause;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
