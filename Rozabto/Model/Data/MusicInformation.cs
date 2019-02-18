@@ -36,7 +36,7 @@ namespace Rozabto.Model.Data
    
         public static void SearchMusic(string[] paths, Collection collection) 
         {
-            
+            Random random = new Random();
 
             foreach (var path in paths)
             {
