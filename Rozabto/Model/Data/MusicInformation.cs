@@ -83,12 +83,14 @@ namespace Rozabto.Model.Data
                     song = collection.Songs.FirstOrDefault(s => s.Name == tag.Title);
                     if (song != null)
                         tag.Title += "_";
-                    
-                 
-                       
+
+                    int rnd = random.Next(int.MinValue, int.MaxValue);
+                    while (collection.Songs.FirstOrDefault(f => f.ID == rnd) != null)
+                        rnd = random.Next(int.MinValue, int.MaxValue);
+
                     song = new Song
                     {
-                   
+                        ID = rnd,
                         Name = tag.Title,
                         Location = file.FullName , 
                         Duration = tagLibFile.Properties.Duration

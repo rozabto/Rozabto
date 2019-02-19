@@ -8,11 +8,13 @@ namespace Rozabto.Model
 {
      public class Playlist
     {
+        public List<int> IDsongs { get; set; }
         public List<Song> Songs { get; set; }
         public string Name { get; set; }
         public Playlist()
         {
-           Songs = new List<Song>();
+            IDsongs = new List<int>();
+            Songs = new List<Song>();
 
         }
 
