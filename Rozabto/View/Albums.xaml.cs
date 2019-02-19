@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rozabto.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +16,12 @@ using System.Windows.Shapes;
 
 namespace Rozabto.View
 {
-    /// <summary>
-    /// Interaction logic for Album.xaml
-    /// </summary>
     public partial class Album : UserControl
     {
         public Album()
         {
             InitializeComponent();
+            DataContext = MainViewModel.MySongs;
         }
     }
 }

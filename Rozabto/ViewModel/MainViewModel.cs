@@ -33,6 +33,8 @@ namespace Rozabto.ViewModel {
         public static void AddSongs(string[] songs) {
             MusicInformation.SearchMusic(songs, _collection);
             NowPlaying.OnPropertyChanged("Songs");
+            MySongs.OnPropertyChanged("Bands");
+            MySongs.OnPropertyChanged("Albums");
         }
 
         public static void Play() {
