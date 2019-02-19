@@ -57,11 +57,11 @@ namespace Rozabto.Model.Data
                     Song song = null;
                     Album album = null;
                     var tag = tagLibFile.Tag;
-                    var bandName = tag.FirstAlbumArtist ?? tag.FirstPerformer ?? tag.FirstComposer ?? "Unknown";
+                    var bandName = tag.FirstAlbumArtist ?? tag.FirstPerformer ?? tag.FirstComposer ?? "BandNameIsUnknown";
 
                     if (tag.Title is null)
                         tag.Title = file.Name;
-                    var albumName = tag.Album ?? "BandNameIsUnknown";
+                    var albumName = tag.Album ?? "Unknown";
                     band = collection.Bands.FirstOrDefault(b => b.Name == bandName);
                     if (band is null)
                     {

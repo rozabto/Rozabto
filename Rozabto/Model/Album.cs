@@ -9,21 +9,21 @@ namespace Rozabto.Model
 {
     public class Album
     {
-      
+
         public List<Song> Songs { get; set; }
         public string Name { get; set; }
 
         [JsonIgnore]
         public int SongsCount => Songs.Count;
 
-        public Album ()
+        public Album()
         {
 
-           Songs = new List<Song>();
-          
+            Songs = new List<Song>();
+
 
         }
 
     }
-    
+
 }
