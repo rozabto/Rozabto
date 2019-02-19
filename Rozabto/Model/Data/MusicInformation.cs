@@ -61,7 +61,7 @@ namespace Rozabto.Model.Data
 
                     if (tag.Title is null)
                         tag.Title = file.Name;
-                    var albumName = tag.Album ?? tag.Title;
+                    var albumName = tag.Album ?? "BandNameIsUnknown";
                     band = collection.Bands.FirstOrDefault(b => b.Name == bandName);
                     if (band is null)
                     {

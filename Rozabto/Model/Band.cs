@@ -9,7 +9,7 @@ namespace Rozabto.Model
 {
     public class Band
     {
-        public List<int> IDsongs { get; set; }
+       
         public List<Song> Songs { get; set; }
         public string Name { get; set; }
 
@@ -18,7 +18,7 @@ namespace Rozabto.Model
 
         public Band ()
         {
-            IDsongs = new List<int>();
+          
             Songs = new List<Song>();
         }
     }
