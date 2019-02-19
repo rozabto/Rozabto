@@ -92,6 +92,7 @@ namespace Rozabto.View {
             playListBox.UpdateLayout();
             MediaViewModel.Stop();
             MainViewModel.NowPlaying.CurrentSong = song;
+            MainViewModel.NowPlaying.CurrentSongPos = playListBox.SelectedIndex;
             MediaViewModel.Play();
         }
 

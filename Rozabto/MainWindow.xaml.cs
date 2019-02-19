@@ -67,5 +67,9 @@ namespace Rozabto {
                     break;
             }
         }
+
+        private void Minimize(object sender, RoutedEventArgs e) {
+            WindowState = WindowState.Minimized;
+        }
     }
 }

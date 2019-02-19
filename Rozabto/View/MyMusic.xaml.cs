@@ -17,6 +17,7 @@ namespace Rozabto.View {
     public partial class MyMusic : UserControl {
         public MyMusic() {
             InitializeComponent();
+            GridPrincipal.Children.Add(new Bands());
         }
 
         private void Album(object sender, MouseButtonEventArgs e) {

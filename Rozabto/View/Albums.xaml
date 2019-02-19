@@ -5,17 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Rozabto.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450"  Width="300" Height="500" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox>
-            <ListBoxItem>
-                <DockPanel Width="60">
-                    <Image DockPanel.Dock="Top" Width="40" Height="40"/>
-                    <Label Content="Songs" DockPanel.Dock="Bottom" FontSize="8" Foreground="LightSteelBlue"/>
-                    <Label Content="10" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="LightSteelBlue"/>
-
-                </DockPanel>
-            </ListBoxItem>
+        <ListBox ItemsSource="{Binding Albums}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel Width="60">
+                        <Image DockPanel.Dock="Top" Width="40" Height="40"/>
+                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="8" Foreground="LightSteelBlue"/>
+                        <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="LightSteelBlue"/>
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
     </Grid>
 </UserControl>
