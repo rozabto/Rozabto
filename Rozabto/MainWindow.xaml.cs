@@ -20,7 +20,6 @@ namespace Rozabto {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            DataContext = MainViewModel.NowPlaying;
             GridPrincipal.Children.Add(new Nowplaying());
         }
 
@@ -70,6 +69,10 @@ namespace Rozabto {
 
         private void Minimize(object sender, RoutedEventArgs e) {
             WindowState = WindowState.Minimized;
+        }
+
+        private void Window_Closed(object sender, EventArgs e) {
+            MainViewModel.SaveCollection();
         }
     }
 }

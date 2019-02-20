@@ -3,10 +3,7 @@ using Rozabto.Model.Data;
 using Rozabto.ViewModel.Notify;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Rozabto.ViewModel {
@@ -23,7 +20,33 @@ namespace Rozabto.ViewModel {
         static MainViewModel() {
             Player = new MediaPlayer();
             _collection = new Collection();
-            //add logic
+            var songs = Json.Read<List<Song>>("Songs");
+            var albums = Json.Read<List<Tuple<List<int>, string>>>("Albums");
+            var bands = Json.Read<List<Tuple<List<int>, string>>>("Bands");
+            var playlists = Json.Read<List<Tuple<List<int>, string>>>("PlayLists");
+            //add songs
+            if (songs != null) {
+                _collection.Songs = songs;
+                //add albums
+                if (albums != null)
+                    _collection.Albums = albums.Select(s => new Album {
+                        Name = s.Item2,
+                        Songs = songs.Where(r => s.Item1.Contains(r.ID)).ToList()
+                    }).ToList();
+                //add bands
+                if (bands != null)
+                    _collection.Bands = bands.Select(s => new Band {
+                        Name = s.Item2,
+                        Songs = songs.Where(r => s.Item1.Contains(r.ID)).ToList()
+                    }).ToList();
+                //add playlists
+                if (playlists != null)
+                    _collection.Playlists = playlists.Select(s => new Playlist {
+                        Name = s.Item2,
+                        Songs = songs.Where(r => s.Item1.Contains(r.ID)).ToList()
+                    }).ToList();
+            }
+            //instantiate
             Settings = new SettingsNotify();
             MySongs = new MySongsNotify(_collection);
             NowPlaying = new NowPlayingNotify(_collection);
@@ -35,6 +58,17 @@ namespace Rozabto.ViewModel {
             NowPlaying.OnPropertyChanged("Songs");
             MySongs.OnPropertyChanged("Bands");
             MySongs.OnPropertyChanged("Albums");
+            MySongs.OnPropertyChanged("Songs");
+        }
+
+        public static void SaveCollection() {
+            Json.Write(_collection.Songs, "Songs");
+            Json.Write(_collection.Albums.Select(s => new Tuple<IEnumerable<int>, string>(
+                s.Songs.Select(r => r.ID), s.Name)), "Albums");
+            Json.Write(_collection.Bands.Select(s => new Tuple<IEnumerable<int>, string>(
+                s.Songs.Select(r => r.ID), s.Name)), "Bands");
+            Json.Write(_collection.Playlists.Select(s => new Tuple<IEnumerable<int>, string>(
+                s.Songs.Select(r => r.ID), s.Name)), "PlayLists");
         }
 
         public static void Play() {

@@ -11,8 +11,8 @@ namespace Rozabto.Model.Data
     public static class Json
     {
         public static T Read<T>(string file) =>
-     File.Exists(file + ".json") ?
-     JsonConvert.DeserializeObject<T>(File.ReadAllText(file)) : (default(T));
+            File.Exists(file + ".json") ?
+            JsonConvert.DeserializeObject<T>(File.ReadAllText(file + ".json")) : default(T);
 
         public static void Write<T>(T obj, string file)
         {
