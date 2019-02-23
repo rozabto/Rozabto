@@ -20,7 +20,7 @@ namespace Rozabto {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            GridPrincipal.Children.Add(new Nowplaying());
+            GridPrincipal.Children.Add(new Playlists());
         }
 
         private void CloseApplication(object sender, RoutedEventArgs e) {
@@ -73,6 +73,11 @@ namespace Rozabto {
 
         private void Window_Closed(object sender, EventArgs e) {
             MainViewModel.SaveCollection();
+        }
+
+        private void ButtonMysongs_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

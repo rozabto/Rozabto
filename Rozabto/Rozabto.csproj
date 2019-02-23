@@ -84,6 +84,9 @@
     <Compile Include="ViewModel\Notify\NowPlayingNotify.cs" />
     <Compile Include="ViewModel\Notify\PlayListsNotify.cs" />
     <Compile Include="ViewModel\Notify\SettingsNotify.cs" />
+    <Compile Include="View\ABPContent.xaml.cs">
+      <DependentUpon>ABPContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Albums.xaml.cs">
       <DependentUpon>Albums.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ABPContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Albums.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
