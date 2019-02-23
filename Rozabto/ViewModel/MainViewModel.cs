@@ -9,7 +9,6 @@ using System.Windows.Media;
 namespace Rozabto.ViewModel {
     public static class MainViewModel {
         public static Collection Collection { get; }
-
         public static MediaPlayer Player { get; }
         public static MySongsNotify MySongs { get; }
         public static NowPlayingNotify NowPlaying { get; }
@@ -21,25 +20,21 @@ namespace Rozabto.ViewModel {
         static MainViewModel() {
             Player = new MediaPlayer();
             Collection = new Collection();
-            var songs = Json.Read<List<Song>>("Songs");
-            var albums = Json.Read<List<Album>>("Albums");
-            var bands = Json.Read<List<Tuple<int[], string>>>("Bands");
-            var playlists = Json.Read<List<Tuple<int[], string>>>("PlayLists");
             //add songs
+            var songs = Json.Read<List<Song>>("Songs");
             if (songs != null) {
                 Collection.Songs = songs;
                 //add bands
+                var bands = Json.Read<List<Band>>("Bands");
                 if (bands != null)
-                    Collection.Bands = bands.Select(s => new Band {
-                        Name = s.Item2,
-                        
-                    }).ToList();
-                //add playlists
+                    Collection.Bands = bands;
+                var albums = Json.Read<List<Album>>("Albums");
+                if (albums != null)
+                    Collection.Albums = albums;
+                //add play lists
+                var playlists = Json.Read<List<Playlist>>("PlayLists");
                 if (playlists != null)
-                    Collection.Playlists = playlists.Select(s => new Playlist {
-                        Name = s.Item2,
-                        Songs = songs.Where(r => s.Item1.Contains(r.ID)).ToList()
-                    }).ToList();
+                    Collection.Playlists = playlists;
             }
             //instantiate
             Settings = new SettingsNotify();
@@ -49,7 +44,7 @@ namespace Rozabto.ViewModel {
         }
 
         public static void AddPlayList(string name) {
-            _collection.Playlists.Add(new Playlist { Name = name });
+            Collection.Playlists.Add(new Playlist { Name = name });
             PlayList.OnPropertyChanged("PlayList");
         }
 
