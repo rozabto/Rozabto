@@ -13,10 +13,10 @@
         </Grid.RowDefinitions>
         <Grid>
             <Image DockPanel.Dock="Top" Margin="340,10,347,10"/>
-            <Label Content="Songs" Margin="0,50,0,0" FontSize="30" Foreground="LightSteelBlue"/>
+            <Label Content="{Binding Name}" Margin="0,50,0,0" FontSize="30" Foreground="LightSteelBlue"/>
             <Label Content="Unknown" Margin="0,83,0,-33" FontSize="20" Foreground="LightSteelBlue"/>
-            <Label Content="00:00:00" Margin="95 85 0 0" FontSize="20" Foreground="LightSteelBlue"/>
-            <Label Content="10" Margin="180 85 0 0" FontSize="20" Foreground="LightSteelBlue"/>
+            <Label Content="{Binding TotalTime}" Margin="95 85 0 0" FontSize="20" Foreground="LightSteelBlue"/>
+            <Label Content="{Binding SongsCount}" Margin="180 85 0 0" FontSize="20" Foreground="LightSteelBlue"/>
 
         </Grid>
         <Grid Name="GridPrincipal" Grid.Row="1"/>

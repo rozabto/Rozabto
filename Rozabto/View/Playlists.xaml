@@ -20,7 +20,7 @@
                 <DockPanel>
                     <Label Content="Add playlist" DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Center"/>
                     <TextBox Name="Playlist" Margin="5" DockPanel.Dock="Top"/>
-                    <Button Content="Add playlist" Margin="5" DockPanel.Dock="Left">
+                    <Button Content="Add playlist" Margin="5" DockPanel.Dock="Left" Click="AddPlayList">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                                 <GradientStop Color="#FF2727F0"/>
@@ -56,15 +56,17 @@
         </materialDesign:DialogHost>
 
 
-        <ListBox Grid.Row="1">
-            <ListBoxItem>
-                <DockPanel Width="60">
-                    <Image DockPanel.Dock="Top" Width="40" Height="40"/>
-                    <Label Content="Songs" DockPanel.Dock="Bottom" FontSize="8" Foreground="LightSteelBlue"/>
-                    <Label Content="10" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="LightSteelBlue"/>
+        <ListBox Grid.Row="1" ItemsSource="{Binding PlayList}" SelectionChanged="ListBox_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel Width="60">
+                        <Image DockPanel.Dock="Top" Width="40" Height="40"/>
+                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="8" Foreground="LightSteelBlue"/>
+                        <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="LightSteelBlue"/>
 
-                </DockPanel>
-            </ListBoxItem>
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
     </Grid>
 </UserControl>

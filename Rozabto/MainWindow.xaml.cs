@@ -20,7 +20,7 @@ namespace Rozabto {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            GridPrincipal.Children.Add(new Playlists());
+            GridPrincipal.Children.Add(new Nowplaying());
         }
 
         private void CloseApplication(object sender, RoutedEventArgs e) {
@@ -45,28 +45,6 @@ namespace Rozabto {
             DragMove();
         }
 
-        private void ChangePage(object sender, RoutedEventArgs e) {
-            var list = sender as ListView;
-            switch (list.SelectedIndex) {
-                case 0:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new MyMusic());
-                    break;
-                case 1:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new Playlists());
-                    break;
-                case 2:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new Nowplaying());
-                    break;
-                case 3:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new Settings());
-                    break;
-            }
-        }
-
         private void Minimize(object sender, RoutedEventArgs e) {
             WindowState = WindowState.Minimized;
         }
@@ -75,9 +53,24 @@ namespace Rozabto {
             MainViewModel.SaveCollection();
         }
 
-        private void ButtonMysongs_Click(object sender, RoutedEventArgs e)
-        {
+        private void ShowMyMusic(object sender, RoutedEventArgs e) {
+            GridPrincipal.Children.Clear();
+            GridPrincipal.Children.Add(new MyMusic());
+        }
 
+        private void ShowPlayList(object sender, RoutedEventArgs e) {
+            GridPrincipal.Children.Clear();
+            GridPrincipal.Children.Add(new Playlists());
+        }
+
+        private void ShowNowPlaying(object sender, RoutedEventArgs e) {
+            GridPrincipal.Children.Clear();
+            GridPrincipal.Children.Add(new Nowplaying());
+        }
+
+        private void ShowSettings(object sender, RoutedEventArgs e) {
+            GridPrincipal.Children.Clear();
+            GridPrincipal.Children.Add(new Settings());
         }
     }
 }

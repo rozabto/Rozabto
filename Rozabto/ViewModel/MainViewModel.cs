@@ -14,6 +14,7 @@ namespace Rozabto.ViewModel {
         public static MySongsNotify MySongs { get; }
         public static NowPlayingNotify NowPlaying { get; }
         public static PlayListsNotify PlayList { get; }
+        public static ABPNotify ABP { get; }
         public static SettingsNotify Settings { get; }
         public static SongStatus Status { get; set; }
 
@@ -50,7 +51,12 @@ namespace Rozabto.ViewModel {
             Settings = new SettingsNotify();
             MySongs = new MySongsNotify(_collection);
             NowPlaying = new NowPlayingNotify(_collection);
-            PlayList = new PlayListsNotify();
+            PlayList = new PlayListsNotify(_collection);
+        }
+
+        public static void AddPlayList(string name) {
+            _collection.Playlists.Add(new Playlist { Name = name });
+            PlayList.OnPropertyChanged("PlayList");
         }
 
         public static void AddSongs(string[] songs) {
