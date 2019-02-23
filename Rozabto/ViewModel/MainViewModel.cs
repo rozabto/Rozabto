@@ -10,7 +10,7 @@ namespace Rozabto.ViewModel {
     public static class MainViewModel {
         private static readonly Collection _collection;
 
-        public static MediaPlayer Player { get; private set; }
+        public static MediaPlayer Player { get; }
         public static MySongsNotify MySongs { get; }
         public static NowPlayingNotify NowPlaying { get; }
         public static PlayListsNotify PlayList { get; }
@@ -21,9 +21,9 @@ namespace Rozabto.ViewModel {
             Player = new MediaPlayer();
             _collection = new Collection();
             var songs = Json.Read<List<Song>>("Songs");
-            var albums = Json.Read<List<Tuple<List<int>, string>>>("Albums");
-            var bands = Json.Read<List<Tuple<List<int>, string>>>("Bands");
-            var playlists = Json.Read<List<Tuple<List<int>, string>>>("PlayLists");
+            var albums = Json.Read<List<Tuple<int[], string>>>("Albums");
+            var bands = Json.Read<List<Tuple<int[], string>>>("Bands");
+            var playlists = Json.Read<List<Tuple<int[], string>>>("PlayLists");
             //add songs
             if (songs != null) {
                 _collection.Songs = songs;
