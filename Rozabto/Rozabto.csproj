@@ -84,11 +84,17 @@
     <Compile Include="ViewModel\Notify\NowPlayingNotify.cs" />
     <Compile Include="ViewModel\Notify\PlayListsNotify.cs" />
     <Compile Include="ViewModel\Notify\SettingsNotify.cs" />
+    <Compile Include="View\AlbumContent.xaml.cs">
+      <DependentUpon>AlbumContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Albums.xaml.cs">
       <DependentUpon>Albums.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BandsContent.xaml.cs">
+      <DependentUpon>BandsContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Empty.xaml.cs">
       <DependentUpon>Empty.xaml</DependentUpon>
@@ -98,6 +104,9 @@
     </Compile>
     <Compile Include="View\Nowplaying.xaml.cs">
       <DependentUpon>Nowplaying.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlaylistContent.xaml.cs">
+      <DependentUpon>PlaylistContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Playlists.xaml.cs">
       <DependentUpon>Playlists.xaml</DependentUpon>
@@ -120,11 +129,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AlbumContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Albums.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Bands.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BandsContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Nowplaying.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlaylistContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

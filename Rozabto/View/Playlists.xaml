@@ -15,7 +15,7 @@
 
         </Grid.RowDefinitions>
 
-        <materialDesign:DialogHost CloseOnClickAway="True">
+        <materialDesign:DialogHost Name="Playlistdialog" CloseOnClickAway="True">
             <materialDesign:DialogHost.DialogContent>
                 <DockPanel>
                     <Label Content="Add playlist" DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Center"/>
