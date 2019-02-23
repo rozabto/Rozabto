@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Rozabto.View
 {
     /// <summary>
-    /// Interaction logic for AlbumContent.xaml
+    /// Interaction logic for ABPContent.xaml
     /// </summary>
-    public partial class AlbumContent : UserControl
+    public partial class ABPContent : UserControl
     {
-        public AlbumContent()
+        public ABPContent()
         {
             InitializeComponent();
         }
