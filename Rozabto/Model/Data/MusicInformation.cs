@@ -12,7 +12,7 @@ namespace Rozabto.Model.Data
     public static class MusicInformation
     {
         public static readonly string BandNameIsUnknown = "Unknown";
-        
+
 
         public class FileTagLib : TagFile.IFileAbstraction
         {
@@ -33,14 +33,14 @@ namespace Rozabto.Model.Data
             public Stream WriteStream => file.OpenWrite();
 
         }
-   
-        public static void SearchMusic(string[] paths, Collection collection) 
+
+        public static void SearchMusic(string[] paths, Collection collection)
         {
             Random random = new Random();
 
             foreach (var path in paths)
             {
-                
+
                 var file = new FileInfo(path);
                 TagFile tagLibFile = null;
                 try
@@ -65,19 +65,13 @@ namespace Rozabto.Model.Data
                     band = collection.Bands.FirstOrDefault(b => b.Name == bandName);
                     if (band is null)
                     {
-                        band = new Band
-                        {
-                            Name = bandName
-                        };
+                        band = new Band(bandName);
                         collection.Bands.Add(band);
                     }
                     album = collection.Albums.FirstOrDefault(b => b.Name == albumName);
                     if (album is null)
                     {
-                        album = new Album
-                        {
-                            Name = albumName
-                        };
+                        album = new Album(albumName);
                         collection.Albums.Add(album);
                     }
                     song = collection.Songs.FirstOrDefault(s => s.Name == tag.Title);
@@ -92,7 +86,7 @@ namespace Rozabto.Model.Data
                     {
                         ID = rnd,
                         Name = tag.Title,
-                        Location = file.FullName , 
+                        Location = file.FullName,
                         Duration = tagLibFile.Properties.Duration
                     };
                     band.Songs.Add(song);

@@ -12,7 +12,7 @@ namespace Rozabto.Model
     {
 
         public List<Song> Songs { get; }
-        public string Name { get; set; }
+        public string Name { get; }
 
         [JsonIgnore]
         public int SongsCount => Songs.Count;
@@ -21,7 +21,7 @@ namespace Rozabto.Model
         {
 
             Songs = new List<Song>();
-            
+
         }
 
         [JsonConstructor]

@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 
-namespace Rozabto.ViewModel {
-    public static class MainViewModel {
+namespace Rozabto.ViewModel
+{
+    public static class MainViewModel
+    {
         public static Collection Collection { get; }
         public static MediaPlayer Player { get; }
         public static MySongsNotify MySongs { get; }
@@ -17,12 +19,14 @@ namespace Rozabto.ViewModel {
         public static SettingsNotify Settings { get; }
         public static SongStatus Status { get; set; }
 
-        static MainViewModel() {
+        static MainViewModel()
+        {
             Player = new MediaPlayer();
             Collection = new Collection();
             //add songs
             var songs = Json.Read<List<Song>>("Songs");
-            if (songs != null) {
+            if (songs != null)
+            {
                 Collection.Songs = songs;
                 //add bands
                 var bands = Json.Read<List<Band>>("Bands");
@@ -43,12 +47,14 @@ namespace Rozabto.ViewModel {
             PlayList = new PlayListsNotify(Collection);
         }
 
-        public static void AddPlayList(string name) {
-            Collection.Playlists.Add(new Playlist { Name = name });
+        public static void AddPlayList(string name)
+        {
+            Collection.Playlists.Add(new Playlist(name));
             PlayList.OnPropertyChanged("PlayList");
         }
 
-        public static void AddSongs(string[] songs) {
+        public static void AddSongs(string[] songs)
+        {
             MusicInformation.SearchMusic(songs, Collection);
             NowPlaying.OnPropertyChanged("Songs");
             MySongs.OnPropertyChanged("Bands");
@@ -56,7 +62,8 @@ namespace Rozabto.ViewModel {
             MySongs.OnPropertyChanged("Songs");
         }
 
-        public static void SaveCollection() {
+        public static void SaveCollection()
+        {
             Json.Write(Collection.Songs, "Songs");
             Json.Write(Collection.Albums.Select(s => new Tuple<IEnumerable<int>, string>(
                 s.Songs.Select(r => r.ID), s.Name)), "Albums");
@@ -66,20 +73,25 @@ namespace Rozabto.ViewModel {
                 s.Songs.Select(r => r.ID), s.Name)), "PlayLists");
         }
 
-        public static void Play() {
-            if (Status == SongStatus.Stopped) {
+        public static void Play()
+        {
+            if (Status == SongStatus.Stopped)
+            {
                 Player.Close();
-                if (NowPlaying.CurrentSong != Song.EmptySong) {
+                if (NowPlaying.CurrentSong != Song.EmptySong)
+                {
                     Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
                     Player.Play();
                     Status = SongStatus.Playing;
                 }
             }
-            else if (Status == SongStatus.Playing) {
+            else if (Status == SongStatus.Playing)
+            {
                 Player.Pause();
                 Status = SongStatus.Paused;
             }
-            else if (Status == SongStatus.Paused) {
+            else if (Status == SongStatus.Paused)
+            {
                 Player.Play();
                 Status = SongStatus.Playing;
             }
