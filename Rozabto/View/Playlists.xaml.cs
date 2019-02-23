@@ -33,5 +33,13 @@ namespace Rozabto.View {
             var view = sender as Viewbox;
 
         }
+
+        private void GoToPlayList(object sender, MouseButtonEventArgs e) {
+            var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
+            grid.Children.Clear();
+            var name = ((sender as DockPanel).Children[1] as Label).Content.ToString();
+            MainViewModel.ActivateABP("playlist", name);
+            grid.Children.Add(new ABPContent());
+        }
     }
 }
