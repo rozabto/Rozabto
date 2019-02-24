@@ -14,14 +14,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Rozabto.View
-{
-    public partial class Bands : UserControl
-    {
-        public Bands()
-        {
+namespace Rozabto.View {
+    public partial class Bands : UserControl {
+        public Bands() {
             InitializeComponent();
             DataContext = MainViewModel.MySongs;
+        }
+
+        private void GoToBand(object sender, MouseButtonEventArgs e) {
+            var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
+            grid.Children.Clear();
+            var name = ((sender as DockPanel).Children[1] as Label).Content.ToString();
+            MainViewModel.ActivateABP("band", name);
+            grid.Children.Add(new ABPContent());
         }
     }
 }

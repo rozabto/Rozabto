@@ -12,7 +12,10 @@ namespace Rozabto.ViewModel.Notify {
         public string Name { get; }
         public ObservableCollection<Song> Songs { get; }
         public int SongsCount => Songs.Count;
-        public TimeSpan TotalTime => new TimeSpan(Songs.Sum(s => s.Duration.Ticks));
+        public string TotalTime => (_totalTime = new TimeSpan(Songs.Sum(s => s.Duration.Ticks)))
+            .Hours > 0 ? _totalTime.ToString(@"hh\:mm\:ss") : _totalTime.ToString(@"mm\:ss");
+
+        private TimeSpan _totalTime;
 
         public ABPNotify(List<Song> songs, string name) {
             Songs = new ObservableCollection<Song>(songs);
