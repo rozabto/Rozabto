@@ -21,11 +21,11 @@ namespace Rozabto.View {
             DataContext = MainViewModel.MySongs;
         }
 
-        private void GoToBand(object sender, MouseButtonEventArgs e) {
+        private void SelectBand(object sender, SelectionChangedEventArgs e) {
+            var listbox = sender as ListBox;
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
             grid.Children.Clear();
-            var name = ((sender as DockPanel).Children[1] as Label).Content.ToString();
-            MainViewModel.ActivateABP("band", name);
+            MainViewModel.ActivateABP(MainViewModel.Collection.Bands[listbox.SelectedIndex]);
             grid.Children.Add(new ABPContent());
         }
     }

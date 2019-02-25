@@ -29,16 +29,11 @@ namespace Rozabto.View {
             Playlistdialog.IsOpen = false;
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var view = sender as Viewbox;
-
-        }
-
-        private void GoToPlayList(object sender, MouseButtonEventArgs e) {
+        private void SelectPlayList(object sender, SelectionChangedEventArgs e) {
+            var listbox = sender as ListBox;
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
             grid.Children.Clear();
-            var name = ((sender as DockPanel).Children[1] as Label).Content.ToString();
-            MainViewModel.ActivateABP("playlist", name);
+            MainViewModel.ActivateABP(MainViewModel.Collection.Playlists[listbox.SelectedIndex]);
             grid.Children.Add(new ABPContent());
         }
     }

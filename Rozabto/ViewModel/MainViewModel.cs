@@ -16,6 +16,7 @@ namespace Rozabto.ViewModel {
         public static ABPNotify ABP { get; private set; }
         public static SettingsNotify Settings { get; }
         public static SongStatus Status { get; set; }
+        public static VolumeState Volume { get; set; }
 
         static MainViewModel() {
             Player = new MediaPlayer();
@@ -41,23 +42,21 @@ namespace Rozabto.ViewModel {
             MySongs = new MySongsNotify(Collection);
             NowPlaying = new NowPlayingNotify(Collection);
             PlayList = new PlayListsNotify(Collection);
+            Volume = VolumeState.On;
         }
 
-        public static void ActivateABP(string type, string name) {
-            if (type == "band") {
-                var band = Collection.Bands.FirstOrDefault(f => f.Name == name);
-                if (band is null) return;
-                ABP = new ABPNotify(band.Songs, name);
+        public static void ActivateABP(object type) {
+            if (type.GetType() == typeof(Band)) {
+                var band = type as Band;
+                ABP = new ABPNotify(band.Songs, band.Name);
             }
-            else if (type == "album") {
-                var album = Collection.Albums.FirstOrDefault(f => f.Name == name);
-                if (album is null) return;
-                ABP = new ABPNotify(album.Songs, name);
+            else if (type.GetType() == typeof(Album)) {
+                var album = type as Album;
+                ABP = new ABPNotify(album.Songs, album.Name);
             }
-            else if (type == "playlist") {
-                var playlist = Collection.Playlists.FirstOrDefault(f => f.Name == name);
-                if (playlist is null) return;
-                ABP = new ABPNotify(playlist.Songs, name);
+            else if (type.GetType() == typeof(Playlist)) {
+                var playlist = type as Playlist;
+                ABP = new ABPNotify(playlist.Songs, playlist.Name);
             }
         }
 

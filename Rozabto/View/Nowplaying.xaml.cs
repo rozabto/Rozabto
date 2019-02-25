@@ -42,12 +42,30 @@ namespace Rozabto.View {
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            if (MainViewModel.Volume == VolumeState.Mute) return;
             MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
             VolumeLabel.Changed(VolumeGrid, VolumeSlider.Value);
-            if (VolumeSlider.Value == 0)
+            SetVolumeToPlayer();
+        }
+
+        private void SetVolumeToPlayer() {
+            var volume = MainViewModel.Player.Volume;
+            if (volume == 0 && MainViewModel.Volume != VolumeState.Zero) {
+                MainViewModel.Volume = VolumeState.Zero;
                 MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMute;
-            else if (MainViewModel.NowPlaying.MuteButton == PackIconKind.VolumeMute)
+            }
+            else if (volume > 0 && volume <= 0.298 && MainViewModel.Volume != VolumeState.Low) {
+                MainViewModel.Volume = VolumeState.Low;
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeLow;
+            }
+            else if (volume > 0.298 && volume <= 0.663 && MainViewModel.Volume != VolumeState.Medium) {
+                MainViewModel.Volume = VolumeState.Medium;
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMedium;
+            }
+            else if (volume > 0.663 && MainViewModel.Volume != VolumeState.High) {
+                MainViewModel.Volume = VolumeState.High;
                 MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeHigh;
+            }
         }
 
         private void PlayPause(object sender, RoutedEventArgs e) {
@@ -123,13 +141,15 @@ namespace Rozabto.View {
         }
 
         private void MuteButton(object sender, RoutedEventArgs e) {
-            if (MainViewModel.NowPlaying.MuteButton == PackIconKind.VolumeHigh) {
+            if (MainViewModel.Volume != VolumeState.Mute) {
                 MainViewModel.Player.Volume = 0;
+                MainViewModel.Volume = VolumeState.Mute;
                 MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMute;
             }
             else {
                 MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeHigh;
+                MainViewModel.Volume = VolumeState.On;
+                SetVolumeToPlayer();
             }
         }
     }
