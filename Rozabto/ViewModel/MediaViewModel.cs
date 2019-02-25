@@ -1,4 +1,5 @@
-﻿using Rozabto.Model;
+﻿using MaterialDesignThemes.Wpf;
+using Rozabto.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,7 +76,8 @@ namespace Rozabto.ViewModel {
             player.Position = new TimeSpan(0, 0, 0);
             MusicSlider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
             MusicSlider.Minimum = 0;
-            player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
+            player.Volume = MainViewModel.NowPlaying.MuteButton == PackIconKind.VolumeMute ? 0 
+                : Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
             MainViewModel.NowPlaying.OnPropertyChanged("SongBand");
         }
 
@@ -84,13 +86,13 @@ namespace Rozabto.ViewModel {
             switch (MainViewModel.Status) {
                 case SongStatus.Playing:
                     SliderTimer.Start();
-                    MainViewModel.NowPlaying.PauseButton = MaterialDesignThemes.Wpf.PackIconKind.Pause;
+                    MainViewModel.NowPlaying.PauseButton = PackIconKind.Pause;
                     break;
                 case SongStatus.Paused:
                 // Fall through
                 case SongStatus.Stopped:
                     SliderTimer.Stop();
-                    MainViewModel.NowPlaying.PauseButton = MaterialDesignThemes.Wpf.PackIconKind.Play;
+                    MainViewModel.NowPlaying.PauseButton = PackIconKind.Play;
                     break;
             }
         }
@@ -98,7 +100,7 @@ namespace Rozabto.ViewModel {
         public static void Stop() {
             SliderTimer.Stop();
             MainViewModel.Status = SongStatus.Stopped;
-            MainViewModel.NowPlaying.PauseButton = MaterialDesignThemes.Wpf.PackIconKind.Pause;
+            MainViewModel.NowPlaying.PauseButton = PackIconKind.Pause;
             MusicSlider.Value = 0;
             MainViewModel.Player.Stop();
         }
