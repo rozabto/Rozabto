@@ -36,8 +36,7 @@ namespace Rozabto.ViewModel {
         }
 
         public static void Hide(Grid volumeGrid) {
-            if (volumeGrid.Children.Count >= pos && volumeGrid.Children[pos] is Label)
-                volumeGrid.Children.RemoveAt(pos);
+            volumeGrid.Children.RemoveAt(pos);
         }
     }
 }
