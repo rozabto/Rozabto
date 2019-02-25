@@ -85,6 +85,7 @@
     <Compile Include="ViewModel\Notify\NowPlayingNotify.cs" />
     <Compile Include="ViewModel\Notify\PlayListsNotify.cs" />
     <Compile Include="ViewModel\Notify\SettingsNotify.cs" />
+    <Compile Include="ViewModel\VolumeLabel.cs" />
     <Compile Include="View\ABPContent.xaml.cs">
       <DependentUpon>ABPContent.xaml</DependentUpon>
     </Compile>

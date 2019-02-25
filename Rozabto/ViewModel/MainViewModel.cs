@@ -85,21 +85,23 @@ namespace Rozabto.ViewModel {
         }
 
         public static void Play() {
-            if (Status == SongStatus.Stopped) {
-                Player.Close();
-                if (NowPlaying.CurrentSong != Song.EmptySong) {
-                    Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
+            switch (Status) {
+                case SongStatus.Stopped:
+                    Player.Close();
+                    if (NowPlaying.CurrentSong != Song.EmptySong) {
+                        Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
+                        Player.Play();
+                        Status = SongStatus.Playing;
+                    }
+                    break;
+                case SongStatus.Playing:
+                    Player.Pause();
+                    Status = SongStatus.Paused;
+                    break;
+                case SongStatus.Paused:
                     Player.Play();
                     Status = SongStatus.Playing;
-                }
-            }
-            else if (Status == SongStatus.Playing) {
-                Player.Pause();
-                Status = SongStatus.Paused;
-            }
-            else if (Status == SongStatus.Paused) {
-                Player.Play();
-                Status = SongStatus.Playing;
+                    break;
             }
         }
     }

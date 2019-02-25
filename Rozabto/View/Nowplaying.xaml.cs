@@ -1,4 +1,5 @@
-﻿using Rozabto.Model;
+﻿using MaterialDesignThemes.Wpf;
+using Rozabto.Model;
 using Rozabto.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,11 @@ namespace Rozabto.View {
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
+            VolumeLabel.Changed(VolumeGrid, VolumeSlider.Value);
+            if (VolumeSlider.Value == 0)
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMute;
+            else if (MainViewModel.NowPlaying.MuteButton == PackIconKind.VolumeMute)
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeHigh;
         }
 
         private void PlayPause(object sender, RoutedEventArgs e) {
@@ -106,6 +112,25 @@ namespace Rozabto.View {
 
         private void SaveVolumeSliderValue(object sender, RoutedEventArgs e) {
             MediaViewModel.SaveVolume();
+        }
+
+        private void ShowVolumeNumber(object sender, MouseButtonEventArgs e) {
+            VolumeLabel.Show(VolumeGrid, VolumeSlider.Value);
+        }
+
+        private void HideVolumeNumber(object sender, MouseButtonEventArgs e) {
+            VolumeLabel.Hide(VolumeGrid);
+        }
+
+        private void MuteButton(object sender, RoutedEventArgs e) {
+            if (MainViewModel.NowPlaying.MuteButton == PackIconKind.VolumeHigh) {
+                MainViewModel.Player.Volume = 0;
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMute;
+            }
+            else {
+                MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeHigh;
+            }
         }
     }
 }

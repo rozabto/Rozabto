@@ -125,22 +125,24 @@
                         </materialDesign:PackIcon.Foreground>
                     </materialDesign:PackIcon>
                 </materialDesign:PopupBox.ToggleContent>
-                <StackPanel Width="100" Background="Black">
-                    <DockPanel>
-                        <Button DockPanel.Dock="Left" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,20,20" >
-                            <materialDesign:PackIcon Kind="VolumeHigh" VerticalAlignment="Center" Width="20" Height="20">
-                                <materialDesign:PackIcon.Foreground>
-                                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF009CBF"/>
-                                        <GradientStop Color="#FF0000B9" Offset="0.747"/>
-                                        <GradientStop Color="#FF002470" Offset="0.807"/>
-                                    </LinearGradientBrush>
-                                </materialDesign:PackIcon.Foreground>
-                            </materialDesign:PackIcon>
-                        </Button>
-                        <Slider Name="VolumeSlider" Value="1" DockPanel.Dock="Left" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" ValueChanged="VolumeSlider_ValueChanged"/>
-                    </DockPanel>
-                </StackPanel>
+                <Grid Width="100" Background="Black" Name="VolumeGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Click="MuteButton">
+                        <materialDesign:PackIcon Kind="{Binding MuteButton}" VerticalAlignment="Center" Width="20" Height="20">
+                            <materialDesign:PackIcon.Foreground>
+                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF009CBF"/>
+                                    <GradientStop Color="#FF0000B9" Offset="0.747"/>
+                                    <GradientStop Color="#FF002470" Offset="0.807"/>
+                                </LinearGradientBrush>
+                            </materialDesign:PackIcon.Foreground>
+                        </materialDesign:PackIcon>
+                    </Button>
+                    <Slider Name="VolumeSlider" Value="1" Grid.Column="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" ValueChanged="VolumeSlider_ValueChanged" PreviewMouseLeftButtonDown="ShowVolumeNumber" PreviewMouseLeftButtonUp="HideVolumeNumber"/>
+                </Grid>
             </materialDesign:PopupBox>
             <Label Name="SongTime" Content="00:00" Margin="0,27,2,-20" Grid.Row="1" Grid.ColumnSpan="3" FontSize="8" Foreground="LightSteelBlue" Grid.Column="2"/>
             <Slider Name="MusicSlider" Value="{Binding Player.Position}" Grid.ColumnSpan="3" Grid.Column="4" Margin="17,28,43,-30" Grid.Row="1" MouseLeftButtonDown="SliderControl_PreviewMouseLeftButtonDown" Thumb.DragCompleted="MusicSlider_DragCompleted" Thumb.DragStarted="MusicSlider_DragStarted">
