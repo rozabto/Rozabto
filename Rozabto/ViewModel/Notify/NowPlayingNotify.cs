@@ -35,6 +35,16 @@ namespace Rozabto.ViewModel.Notify {
             }
         }
 
+        private PackIconKind _muteButton;
+
+        public PackIconKind MuteButton {
+            get => _muteButton;
+            set {
+                _muteButton = value;
+                OnPropertyChanged("MuteButton");
+            }
+        }
+
         public bool RepeatSong { get; set; }
         public bool ShuffleSongs { get; set; }
         public int CurrentSongPos { get; set; }
@@ -42,6 +52,7 @@ namespace Rozabto.ViewModel.Notify {
         public NowPlayingNotify(Collection collection) {
             Collection = collection;
             PauseButton = PackIconKind.Pause;
+            MuteButton = PackIconKind.VolumeHigh;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -11,9 +11,6 @@ namespace Rozabto.Model.Data
 {
     public static class MusicInformation
     {
-        public static readonly string BandNameIsUnknown = "Unknown";
-
-
         public class FileTagLib : TagFile.IFileAbstraction
         {
             private readonly FileInfo file;
@@ -57,11 +54,16 @@ namespace Rozabto.Model.Data
                     Song song = null;
                     Album album = null;
                     var tag = tagLibFile.Tag;
-                    var bandName = tag.FirstAlbumArtist ?? tag.FirstPerformer ?? tag.FirstComposer ?? "BandNameIsUnknown";
+                    var bandName = tag.FirstAlbumArtist ?? tag.FirstPerformer ?? tag.FirstComposer ?? "Unknown";
 
                     if (tag.Title is null)
                         tag.Title = file.Name;
                     var albumName = tag.Album ?? "Unknown";
+                    song = collection.Songs.FirstOrDefault(s => s.Name == tag.Title);
+
+                    if (song != null)
+                        continue;
+
                     band = collection.Bands.FirstOrDefault(b => b.Name == bandName);
                     if (band is null)
                     {
@@ -74,21 +76,19 @@ namespace Rozabto.Model.Data
                         album = new Album(albumName);
                         collection.Albums.Add(album);
                     }
-                    song = collection.Songs.FirstOrDefault(s => s.Name == tag.Title);
-                    if (song != null)
-                        tag.Title += "_";
+                    
 
                     int rnd = random.Next(int.MinValue, int.MaxValue);
                     while (collection.Songs.FirstOrDefault(f => f.ID == rnd) != null)
                         rnd = random.Next(int.MinValue, int.MaxValue);
 
                     song = new Song
-                    {
-                        ID = rnd,
-                        Name = tag.Title,
-                        Location = file.FullName,
-                        Duration = tagLibFile.Properties.Duration
-                    };
+                    (
+                        rnd,
+                         tag.Title,
+                        tagLibFile.Properties.Duration,
+                        file.FullName
+                    );
                     band.Songs.Add(song);
                     album.Songs.Add(song);
                     collection.Songs.Add(song);

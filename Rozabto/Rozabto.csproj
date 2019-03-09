@@ -78,6 +78,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\SongStatus.cs" />
+    <Compile Include="Model\VolumeState.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MediaViewModel.cs" />
     <Compile Include="ViewModel\Notify\ABPNotify.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="ViewModel\Notify\NowPlayingNotify.cs" />
     <Compile Include="ViewModel\Notify\PlayListsNotify.cs" />
     <Compile Include="ViewModel\Notify\SettingsNotify.cs" />
+    <Compile Include="ViewModel\VolumeLabel.cs" />
     <Compile Include="View\ABPContent.xaml.cs">
       <DependentUpon>ABPContent.xaml</DependentUpon>
     </Compile>

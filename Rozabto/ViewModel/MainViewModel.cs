@@ -16,6 +16,7 @@ namespace Rozabto.ViewModel {
         public static ABPNotify ABP { get; private set; }
         public static SettingsNotify Settings { get; }
         public static SongStatus Status { get; set; }
+        public static VolumeState Volume { get; set; }
 
         static MainViewModel() {
             Player = new MediaPlayer();
@@ -41,23 +42,21 @@ namespace Rozabto.ViewModel {
             MySongs = new MySongsNotify(Collection);
             NowPlaying = new NowPlayingNotify(Collection);
             PlayList = new PlayListsNotify(Collection);
+            Volume = VolumeState.On;
         }
 
-        public static void ActivateABP(string type, string name) {
-            if (type == "band") {
-                var band = Collection.Bands.FirstOrDefault(f => f.Name == name);
-                if (band is null) return;
-                ABP = new ABPNotify(band.Songs, name);
+        public static void ActivateABP(object type) {
+            if (type.GetType() == typeof(Band)) {
+                var band = type as Band;
+                ABP = new ABPNotify(band.Songs, band.Name);
             }
-            else if (type == "album") {
-                var album = Collection.Albums.FirstOrDefault(f => f.Name == name);
-                if (album is null) return;
-                ABP = new ABPNotify(album.Songs, name);
+            else if (type.GetType() == typeof(Album)) {
+                var album = type as Album;
+                ABP = new ABPNotify(album.Songs, album.Name);
             }
-            else if (type == "playlist") {
-                var playlist = Collection.Playlists.FirstOrDefault(f => f.Name == name);
-                if (playlist is null) return;
-                ABP = new ABPNotify(playlist.Songs, name);
+            else if (type.GetType() == typeof(Playlist)) {
+                var playlist = type as Playlist;
+                ABP = new ABPNotify(playlist.Songs, playlist.Name);
             }
         }
 
@@ -85,21 +84,23 @@ namespace Rozabto.ViewModel {
         }
 
         public static void Play() {
-            if (Status == SongStatus.Stopped) {
-                Player.Close();
-                if (NowPlaying.CurrentSong != Song.EmptySong) {
-                    Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
+            switch (Status) {
+                case SongStatus.Stopped:
+                    Player.Close();
+                    if (NowPlaying.CurrentSong != Song.EmptySong) {
+                        Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
+                        Player.Play();
+                        Status = SongStatus.Playing;
+                    }
+                    break;
+                case SongStatus.Playing:
+                    Player.Pause();
+                    Status = SongStatus.Paused;
+                    break;
+                case SongStatus.Paused:
                     Player.Play();
                     Status = SongStatus.Playing;
-                }
-            }
-            else if (Status == SongStatus.Playing) {
-                Player.Pause();
-                Status = SongStatus.Paused;
-            }
-            else if (Status == SongStatus.Paused) {
-                Player.Play();
-                Status = SongStatus.Playing;
+                    break;
             }
         }
     }
