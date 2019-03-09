@@ -6,7 +6,16 @@
              xmlns:local="clr-namespace:Rozabto.View"
              mc:Ignorable="d" 
                    d:DesignHeight="450" d:DesignWidth="800"  Height="50" Width="300">
-    <Grid Background="White">
-           
+    <Grid Background="LightSteelBlue">
+        <ListBox>
+            <ListBoxItem Height="50">
+                <DockPanel Width="260">
+                    <Image DockPanel.Dock="Left" Width="40" Height="33"/>
+                    <Label Content="Song" DockPanel.Dock="Left" FontSize="8"/>
+                   
+                </DockPanel>
+            </ListBoxItem>
+        </ListBox>
+
     </Grid>
 </UserControl>
