@@ -21,6 +21,7 @@ namespace Rozabto {
         public MainWindow() {
             InitializeComponent();
             GridPrincipal.Children.Add(new Nowplaying());
+            Playing.Children.Add(new MiniNowplaying());
         }
 
         private void CloseApplication(object sender, RoutedEventArgs e) {
