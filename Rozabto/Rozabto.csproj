@@ -47,9 +47,6 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
     </Reference>
@@ -77,6 +74,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Migrations\201903160854192_StartOfDataBase.cs" />
+    <Compile Include="Migrations\201903160854192_StartOfDataBase.Designer.cs">
+      <DependentUpon>201903160854192_StartOfDataBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903160928200_ChangedABP.cs" />
+    <Compile Include="Migrations\201903160928200_ChangedABP.Designer.cs">
+      <DependentUpon>201903160928200_ChangedABP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\AlbumEF.cs" />
+    <Compile Include="Model\AlbumSongsEF.cs" />
+    <Compile Include="Model\BandEF.cs" />
+    <Compile Include="Model\BandSongsEF.cs" />
+    <Compile Include="Model\Collection.cs" />
+    <Compile Include="Model\Data\BlogDBContext.cs" />
+    <Compile Include="Model\PlayListEF.cs" />
+    <Compile Include="Model\PlayListSongsEF.cs" />
+    <Compile Include="Model\SongList.cs" />
     <Compile Include="Model\SongStatus.cs" />
     <Compile Include="Model\VolumeState.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -173,10 +188,8 @@
   <ItemGroup>
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Band.cs" />
-    <Compile Include="Model\Collection.cs" />
-    <Compile Include="Model\Data\Json.cs" />
     <Compile Include="Model\Data\MusicInformation.cs" />
-    <Compile Include="Model\Playlist.cs" />
+    <Compile Include="Model\PlayList.cs" />
     <Compile Include="Model\Song.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -191,6 +204,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201903160854192_StartOfDataBase.resx">
+      <DependentUpon>201903160854192_StartOfDataBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903160928200_ChangedABP.resx">
+      <DependentUpon>201903160928200_ChangedABP.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

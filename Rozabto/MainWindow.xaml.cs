@@ -50,10 +50,6 @@ namespace Rozabto {
             WindowState = WindowState.Minimized;
         }
 
-        private void Window_Closed(object sender, EventArgs e) {
-            MainViewModel.SaveCollection();
-        }
-
         private void ShowMyMusic(object sender, RoutedEventArgs e) {
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new MyMusic());

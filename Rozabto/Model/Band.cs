@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Rozabto.ViewModel;
+﻿using Rozabto.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,28 +7,16 @@ using System.Threading.Tasks;
 
 namespace Rozabto.Model
 {
-    public class Band
+    public class Band : SongList
     {
-
-        public List<Song> Songs { get; }
         public string Name { get; }
 
-        [JsonIgnore]
-        public int SongsCount => Songs.Count;
-
-        public Band()
+        public Band(string name) : base()
         {
-
-            Songs = new List<Song>();
+            Name = name;
         }
-        [JsonConstructor]
-        public Band(int[] Item1, string Item2)
-        {
-            Songs = MainViewModel.Collection.Songs.Where(r => Item1.Contains(r.ID)).ToList();
 
-            this.Name = Item2;
-        }
-        public Band(string name) : this()
+        public Band(string name, List<Song> songs) : base(songs)
         {
             Name = name;
         }
