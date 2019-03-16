@@ -8,18 +8,25 @@ namespace Rozabto.Model
 {
     public class Collection
     {
-        public List<Band> Bands { get; set; }
-        public List<Album> Albums { get; set; }
-        public List<Song> Songs { get; set; }
-        public List<Playlist> Playlists { get; set; }
+        public List<Album> Albums { get; }
+        public List<Band> Bands { get; }
+        public List<PlayList> PlayLists { get; }
+        public List<Song> Songs { get; }
 
         public Collection()
         {
-            Bands = new List<Band>();
             Albums = new List<Album>();
+            Bands = new List<Band>();
+            PlayLists = new List<PlayList>();
             Songs = new List<Song>();
-            Playlists = new List<Playlist>();
         }
-        
+
+        public Collection(List<Album> albums, List<Band> bands, List<PlayList> playlists, List<Song> songs)
+        {
+            Albums = albums;
+            Bands = bands;
+            PlayLists = playlists;
+            Songs = songs;
+        }
     }
 }

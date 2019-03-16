@@ -31,13 +31,13 @@ namespace Rozabto.Model.Data
 
         }
 
-        public static void SearchMusic(string[] paths, Collection collection)
+        public static void SearchMusic(string[] paths)
         {
+            var context = new BlogDBContext();
             Random random = new Random();
 
             foreach (var path in paths)
             {
-
                 var file = new FileInfo(path);
                 TagFile tagLibFile = null;
                 try
@@ -50,48 +50,60 @@ namespace Rozabto.Model.Data
                 }
                 using (tagLibFile)
                 {
-                    Band band = null;
+                    BandEF band = null;
                     Song song = null;
-                    Album album = null;
+                    AlbumEF album = null;
                     var tag = tagLibFile.Tag;
                     var bandName = tag.FirstAlbumArtist ?? tag.FirstPerformer ?? tag.FirstComposer ?? "Unknown";
 
                     if (tag.Title is null)
-                        tag.Title = file.Name;
+                        tag.Title = Path.GetFileNameWithoutExtension(file.Name);
                     var albumName = tag.Album ?? "Unknown";
-                    song = collection.Songs.FirstOrDefault(s => s.Name == tag.Title);
+                    song = context.Songs.FirstOrDefault(s => s.Name == tag.Title);
 
                     if (song != null)
                         continue;
 
-                    band = collection.Bands.FirstOrDefault(b => b.Name == bandName);
+                    band = context.Bands.FirstOrDefault(f => f.Name == bandName);
                     if (band is null)
                     {
-                        band = new Band(bandName);
-                        collection.Bands.Add(band);
+                        band = new BandEF
+                        {
+                            Name = bandName
+                        };
+                        context.Bands.Add(band);
                     }
-                    album = collection.Albums.FirstOrDefault(b => b.Name == albumName);
+
+                    album = context.Albums.FirstOrDefault(f => f.Name == albumName);
                     if (album is null)
                     {
-                        album = new Album(albumName);
-                        collection.Albums.Add(album);
+                        album = new AlbumEF
+                        {
+                            Name = albumName
+                        };
+                        context.Albums.Add(album);
                     }
-                    
-
-                    int rnd = random.Next(int.MinValue, int.MaxValue);
-                    while (collection.Songs.FirstOrDefault(f => f.ID == rnd) != null)
-                        rnd = random.Next(int.MinValue, int.MaxValue);
 
                     song = new Song
-                    (
-                        rnd,
-                         tag.Title,
-                        tagLibFile.Properties.Duration,
-                        file.FullName
-                    );
-                    band.Songs.Add(song);
-                    album.Songs.Add(song);
-                    collection.Songs.Add(song);
+                    {
+                        Name = tag.Title,
+                        Duration = tagLibFile.Properties.Duration,
+                        Location = file.FullName
+                    };
+
+                    context.Songs.Add(song);
+                    context.SaveChanges();
+                    song = context.Songs.FirstOrDefault(f => f.Name == song.Name);
+                    context.AlbumsSongs.Add(new AlbumSongsEF
+                    {
+                        AlbumID = context.Albums.FirstOrDefault(f => f.Name == albumName).ID,
+                        SongID = song.ID
+                    });
+                    context.BandsSongs.Add(new BandSongsEF
+                    {
+                        BandID = context.Bands.FirstOrDefault(f => f.Name == bandName).ID,
+                        SongID = song.ID
+                    });
                 }
             }
         }

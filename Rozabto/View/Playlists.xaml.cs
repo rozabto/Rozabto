@@ -33,7 +33,7 @@ namespace Rozabto.View {
             var listbox = sender as ListBox;
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
             grid.Children.Clear();
-            MainViewModel.ActivateABP(MainViewModel.Collection.Playlists[listbox.SelectedIndex]);
+            MainViewModel.ActivateABP(MainViewModel.Collection.PlayLists[listbox.SelectedIndex]);
             grid.Children.Add(new ABPContent());
         }
     }

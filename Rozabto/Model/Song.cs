@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using Rozabto.ViewModel;
+﻿using Rozabto.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,34 +10,16 @@ namespace Rozabto.Model
 {
     public class Song
     {
-        public int ID { get; }
-        public string Name { get; }
-        public TimeSpan Duration { get; }
-        public string Location { get; }
-
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public TimeSpan Duration { get; set; }
+        public string Location { get; set; }
         public static Song EmptySong = new Song();
-
-        [JsonConstructor]
-        public Song(int ID, string Name, TimeSpan Duration, string Location)
-        {
-            this.ID = ID;
-            this.Name = Name;
-            this.Duration = Duration;
-            this.Location = Location;
-        }
-
         public Song()
         {
             Name = ""; Duration = default(TimeSpan); Location = "";
         }
-
-
-
-        [JsonIgnore]
+        [NotMapped]
         public string DurationString => Duration.Hours > 0 ? Duration.ToString(@"hh\:mm\:ss") : Duration.ToString(@"mm\:ss");
-
-
-
-
     }
 }

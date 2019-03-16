@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Rozabto.ViewModel.Notify {
     public class PlayListsNotify : INotifyPropertyChanged {
         public Collection Collection { get; }
-        public ObservableCollection<Playlist> PlayList => new ObservableCollection<Playlist>(Collection.Playlists);
+        public ObservableCollection<PlayList> PlayList => new ObservableCollection<PlayList>(Collection.PlayLists);
 
         public PlayListsNotify(Collection collection) {
             Collection = collection;
