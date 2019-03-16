@@ -13,14 +13,6 @@ namespace Rozabto.Model
         public List<PlayList> PlayLists { get; }
         public List<Song> Songs { get; }
 
-        public Collection()
-        {
-            Albums = new List<Album>();
-            Bands = new List<Band>();
-            PlayLists = new List<PlayList>();
-            Songs = new List<Song>();
-        }
-
         public Collection(List<Album> albums, List<Band> bands, List<PlayList> playlists, List<Song> songs)
         {
             Albums = albums;

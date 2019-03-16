@@ -64,24 +64,24 @@ namespace Rozabto.Model.Data
                     if (song != null)
                         continue;
 
-                    band = context.Bands.FirstOrDefault(f => f.Name == bandName);
+                    band = context.BandEFs.FirstOrDefault(f => f.Name == bandName);
                     if (band is null)
                     {
                         band = new BandEF
                         {
                             Name = bandName
                         };
-                        context.Bands.Add(band);
+                        context.BandEFs.Add(band);
                     }
 
-                    album = context.Albums.FirstOrDefault(f => f.Name == albumName);
+                    album = context.AlbumEFs.FirstOrDefault(f => f.Name == albumName);
                     if (album is null)
                     {
                         album = new AlbumEF
                         {
                             Name = albumName
                         };
-                        context.Albums.Add(album);
+                        context.AlbumEFs.Add(album);
                     }
 
                     song = new Song
@@ -94,14 +94,14 @@ namespace Rozabto.Model.Data
                     context.Songs.Add(song);
                     context.SaveChanges();
                     song = context.Songs.FirstOrDefault(f => f.Name == song.Name);
-                    context.AlbumsSongs.Add(new AlbumSongsEF
+                    context.AlbumsSongEFs.Add(new AlbumSongsEF
                     {
-                        AlbumID = context.Albums.FirstOrDefault(f => f.Name == albumName).ID,
+                        AlbumID = context.AlbumEFs.FirstOrDefault(f => f.Name == albumName).ID,
                         SongID = song.ID
                     });
-                    context.BandsSongs.Add(new BandSongsEF
+                    context.BandsSongEFs.Add(new BandSongsEF
                     {
-                        BandID = context.Bands.FirstOrDefault(f => f.Name == bandName).ID,
+                        BandID = context.BandEFs.FirstOrDefault(f => f.Name == bandName).ID,
                         SongID = song.ID
                     });
                 }
