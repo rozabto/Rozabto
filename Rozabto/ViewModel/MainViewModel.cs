@@ -3,6 +3,7 @@ using Rozabto.Model.Data;
 using Rozabto.ViewModel.Notify;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media;
 
 namespace Rozabto.ViewModel {
@@ -46,7 +47,7 @@ namespace Rozabto.ViewModel {
             var context = new BlogDBContext();
             var playlist = new PlayList(name);
             Collection.PlayLists.Add(playlist);
-            context.PlayListEFs.Add(new PlayListEF { Name = name });
+            context.PlayLists.Add(new PlayListEF { Name = name });
             context.SaveChanges();
             PlayList.OnPropertyChanged("PlayList");
         }
@@ -83,54 +84,19 @@ namespace Rozabto.ViewModel {
 
         static void SetCollection() {
             var context = new BlogDBContext();
-            var songs = new List<Song>(context.Songs);
-            var bands = new List<Band>();
-            var albums = new List<Album>();
-            var playLists = new List<PlayList>();
-            if (songs.Count != 0) {
-                var bandEFs = new List<BandEF>(context.BandEFs);
-                foreach (var bandSong in context.BandsSongEFs) {
-                    var list = new List<Song>();
-                    foreach (var song in songs)
-                        if (bandSong.SongID == song.ID)
-                            list.Add(song);
-                    string name = null;
-                    foreach (var band in bandEFs)
-                        if (band.ID == bandSong.BandID) {
-                            name = band.Name;
-                            break;
-                        }
-                    bands.Add(new Band(name, list));
-                }
-                var albumEFs = new List<AlbumEF>(context.AlbumEFs);
-                foreach (var albumSong in context.AlbumsSongEFs) {
-                    var list = new List<Song>();
-                    foreach (var song in songs)
-                        if (albumSong.SongID == song.ID)
-                            list.Add(song);
-                    string name = null;
-                    foreach (var album in albumEFs)
-                        if (album.ID == albumSong.AlbumID) {
-                            name = album.Name;
-                            break;
-                        }
-                    albums.Add(new Album(name, list));
-                }
-            }
-            var playlistEFs = new List<PlayListEF>(context.PlayListEFs);
-            foreach (var playListSong in context.PlayListsSongEFs) {
-                var list = new List<Song>();
-                foreach (var song in songs)
-                    if (playListSong.SongID == song.ID)
-                        list.Add(song);
-                string name = null;
-                foreach (var playlist in playlistEFs)
-                    if (playlist.ID == playListSong.PlayListID) {
-                        name = playlist.Name;
-                        break;
-                    }
-                playLists.Add(new PlayList(name, list));
-            }
+            var songs = context.Songs.ToList();
+            var bandsSongs = context.BandsSongs.ToArray();
+            var bands = context.Bands.ToArray().Select(s => new Band(s.Name,
+                songs.Where(w => bandsSongs.Where(wh => wh.BandID == s.ID)
+                .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
+            var albumsSongs = context.AlbumsSongs.ToArray();
+            var albums = context.Albums.ToArray().Select(s => new Album(s.Name,
+                songs.Where(w => albumsSongs.Where(wh => wh.AlbumID == s.ID)
+                .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
+            var playListsSongs = context.PlayListsSongs.ToArray();
+            var playLists = context.PlayLists.ToArray().Select(s => new PlayList(s.Name,
+                songs.Where(w => playListsSongs.Where(wh => wh.PlayListID == s.ID)
+                .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
             Collection = new Collection(albums, bands, playLists, songs);
         }
     }
