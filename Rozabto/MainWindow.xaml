@@ -119,7 +119,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="0" Name="RowDef"/>
         </Grid.RowDefinitions>
         <Grid VerticalAlignment="Stretch" Background="Black" MouseLeftButtonDown="ChangeWindowPosition">
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,20,20" Click="Minimize">

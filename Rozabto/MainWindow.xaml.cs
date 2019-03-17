@@ -21,7 +21,6 @@ namespace Rozabto {
         public MainWindow() {
             InitializeComponent();
             GridPrincipal.Children.Add(new Nowplaying());
-            Playing.Children.Add(new MiniNowplaying());
         }
 
         private void CloseApplication(object sender, RoutedEventArgs e) {
@@ -51,21 +50,35 @@ namespace Rozabto {
         }
 
         private void ShowMyMusic(object sender, RoutedEventArgs e) {
+            if (Playing.Children.Count == 0) {
+                Playing.Children.Add(new MiniNowplaying());
+                RowDef.Height = new GridLength(50);
+            }
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new MyMusic());
         }
 
         private void ShowPlayList(object sender, RoutedEventArgs e) {
+            if (Playing.Children.Count == 0) {
+                Playing.Children.Add(new MiniNowplaying());
+                RowDef.Height = new GridLength(50);
+            }
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Playlists());
         }
 
         private void ShowNowPlaying(object sender, RoutedEventArgs e) {
+            Playing.Children.Clear();
+            RowDef.Height = new GridLength(0);
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Nowplaying());
         }
 
         private void ShowSettings(object sender, RoutedEventArgs e) {
+            if (Playing.Children.Count == 0) {
+                Playing.Children.Add(new MiniNowplaying());
+                RowDef.Height = new GridLength(50);
+            }
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Settings());
         }
