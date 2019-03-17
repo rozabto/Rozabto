@@ -113,6 +113,7 @@
                     </materialDesign:PackIcon.Foreground>
                 </materialDesign:PackIcon>
             </ToggleButton>
+
             <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" HorizontalAlignment="Stretch" Margin="163,20,13,-25" Grid.Column="6" Grid.Row="1">
                 <materialDesign:PopupBox.ToggleContent>
                     <materialDesign:PackIcon Kind="DotsHorizontal" Height="19" Width="20">
@@ -125,9 +126,8 @@
                         </materialDesign:PackIcon.Foreground>
                     </materialDesign:PackIcon>
                 </materialDesign:PopupBox.ToggleContent>
-               
-                        
-                        <Grid Width="100" Background="Black" Name="VolumeGrid">
+
+                <Grid Width="100" Background="Black" Name="VolumeGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>
                         <ColumnDefinition/>
