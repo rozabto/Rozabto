@@ -22,6 +22,7 @@ namespace Rozabto.View {
     public partial class Nowplaying : UserControl {
         public Nowplaying() {
             InitializeComponent();
+            SongListBox.Children.Add(new NowplayingList());
             DataContext = MainViewModel.NowPlaying;
             MusicSlider.Maximum = !MainViewModel.Player.NaturalDuration.HasTimeSpan ? 1d :
                 MainViewModel.Player.NaturalDuration.TimeSpan.TotalSeconds;
@@ -110,16 +111,7 @@ namespace Rozabto.View {
             MediaViewModel.Play();
         }
 
-        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
-            var playListBox = sender as ListBox;
-            var song = playListBox.SelectedItem as Song;
-            playListBox.UpdateLayout();
-            MediaViewModel.Stop();
-            MainViewModel.NowPlaying.CurrentSong = song;
-            MainViewModel.NowPlaying.CurrentSongPos = playListBox.SelectedIndex;
-            MediaViewModel.Play();
-        }
-
+       
         private void Randomizer(object sender, RoutedEventArgs e) {
             MainViewModel.NowPlaying.ShuffleSongs = !MainViewModel.NowPlaying.ShuffleSongs;
         }

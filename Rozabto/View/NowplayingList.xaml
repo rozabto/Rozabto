@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Rozabto.View.NowplayingList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Rozabto.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ListBox ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentSong, Mode=OneWay}" MouseDoubleClick="ListBox_MouseDoubleClick" Foreground="LightSteelBlue">
+
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+
+                    <TextBlock Text="01" Margin="5" VerticalAlignment="Center"/>
+                    <Ellipse Width="30" Height="30">
+                        <Ellipse.Fill>
+                            <ImageBrush/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="{Binding Name}" Margin="10,0" VerticalAlignment="Center" Width="100" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="2017" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding DurationString}" Margin="10,0" VerticalAlignment="Center"/>
+
+                    <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Visibility="Visible">
+                        <materialDesign:PopupBox.ToggleContent>
+                            <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="LightSteelBlue"/>
+                        </materialDesign:PopupBox.ToggleContent>
+                        <StackPanel Background="Black">
+                            <Button Content="Add to playlist" Foreground="LightSteelBlue"/>
+                            <Button Content="Remove song" Foreground="LightSteelBlue"/>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </StackPanel>
+              
+                                        
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+        
+    </ListBox>
+    
+</UserControl>
