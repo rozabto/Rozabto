@@ -24,7 +24,7 @@
                     </LinearGradientBrush>
                 </Ellipse.Stroke>
             </Ellipse>
-            <Ellipse Width="144" Height="146" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="66,33,1,-28">
+            <Ellipse Width="142" Height="146" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="74,36,10,-24">
                 <Ellipse.Fill>
                     <RadialGradientBrush>
                         <GradientStop Color="#FF0C0604" Offset="1"/>
@@ -33,9 +33,9 @@
                     </RadialGradientBrush>
                 </Ellipse.Fill>
             </Ellipse>
-            <Ellipse Margin="79,41,13,-16">
+            <Ellipse Margin="84,49,22,-10">
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="/Rozabto;component/Image/CIRCLE.png"/>
+                    <ImageBrush ImageSource="/Rozabto;component/Image/music_icon_1538660773.png"/>
                 </Ellipse.Fill>
             </Ellipse>
             <Ellipse Margin="68,32,70,-28" Grid.ColumnSpan="2">

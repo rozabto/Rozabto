@@ -233,5 +233,8 @@
   <ItemGroup>
     <Resource Include="Image\CIRCLE.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\music_icon_1538660773.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
