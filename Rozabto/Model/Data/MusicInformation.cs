@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -88,7 +89,8 @@ namespace Rozabto.Model.Data
                     {
                         Name = tag.Title,
                         Duration = tagLibFile.Properties.Duration,
-                        Location = file.FullName
+                        Location = file.FullName,
+                        Volume = GetSongVolume(path)
                     };
 
                     context.Songs.Add(song);
@@ -105,6 +107,34 @@ namespace Rozabto.Model.Data
                         SongID = song.ID
                     });
                 }
+            }
+
+        }
+        private static float GetSongVolume(string path)
+        {
+            try
+            {
+                float max = 0;
+                using (var reader = new AudioFileReader(path))
+                {
+                    float[] buffer = new float[reader.WaveFormat.SampleRate];
+                    int read;
+                    do
+                    {
+                        read = reader.Read(buffer, 0, buffer.Length);
+                        for (int n = 0; n < read; n++)
+                        {
+                            var abs = Math.Abs(buffer[n]);
+                            if (abs > 0.95) return 1;
+                            if (abs > max) max = abs;
+                        }
+                    } while (read > 0);
+                }
+                return max == 0 || max > 1.0f ? 1f : max < 0.4f ? 0.4f : max;
+            }
+            catch
+            {
+                return 1;
             }
         }
     }
