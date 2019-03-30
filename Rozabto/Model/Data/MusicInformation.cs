@@ -31,7 +31,7 @@ namespace Rozabto.Model.Data
 
         }
 
-        public static void SearchMusic(string[] paths)
+        public static async Task SearchMusic(string[] paths)
         {
             var context = new BlogDBContext();
             Random random = new Random();
@@ -92,7 +92,7 @@ namespace Rozabto.Model.Data
                     };
 
                     context.Songs.Add(song);
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                     song = context.Songs.FirstOrDefault(f => f.Name == song.Name);
                     context.AlbumsSongs.Add(new AlbumSongsEF
                     {

@@ -17,7 +17,9 @@ namespace Rozabto.Model
         public static Song EmptySong = new Song();
         public Song()
         {
-            Name = ""; Duration = default(TimeSpan); Location = "";
+            Name = "";
+            Duration = default(TimeSpan);
+            Location = "";
         }
         [NotMapped]
         public string DurationString => Duration.Hours > 0 ? Duration.ToString(@"hh\:mm\:ss") : Duration.ToString(@"mm\:ss");
