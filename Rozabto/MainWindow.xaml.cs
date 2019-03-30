@@ -27,7 +27,7 @@ namespace Rozabto {
             Application.Current.Shutdown();
         }
 
-        private void GetNewSongs(object sender, RoutedEventArgs e) {
+        private async void GetNewSongs(object sender, RoutedEventArgs e) {
             var fileDialog = new OpenFileDialog {
                 Filter = "mp3|*.mp3",
                 Multiselect = true,
@@ -38,7 +38,7 @@ namespace Rozabto {
             var result = fileDialog.ShowDialog();
             if (result == true && string.IsNullOrWhiteSpace(fileDialog.FileName) || result == false)
                 return;
-            MainViewModel.AddSongs(fileDialog.FileNames);
+            await MainViewModel.AddSongs(fileDialog.FileNames);
         }
 
         private void ChangeWindowPosition(object sender, MouseButtonEventArgs e) {

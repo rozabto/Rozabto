@@ -4,6 +4,7 @@ using Rozabto.ViewModel.Notify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Rozabto.ViewModel {
@@ -52,8 +53,8 @@ namespace Rozabto.ViewModel {
             PlayList.OnPropertyChanged("PlayList");
         }
 
-        public static void AddSongs(string[] songs) {
-            MusicInformation.SearchMusic(songs);
+        public static async Task AddSongs(string[] songs) {
+            await MusicInformation.SearchMusic(songs);
             SetCollection();
             NowPlaying.OnPropertyChanged("Songs");
             MySongs.OnPropertyChanged("Bands");
