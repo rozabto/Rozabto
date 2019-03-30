@@ -130,7 +130,7 @@ namespace Rozabto.Model.Data
                         }
                     } while (read > 0);
                 }
-                return max == 0 || max > 1.0f ? 1f : max < 0.4f ? 0.4f : max;
+                return max;
             }
             catch
             {

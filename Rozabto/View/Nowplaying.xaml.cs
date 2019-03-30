@@ -44,29 +44,7 @@ namespace Rozabto.View {
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             VolumeLabel.Changed(VolumeGrid, VolumeSlider.Value);
-            SetVolumeToPlayer();
-        }
-
-        private void SetVolumeToPlayer() {
-            if (MainViewModel.Volume == VolumeState.Mute) return;
-            MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
-            var volume = MainViewModel.Player.Volume;
-            if (volume == 0 && MainViewModel.Volume != VolumeState.Zero) {
-                MainViewModel.Volume = VolumeState.Zero;
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMute;
-            }
-            else if (volume > 0 && volume <= 0.298 && MainViewModel.Volume != VolumeState.Low) {
-                MainViewModel.Volume = VolumeState.Low;
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeLow;
-            }
-            else if (volume > 0.298 && volume <= 0.663 && MainViewModel.Volume != VolumeState.Medium) {
-                MainViewModel.Volume = VolumeState.Medium;
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMedium;
-            }
-            else if (volume > 0.663 && MainViewModel.Volume != VolumeState.High) {
-                MainViewModel.Volume = VolumeState.High;
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeHigh;
-            }
+            MediaViewModel.SetVolumeToPlayer();
         }
 
         private void PlayPause(object sender, RoutedEventArgs e) {
