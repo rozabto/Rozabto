@@ -10,7 +10,7 @@
     <Grid Background="#44444444" Height="300" VerticalAlignment="Top">
         <TextBlock Text="{Binding SongBand}" Margin="64,45,68,0" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
         <TextBlock Text="{Binding CurrentSong.Name}" Margin="64,29,68,0" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-        <Grid VerticalAlignment="Top" Margin="10,40,-10,0">
+        <Grid VerticalAlignment="Top" Margin="10,40,-10,0" Height="158">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="211*"/>
                 <ColumnDefinition Width="69*"/>
@@ -33,12 +33,16 @@
                     </RadialGradientBrush>
                 </Ellipse.Fill>
             </Ellipse>
-            <Ellipse Width="135" Height="135" Margin="66,40,10,-24">
+            <Ellipse Margin="79,41,13,-16">
                 <Ellipse.Fill>
-                    <ImageBrush Stretch="Uniform"/>
+                    <ImageBrush ImageSource="/Rozabto;component/Image/CIRCLE.png"/>
                 </Ellipse.Fill>
             </Ellipse>
-            <Ellipse Fill="#7F000000" Margin="61,33,3,-28"/>
+            <Ellipse Margin="68,32,70,-28" Grid.ColumnSpan="2">
+                <Ellipse.Fill>
+                    <ImageBrush/>
+                </Ellipse.Fill>
+            </Ellipse>
         </Grid>
         <Grid VerticalAlignment="Bottom" Margin="5,0,5,32">
             <Grid.RowDefinitions>
