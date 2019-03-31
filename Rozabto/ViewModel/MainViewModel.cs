@@ -11,6 +11,7 @@ namespace Rozabto.ViewModel {
     public static class MainViewModel {
         public static Collection Collection { get; private set; }
         public static MediaPlayer Player { get; }
+        public static AppNotify AppXaml { get; }
         public static MySongsNotify MySongs { get; }
         public static NowPlayingNotify NowPlaying { get; }
         public static PlayListsNotify PlayList { get; }
@@ -26,6 +27,7 @@ namespace Rozabto.ViewModel {
             MySongs = new MySongsNotify(Collection);
             NowPlaying = new NowPlayingNotify(Collection);
             PlayList = new PlayListsNotify(Collection);
+            AppXaml = new AppNotify();
             Volume = VolumeState.On;
         }
 

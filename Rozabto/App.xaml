@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Rozabto"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
+        <ResourceDictionary x:Name="ThemeDictionary">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="BackgroundColour" Color="Black"/>

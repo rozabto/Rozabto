@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rozabto.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Rozabto.View
-{
+namespace Rozabto.View {
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : UserControl
-    {
-        public Settings()
-        {
+    public partial class Settings : UserControl {
+        public Settings() {
             InitializeComponent();
+        }
+
+        private void ChangeColor(object sender, RoutedEventArgs e) {
+            MainViewModel.AppXaml.ChangeColor();
         }
     }
 }

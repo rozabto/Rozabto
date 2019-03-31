@@ -104,6 +104,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MediaViewModel.cs" />
     <Compile Include="ViewModel\Notify\ABPNotify.cs" />
+    <Compile Include="ViewModel\Notify\AppNotify.cs" />
     <Compile Include="ViewModel\Notify\MySongsNotify.cs" />
     <Compile Include="ViewModel\Notify\NowPlayingNotify.cs" />
     <Compile Include="ViewModel\Notify\PlayListsNotify.cs" />
