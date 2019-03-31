@@ -12,6 +12,9 @@ using System.Windows.Threading;
 
 namespace Rozabto.ViewModel
 {
+    /// <summary>
+    /// Контролира звукът.
+    /// </summary>
     public static class MediaViewModel
     {
         private static readonly DispatcherTimer SliderTimer;
@@ -37,6 +40,9 @@ namespace Rozabto.ViewModel
             SliderTimer.Tick += SliderTimer_Tick;
         }
 
+        /// <summary>
+        /// Даваме нужните елементи на класа.
+        /// </summary>
         public static void ConnectViewToViewModel(Slider musicSlider, Slider volumeSlider, Label songTime)
         {
             MusicSlider = musicSlider;
@@ -47,12 +53,14 @@ namespace Rozabto.ViewModel
 
         private static void Player_MediaFailed(object sender, ExceptionEventArgs e)
         {
+            // Ако песента не може да се пусне показваме error.
             MessageBox.Show(e.ErrorException.Message);
             Stop();
         }
 
         private static void SliderTimer_Tick(object sender, EventArgs e)
         {
+            // Ако не местим плъзгача за времетраенето на музиката,тогава той продължава да се движи заедно с песента.
             if (SliderDragging || MusicSlider is null) return;
             MusicSlider.Value = MainViewModel.Player.Position.TotalSeconds;
             SongTime.Content = MainViewModel.Player.Position.ToString(@"mm\:ss");
@@ -60,10 +68,12 @@ namespace Rozabto.ViewModel
 
         private static void Player_MediaEnded(object sender, EventArgs e)
         {
+            // Ако песента свърши този метод се извиква.
             MusicSlider.Value = 0;
             SongTime.Content = "";
             SliderTimer.Stop();
             MainViewModel.Status = SongStatus.Stopped;
+            // Ако е зададен да започне нова песен тогава я пускаме.
             if (MainViewModel.NowPlaying.RepeatSong)
             {
                 Play();
@@ -71,10 +81,12 @@ namespace Rozabto.ViewModel
             }
             if (MainViewModel.NowPlaying.Songs.Count <= 0)
                 return;
+            // Взимаме позицията на новата песен.
             var pos = MainViewModel.NowPlaying.ShuffleSongs ? new Random().Next(MainViewModel.NowPlaying.Songs.Count)
                 : MainViewModel.NowPlaying.CurrentSongPos + 1;
             if (pos >= MainViewModel.NowPlaying.Songs.Count)
                 pos -= MainViewModel.NowPlaying.Songs.Count;
+            // Слагаме песента на позицията на новата песен.
             MainViewModel.NowPlaying.CurrentSong = MainViewModel.NowPlaying.Songs[pos];
             MainViewModel.NowPlaying.CurrentSongPos = pos;
             Play();
@@ -86,10 +98,14 @@ namespace Rozabto.ViewModel
             player.Position = new TimeSpan(0, 0, 0);
             MusicSlider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
             MusicSlider.Minimum = 0;
+            // Слагаме звукът на плеъра спрямо звука на новата песен.
             SetVolumeToPlayer();
             MainViewModel.NowPlaying.OnPropertyChanged("SongBand");
         }
 
+        /// <summary>
+        /// Пуска или спира движението на плъзгача.
+        /// </summary>
         public static void Play()
         {
             MainViewModel.Play();
@@ -100,7 +116,7 @@ namespace Rozabto.ViewModel
                     MainViewModel.NowPlaying.PauseButton = PackIconKind.Pause;
                     break;
                 case SongStatus.Paused:
-                // Fall through
+                // Ако е на пауза трябва да отиде на спряно.
                 case SongStatus.Stopped:
                     SliderTimer.Stop();
                     MainViewModel.NowPlaying.PauseButton = PackIconKind.Play;
@@ -108,10 +124,15 @@ namespace Rozabto.ViewModel
             }
         }
 
+        /// <summary>
+        /// Задава звука на плеъра и променя иконата на звука спрямо силата му.
+        /// </summary>
         public static void SetVolumeToPlayer()
         {
             if (MainViewModel.Volume == VolumeState.Mute) return;
+            // Ако са null тогава няма да променяме звука (избягваме появата на exception).
             if (VolumeSlider != null && MainViewModel.NowPlaying.CurrentSong != null)
+                // Поставяме звука на плеъра спрямо резултата от формулата.
                 MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515 - Math.Sin((1 - MainViewModel.NowPlaying.CurrentSong.Volume) / 2)), 3);
             var volume = MainViewModel.Player.Volume;
             if (volume == 0 && MainViewModel.Volume != VolumeState.Zero)
@@ -136,6 +157,9 @@ namespace Rozabto.ViewModel
             }
         }
 
+        /// <summary>
+        ///  Спираме песента.
+        /// </summary>
         public static void Stop()
         {
             SliderTimer.Stop();
@@ -145,6 +169,9 @@ namespace Rozabto.ViewModel
             MainViewModel.Player.Stop();
         }
 
+        /// <summary>
+        /// Запазваме звука когато излезем от NowPlaying.
+        /// </summary>
         public static void SaveVolume()
         {
             VolumeValue = (int)VolumeSlider.Value;

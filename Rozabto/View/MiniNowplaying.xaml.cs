@@ -26,6 +26,7 @@ namespace Rozabto.View {
         }
 
         private void MoveBackSong(object sender, RoutedEventArgs e) {
+            // Преместваме с една песен назад.
             if (MainViewModel.NowPlaying.Songs.Count <= 1 || --MainViewModel.NowPlaying.CurrentSongPos == -1) {
                 MediaViewModel.Stop();
                 return;
@@ -36,6 +37,7 @@ namespace Rozabto.View {
         }
 
         private void MoveSongForward(object sender, RoutedEventArgs e) {
+            // Преместваме с една песен напред.
             if (MainViewModel.NowPlaying.Songs.Count <= 1) {
                 MediaViewModel.Stop();
                 return;

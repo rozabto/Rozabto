@@ -8,9 +8,15 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Rozabto.ViewModel {
+    /// <summary>
+    /// Слагаме етикет на силата на звука.
+    /// </summary>
     public static class VolumeLabel {
         private static int pos = int.MaxValue;
 
+        /// <summary>
+        /// Създаваме етикет и го добавяме към grid.
+        /// </summary>
         public static void Show(Grid volumeGrid, double value) {
             var label = new Label {
                 Height = 24,
@@ -26,6 +32,9 @@ namespace Rozabto.ViewModel {
             pos = volumeGrid.Children.Add(label);
         }
 
+        /// <summary>
+        /// Променяме позицията и числото в етиката.
+        /// </summary>
         public static void Changed(Grid volumeGrid, double value) {
             if (volumeGrid.Children.Count <= pos || !(volumeGrid.Children[pos] is Label)) return;
             var label = volumeGrid.Children[pos] as Label;
@@ -35,6 +44,9 @@ namespace Rozabto.ViewModel {
             volumeGrid.Children[pos] = label;
         }
 
+        /// <summary>
+        /// Премахваме етикета.
+        /// </summary>
         public static void Hide(Grid volumeGrid) {
             volumeGrid.Children.RemoveAt(pos);
         }

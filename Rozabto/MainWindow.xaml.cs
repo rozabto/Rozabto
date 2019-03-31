@@ -28,6 +28,7 @@ namespace Rozabto {
         }
 
         private async void GetNewSongs(object sender, RoutedEventArgs e) {
+            // Отваряме диалог, в който могат да се изберат нови песни.
             var fileDialog = new OpenFileDialog {
                 Filter = "mp3|*.mp3",
                 Multiselect = true,
@@ -36,6 +37,7 @@ namespace Rozabto {
                 Title = "Select Music Files"
             };
             var result = fileDialog.ShowDialog();
+            // Ако са избрани песни или диалогът е затворен даваме на Model да ги прочете. 
             if (result == true && string.IsNullOrWhiteSpace(fileDialog.FileName) || result == false)
                 return;
             await MainViewModel.AddSongs(fileDialog.FileNames);
@@ -50,6 +52,7 @@ namespace Rozabto {
         }
 
         private void ShowMyMusic(object sender, RoutedEventArgs e) {
+            // Ако се преместим от NowPlaying показваме един малък вариант на плеъра.
             if (Playing.Children.Count == 0) {
                 Playing.Children.Add(new MiniNowplaying());
                 RowDef.Height = new GridLength(50);
@@ -59,6 +62,7 @@ namespace Rozabto {
         }
 
         private void ShowPlayList(object sender, RoutedEventArgs e) {
+            // Ако се преместим от NowPlaying показваме един малък вариант на плеъра.
             if (Playing.Children.Count == 0) {
                 Playing.Children.Add(new MiniNowplaying());
                 RowDef.Height = new GridLength(50);
@@ -68,6 +72,7 @@ namespace Rozabto {
         }
 
         private void ShowNowPlaying(object sender, RoutedEventArgs e) {
+            // Ако малкия плеър е показан го скриваме.
             Playing.Children.Clear();
             RowDef.Height = new GridLength(0);
             GridPrincipal.Children.Clear();
@@ -75,6 +80,7 @@ namespace Rozabto {
         }
 
         private void ShowSettings(object sender, RoutedEventArgs e) {
+            // Ако се преместим от NowPlaying показваме един малък вариант на плеъра.
             if (Playing.Children.Count == 0) {
                 Playing.Children.Add(new MiniNowplaying());
                 RowDef.Height = new GridLength(50);

@@ -29,6 +29,7 @@ namespace Rozabto.View
         }
         private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            // Пускаме песента, избрана от листа.
             var playListBox = sender as ListBox;
             var song = playListBox.SelectedItem as Song;
             playListBox.UpdateLayout();

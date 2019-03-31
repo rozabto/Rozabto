@@ -16,7 +16,7 @@
                     <TextBlock Text="01" Margin="5" VerticalAlignment="Center"/>
                     <Ellipse Width="30" Height="30">
                         <Ellipse.Fill>
-                            <ImageBrush/>
+                            <ImageBrush ImageSource="/Rozabto;component/Image/minilogo.PNG"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     <TextBlock Text="{Binding Name}" Margin="10,0" VerticalAlignment="Center" Width="100" TextTrimming="CharacterEllipsis"/>
