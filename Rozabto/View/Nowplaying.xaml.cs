@@ -119,7 +119,7 @@ namespace Rozabto.View {
             }
             else {
                 MainViewModel.Volume = VolumeState.On;
-                SetVolumeToPlayer();
+                MediaViewModel.SetVolumeToPlayer();
             }
         }
     }

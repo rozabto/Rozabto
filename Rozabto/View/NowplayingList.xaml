@@ -20,7 +20,7 @@
                         </Ellipse.Fill>
                     </Ellipse>
                     <TextBlock Text="{Binding Name}" Margin="10,0" VerticalAlignment="Center" Width="100" TextTrimming="CharacterEllipsis"/>
-                    <TextBlock Text="2017" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Volume}" VerticalAlignment="Center"/>
                     <TextBlock Text="{Binding DurationString}" Margin="10,0" VerticalAlignment="Center"/>
 
                     <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Visibility="Visible">

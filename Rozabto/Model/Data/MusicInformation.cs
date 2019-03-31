@@ -10,6 +10,9 @@ using TagFile = TagLib.File;
 
 namespace Rozabto.Model.Data
 {
+    /// <summary>
+    /// Класът MusicInformation извлича всички песни и ги превръща в код.
+    /// </summary>
     public static class MusicInformation
     {
         public class FileTagLib : TagFile.IFileAbstraction
@@ -108,8 +111,12 @@ namespace Rozabto.Model.Data
                     });
                 }
             }
-
+           
         }
+
+        /// <summary>
+        /// Получава мястото на песента и прочита силата на звука. След това връща силата на звука.
+        /// </summary>
         private static float GetSongVolume(string path)
         {
             try

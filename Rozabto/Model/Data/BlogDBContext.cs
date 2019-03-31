@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Rozabto.Model.Data
 {
+    /// <summary>
+    /// Връзка със SQL базата данни на плеъра.
+    /// </summary>
     public class BlogDBContext : DbContext
     {
         public DbSet<Song> Songs { get; set; }

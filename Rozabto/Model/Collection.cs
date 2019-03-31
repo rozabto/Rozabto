@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rozabto.Model
 {
+
     public class Collection
     {
         public List<Album> Albums { get; }

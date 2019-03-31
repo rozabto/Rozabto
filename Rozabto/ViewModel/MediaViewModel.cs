@@ -10,8 +10,10 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace Rozabto.ViewModel {
-    public static class MediaViewModel {
+namespace Rozabto.ViewModel
+{
+    public static class MediaViewModel
+    {
         private static readonly DispatcherTimer SliderTimer;
         private static Slider MusicSlider;
         private static Slider VolumeSlider;
@@ -19,7 +21,8 @@ namespace Rozabto.ViewModel {
         private static int VolumeValue;
         public static bool SliderDragging { get; set; }
 
-        static MediaViewModel() {
+        static MediaViewModel()
+        {
             MainViewModel.Player.MediaFailed += Player_MediaFailed;
             MainViewModel.Player.MediaOpened += Player_MediaOpened;
             MainViewModel.Player.MediaEnded += Player_MediaEnded;
@@ -27,36 +30,42 @@ namespace Rozabto.ViewModel {
             MainViewModel.Player.Volume = 0.5f;
             VolumeValue = 50;
 
-            SliderTimer = new DispatcherTimer {
+            SliderTimer = new DispatcherTimer
+            {
                 Interval = TimeSpan.FromMilliseconds(200)
             };
             SliderTimer.Tick += SliderTimer_Tick;
         }
 
-        public static void ConnectViewToViewModel(Slider musicSlider, Slider volumeSlider, Label songTime) {
+        public static void ConnectViewToViewModel(Slider musicSlider, Slider volumeSlider, Label songTime)
+        {
             MusicSlider = musicSlider;
             VolumeSlider = volumeSlider;
             SongTime = songTime;
             VolumeSlider.Value = VolumeValue;
         }
 
-        private static void Player_MediaFailed(object sender, ExceptionEventArgs e) {
+        private static void Player_MediaFailed(object sender, ExceptionEventArgs e)
+        {
             MessageBox.Show(e.ErrorException.Message);
             Stop();
         }
 
-        private static void SliderTimer_Tick(object sender, EventArgs e) {
+        private static void SliderTimer_Tick(object sender, EventArgs e)
+        {
             if (SliderDragging || MusicSlider is null) return;
             MusicSlider.Value = MainViewModel.Player.Position.TotalSeconds;
             SongTime.Content = MainViewModel.Player.Position.ToString(@"mm\:ss");
         }
 
-        private static void Player_MediaEnded(object sender, EventArgs e) {
+        private static void Player_MediaEnded(object sender, EventArgs e)
+        {
             MusicSlider.Value = 0;
             SongTime.Content = "";
             SliderTimer.Stop();
             MainViewModel.Status = SongStatus.Stopped;
-            if (MainViewModel.NowPlaying.RepeatSong) {
+            if (MainViewModel.NowPlaying.RepeatSong)
+            {
                 Play();
                 return;
             }
@@ -71,7 +80,8 @@ namespace Rozabto.ViewModel {
             Play();
         }
 
-        private static void Player_MediaOpened(object sender, EventArgs e) {
+        private static void Player_MediaOpened(object sender, EventArgs e)
+        {
             var player = sender as MediaPlayer;
             player.Position = new TimeSpan(0, 0, 0);
             MusicSlider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
@@ -80,9 +90,11 @@ namespace Rozabto.ViewModel {
             MainViewModel.NowPlaying.OnPropertyChanged("SongBand");
         }
 
-        public static void Play() {
+        public static void Play()
+        {
             MainViewModel.Play();
-            switch (MainViewModel.Status) {
+            switch (MainViewModel.Status)
+            {
                 case SongStatus.Playing:
                     SliderTimer.Start();
                     MainViewModel.NowPlaying.PauseButton = PackIconKind.Pause;
@@ -96,29 +108,36 @@ namespace Rozabto.ViewModel {
             }
         }
 
-        public static void SetVolumeToPlayer() {
+        public static void SetVolumeToPlayer()
+        {
             if (MainViewModel.Volume == VolumeState.Mute) return;
-            MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515 - Math.Sin((1 - MainViewModel.NowPlaying.CurrentSong.Volume) / 2)), 3);
+            if (VolumeSlider != null && MainViewModel.NowPlaying.CurrentSong != null)
+                MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515 - Math.Sin((1 - MainViewModel.NowPlaying.CurrentSong.Volume) / 2)), 3);
             var volume = MainViewModel.Player.Volume;
-            if (volume == 0 && MainViewModel.Volume != VolumeState.Zero) {
+            if (volume == 0 && MainViewModel.Volume != VolumeState.Zero)
+            {
                 MainViewModel.Volume = VolumeState.Zero;
                 MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMute;
             }
-            else if (volume > 0 && volume <= 0.298 && MainViewModel.Volume != VolumeState.Low) {
+            else if (volume > 0 && volume <= 0.298 && MainViewModel.Volume != VolumeState.Low)
+            {
                 MainViewModel.Volume = VolumeState.Low;
                 MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeLow;
             }
-            else if (volume > 0.298 && volume <= 0.663 && MainViewModel.Volume != VolumeState.Medium) {
+            else if (volume > 0.298 && volume <= 0.663 && MainViewModel.Volume != VolumeState.Medium)
+            {
                 MainViewModel.Volume = VolumeState.Medium;
                 MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMedium;
             }
-            else if (volume > 0.663 && MainViewModel.Volume != VolumeState.High) {
+            else if (volume > 0.663 && MainViewModel.Volume != VolumeState.High)
+            {
                 MainViewModel.Volume = VolumeState.High;
                 MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeHigh;
             }
         }
 
-        public static void Stop() {
+        public static void Stop()
+        {
             SliderTimer.Stop();
             MainViewModel.Status = SongStatus.Stopped;
             MainViewModel.NowPlaying.PauseButton = PackIconKind.Pause;
@@ -126,7 +145,8 @@ namespace Rozabto.ViewModel {
             MainViewModel.Player.Stop();
         }
 
-        public static void SaveVolume() {
+        public static void SaveVolume()
+        {
             VolumeValue = (int)VolumeSlider.Value;
         }
     }

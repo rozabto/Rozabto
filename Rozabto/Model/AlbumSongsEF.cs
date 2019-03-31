@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Rozabto.Model
 {
+    /// <summary>
+    /// AlbumSongsEF съдържа песните, които после се дават на Album класът.
+    /// </summary>
     public class AlbumSongsEF
     {
         public int ID { get; set; }

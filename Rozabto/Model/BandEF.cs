@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Rozabto.Model
 {
+    /// <summary>
+    /// BandEF съдържа бандите, които после се дават на Band класът.
+    /// </summary>
     public class BandEF
     {
         public int ID { get; set; }
