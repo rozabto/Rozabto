@@ -76,8 +76,7 @@ namespace Rozabto.ViewModel {
             player.Position = new TimeSpan(0, 0, 0);
             MusicSlider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
             MusicSlider.Minimum = 0;
-            player.Volume = MainViewModel.Volume == VolumeState.Zero ? 0 
-                : Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515), 3);
+            SetVolumeToPlayer();
             MainViewModel.NowPlaying.OnPropertyChanged("SongBand");
         }
 
@@ -94,6 +93,28 @@ namespace Rozabto.ViewModel {
                     SliderTimer.Stop();
                     MainViewModel.NowPlaying.PauseButton = PackIconKind.Play;
                     break;
+            }
+        }
+
+        public static void SetVolumeToPlayer() {
+            if (MainViewModel.Volume == VolumeState.Mute) return;
+            MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515 - Math.Sin((1 - MainViewModel.NowPlaying.CurrentSong.Volume) / 2)), 3);
+            var volume = MainViewModel.Player.Volume;
+            if (volume == 0 && MainViewModel.Volume != VolumeState.Zero) {
+                MainViewModel.Volume = VolumeState.Zero;
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMute;
+            }
+            else if (volume > 0 && volume <= 0.298 && MainViewModel.Volume != VolumeState.Low) {
+                MainViewModel.Volume = VolumeState.Low;
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeLow;
+            }
+            else if (volume > 0.298 && volume <= 0.663 && MainViewModel.Volume != VolumeState.Medium) {
+                MainViewModel.Volume = VolumeState.Medium;
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMedium;
+            }
+            else if (volume > 0.663 && MainViewModel.Volume != VolumeState.High) {
+                MainViewModel.Volume = VolumeState.High;
+                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeHigh;
             }
         }
 

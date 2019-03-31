@@ -14,7 +14,9 @@ namespace Rozabto.Model
         public string Name { get; set; }
         public TimeSpan Duration { get; set; }
         public string Location { get; set; }
+        public float Volume { get; set; }
         public static Song EmptySong = new Song();
+
         public Song()
         {
             Name = "";
