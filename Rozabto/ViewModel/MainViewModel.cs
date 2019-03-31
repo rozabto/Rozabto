@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Rozabto.ViewModel {
+    /// <summary>
+    /// Прави връзка между View и Model.
+    /// </summary>
     public static class MainViewModel {
         public static Collection Collection { get; private set; }
         public static MediaPlayer Player { get; }
@@ -29,7 +32,11 @@ namespace Rozabto.ViewModel {
             Volume = VolumeState.On;
         }
 
+        /// <summary>
+        /// Връща лист с песните и информация.
+        /// </summary>
         public static void ActivateABP(object type) {
+            // type е банда,албум или плейлист.
             if (type.GetType() == typeof(Band)) {
                 var band = type as Band;
                 ABP = new ABPNotify(band.Songs, band.Name);
@@ -44,28 +51,45 @@ namespace Rozabto.ViewModel {
             }
         }
 
+        /// <summary>
+        /// Добавя нов плейлист към базата данни.
+        /// </summary>
         public static void AddPlayList(string name) {
             var context = new BlogDBContext();
+            // Създаваме нов плейлист с името.
             var playlist = new PlayList(name);
+            // Добавяме плейлиста към базата данни, която четем в момента.
             Collection.PlayLists.Add(playlist);
+            // Добавяме плейлиста към SQL базата данни.
             context.PlayLists.Add(new PlayListEF { Name = name });
             context.SaveChanges();
+            // Обновяваме листа с плейлистите.
             PlayList.OnPropertyChanged("PlayList");
         }
 
+        /// <summary>
+        /// Добавяме песни към базата данни.
+        /// </summary>
         public static async Task AddSongs(string[] songs) {
+            // Даваме пътеките към песните на класът MusicInformation.
             await MusicInformation.SearchMusic(songs);
             SetCollection();
+            // Обновяваме всичко.
             NowPlaying.OnPropertyChanged("Songs");
             MySongs.OnPropertyChanged("Bands");
             MySongs.OnPropertyChanged("Albums");
             MySongs.OnPropertyChanged("Songs");
         }
 
+        /// <summary>
+        /// Пуска, прекъсва или спира песните.
+        /// </summary>
         public static void Play() {
             switch (Status) {
                 case SongStatus.Stopped:
+                    // Спираме песента.
                     Player.Close();
+                    // Ако песента не е празна, пускаме нова песен.
                     if (NowPlaying.CurrentSong != Song.EmptySong) {
                         Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
                         Player.Play();
@@ -83,21 +107,32 @@ namespace Rozabto.ViewModel {
             }
         }
 
+        /// <summary>
+        /// Превръща данните от SQL към данни, които плеърът може да чете.
+        /// </summary>
         static void SetCollection() {
             var context = new BlogDBContext();
+            // Взимаме песните и ги превръщаме в лист.
             var songs = context.Songs.ToList();
+            // Взимаме песните на бандите и ги превръщаме в масив.
             var bandsSongs = context.BandsSongs.ToArray();
+            // Създаваме лист от всички банди като вземем всички песни от масива от песни.
             var bands = context.Bands.ToArray().Select(s => new Band(s.Name,
                 songs.Where(w => bandsSongs.Where(wh => wh.BandID == s.ID)
                 .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
+            // Взимаме песните от албумите и ги превръщаме в масив.
             var albumsSongs = context.AlbumsSongs.ToArray();
+            // Създаваме лист от всички албуми като вземем всички песни от масива от песни.
             var albums = context.Albums.ToArray().Select(s => new Album(s.Name,
                 songs.Where(w => albumsSongs.Where(wh => wh.AlbumID == s.ID)
                 .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
+            // Взимаме песните от плейлистите и ги превръщаме в масив.
             var playListsSongs = context.PlayListsSongs.ToArray();
+            // Създаваме лист от всички плейлисти като вземем всички песни от масива от песни.
             var playLists = context.PlayLists.ToArray().Select(s => new PlayList(s.Name,
                 songs.Where(w => playListsSongs.Where(wh => wh.PlayListID == s.ID)
                 .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
+            // Даваме всичко нужно на класа Collection.
             Collection = new Collection(albums, bands, playLists, songs);
         }
     }

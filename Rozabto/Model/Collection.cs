@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Rozabto.Model
-{
+{  
+    /// <summary>
+    /// Класът Collection съдържа базата данни, която се чете от View-то.
+    /// </summary>
 
     public class Collection
     {

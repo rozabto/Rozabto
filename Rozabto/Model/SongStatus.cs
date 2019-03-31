@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace Rozabto.Model
 {
     public enum SongStatus
-
     {
         Playing, Paused, Stopped
     }

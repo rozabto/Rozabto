@@ -23,8 +23,10 @@ namespace Rozabto.View {
 
         private void SelectBand(object sender, SelectionChangedEventArgs e) {
             var listbox = sender as ListBox;
+            // Взимаме grid който показва страницата от MainWindow.
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
             grid.Children.Clear();
+            // Активираме ABP с избраната банда от листа.
             MainViewModel.ActivateABP(MainViewModel.Collection.Bands[listbox.SelectedIndex]);
             grid.Children.Add(new ABPContent());
         }

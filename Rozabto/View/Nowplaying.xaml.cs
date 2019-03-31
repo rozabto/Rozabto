@@ -24,9 +24,11 @@ namespace Rozabto.View {
             InitializeComponent();
             SongListBox.Children.Add(new NowplayingList());
             DataContext = MainViewModel.NowPlaying;
+            // Слагаме максимума и минимума на плъзгача за времетраенето.
             MusicSlider.Maximum = !MainViewModel.Player.NaturalDuration.HasTimeSpan ? 1d :
                 MainViewModel.Player.NaturalDuration.TimeSpan.TotalSeconds;
             MusicSlider.Minimum = 0;
+            // Свързваме NowPlaying с MediaViewModel.
             MediaViewModel.ConnectViewToViewModel(MusicSlider, VolumeSlider, SongTime);
         }
 
@@ -43,6 +45,7 @@ namespace Rozabto.View {
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            // Променяме звука.
             VolumeLabel.Changed(VolumeGrid, VolumeSlider.Value);
             MediaViewModel.SetVolumeToPlayer();
         }
@@ -52,6 +55,7 @@ namespace Rozabto.View {
         }
 
         private void MusicSlider_DragCompleted(object sender, DragCompletedEventArgs e) {
+            // Сменяме позицията на песента.
             MediaViewModel.SliderDragging = false;
             MainViewModel.Player.Position = TimeSpan.FromSeconds(MusicSlider.Value);
             if (MainViewModel.Status == SongStatus.Paused)
@@ -61,10 +65,11 @@ namespace Rozabto.View {
         private void MusicSlider_DragStarted(object sender, DragStartedEventArgs e) {
             MediaViewModel.SliderDragging = true;
             if (MainViewModel.Status == SongStatus.Playing)
-                MediaViewModel.Play(); // Pause
+                MediaViewModel.Play(); // Пауза
         }
 
         private void MoveBackSong(object sender, RoutedEventArgs e) {
+            // Местим песента с една назад.
             if (MainViewModel.NowPlaying.Songs.Count <= 1 || --MainViewModel.NowPlaying.CurrentSongPos == -1) {
                 MediaViewModel.Stop();
                 return;
@@ -75,10 +80,12 @@ namespace Rozabto.View {
         }
 
         private void MoveSongForward(object sender, RoutedEventArgs e) {
+            // Местим песента с една напред.
             if (MainViewModel.NowPlaying.Songs.Count <= 1) {
                 MediaViewModel.Stop();
                 return;
             }
+            // Взимаме нова позиция на песента.
             var pos = MainViewModel.NowPlaying.ShuffleSongs ? new Random().Next(MainViewModel.NowPlaying.Songs.Count)
                 : MainViewModel.NowPlaying.CurrentSongPos + 1;
             if (pos >= MainViewModel.NowPlaying.Songs.Count)

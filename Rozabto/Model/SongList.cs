@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Rozabto.Model
 {
+    /// <summary>
+    /// Съдържа лист от песните.
+    /// </summary>
     public class SongList
     {
         public List<Song> Songs { get; }
