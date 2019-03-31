@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:Rozabto.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ListBox ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentSong, Mode=OneWay}" MouseDoubleClick="ListBox_MouseDoubleClick" Foreground="{StaticResource ForegroundColour}">
+    <ListBox ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentSong, Mode=OneWay}" MouseDoubleClick="ListBox_MouseDoubleClick" Foreground="{DynamicResource ForegroundColour}">
 
         <ListBox.ItemTemplate>
             <DataTemplate>
@@ -25,11 +25,11 @@
 
                     <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Visibility="Visible">
                         <materialDesign:PopupBox.ToggleContent>
-                            <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{StaticResource ForegroundColour}"/>
+                            <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                         </materialDesign:PopupBox.ToggleContent>
                         <StackPanel Background="Black">
-                            <Button Content="Add to playlist" Foreground="{StaticResource ForegroundColour}"/>
-                            <Button Content="Remove song" Foreground="{StaticResource ForegroundColour}"/>
+                            <Button Content="Add to playlist" Foreground="{DynamicResource ForegroundColour}"/>
+                            <Button Content="Remove song" Foreground="{DynamicResource ForegroundColour}"/>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </StackPanel>

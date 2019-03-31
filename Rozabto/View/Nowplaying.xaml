@@ -8,8 +8,8 @@
              mc:Ignorable="d" Unloaded="SaveVolumeSliderValue"
              d:DesignHeight="450" d:DesignWidth="800"  Height="500" Width="300">
     <Grid Background="#44444444" Height="300" VerticalAlignment="Top">
-        <TextBlock Text="{Binding SongBand}" Margin="64,45,68,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Foreground="{StaticResource ForegroundColour}"/>
-        <TextBlock Text="{Binding CurrentSong.Name}" Margin="64,29,68,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Foreground="{StaticResource ForegroundColour}"/>
+        <TextBlock Text="{Binding SongBand}" Margin="64,45,68,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Foreground="{DynamicResource ForegroundColour}"/>
+        <TextBlock Text="{Binding CurrentSong.Name}" Margin="64,29,68,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Foreground="{DynamicResource ForegroundColour}"/>
         <Grid VerticalAlignment="Top" Margin="10,39,-10,0" Height="158">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80*"/>
@@ -130,7 +130,7 @@
                     </materialDesign:PackIcon>
                 </materialDesign:PopupBox.ToggleContent>
 
-                <Grid Width="100" Background="{StaticResource BackgroundColour}" Name="VolumeGrid">
+                <Grid Width="100" Background="{DynamicResource BackgroundColour}" Name="VolumeGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>
                         <ColumnDefinition/>
@@ -149,7 +149,7 @@
                     <Slider Name="VolumeSlider" Value="1" Grid.Column="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" ValueChanged="VolumeSlider_ValueChanged" PreviewMouseLeftButtonDown="ShowVolumeNumber" PreviewMouseLeftButtonUp="HideVolumeNumber"/>
                 </Grid>
             </materialDesign:PopupBox>
-            <Label Name="SongTime" Content="00:00" Margin="0,27,2,-20" Grid.Row="1" Grid.ColumnSpan="3" FontSize="8" Foreground="{StaticResource ForegroundColour}" Grid.Column="2"/>
+            <Label Name="SongTime" Content="00:00" Margin="0,27,2,-20" Grid.Row="1" Grid.ColumnSpan="3" FontSize="8" Foreground="{DynamicResource ForegroundColour}" Grid.Column="2"/>
             <Slider Name="MusicSlider" Value="{Binding Player.Position}" Grid.ColumnSpan="3" Grid.Column="4" Margin="17,28,43,-30" Grid.Row="1" MouseLeftButtonDown="SliderControl_PreviewMouseLeftButtonDown" Thumb.DragCompleted="MusicSlider_DragCompleted" Thumb.DragStarted="MusicSlider_DragStarted">
                 <Slider.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">

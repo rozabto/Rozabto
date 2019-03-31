@@ -1,4 +1,5 @@
 ﻿using Rozabto.ViewModel;
+using Rozabto.ViewModel.Notify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,17 @@ namespace Rozabto.View {
         }
 
         private void ChangeColor(object sender, RoutedEventArgs e) {
-            MainViewModel.AppXaml.ChangeColor();
+            var dirs = Application.Current.Resources.MergedDictionaries;
+            dirs.RemoveAt(dirs.Count - 1);
+            if (MainViewModel.Theme)
+                dirs.Add(new ResourceDictionary {
+                    Source = new Uri("/Rozabto;component/View/Theme/DarkTheme.xaml", UriKind.Relative)
+                });
+            else
+                dirs.Add(new ResourceDictionary {
+                    Source = new Uri("/Rozabto;component/View/Theme/LightTheme.xaml", UriKind.Relative)
+                });
+            MainViewModel.Theme = !MainViewModel.Theme;
         }
     }
 }

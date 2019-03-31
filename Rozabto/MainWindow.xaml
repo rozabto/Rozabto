@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="PLAYER" Height="500" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="{StaticResource ForegroundColour}">
+        Title="Rozabto" Height="500" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="{DynamicResource ForegroundColour}">
     <Window.Resources>
         <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
@@ -50,7 +50,7 @@
                         <Grid x:Name="GridRoot" Width="19" Background="{x:Null}">
                             <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
                                 <Track.Thumb>
-                                    <Thumb x:Name="Thumb" Foreground="{StaticResource ForegroundColour}" Style="{DynamicResource ScrollThumbs}" />
+                                    <Thumb x:Name="Thumb" Foreground="{DynamicResource ForegroundColour}" Style="{DynamicResource ScrollThumbs}" />
                                 </Track.Thumb>
                                 <Track.IncreaseRepeatButton>
                                     <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
@@ -115,13 +115,13 @@
             <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
         </EventTrigger>
     </Window.Triggers>
-    <Grid Background="{StaticResource BackgroundColour}">
+    <Grid Background="{DynamicResource BackgroundColour}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition/>
             <RowDefinition Height="0" Name="RowDef"/>
         </Grid.RowDefinitions>
-        <Grid VerticalAlignment="Stretch" Background="{StaticResource BackgroundColour}" MouseLeftButtonDown="ChangeWindowPosition">
+        <Grid VerticalAlignment="Stretch" Background="{DynamicResource BackgroundColour}" MouseLeftButtonDown="ChangeWindowPosition">
             <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,20,20" Click="Minimize">
                 <materialDesign:PackIcon Kind="Minus" VerticalAlignment="Center" Width="20" Height="20">
                     <materialDesign:PackIcon.Foreground>
@@ -168,7 +168,7 @@
                 </materialDesign:PackIcon>
             </Button>
         </Grid>
-        <Grid x:Name="GridMenu" Width="250" Panel.ZIndex="1000" HorizontalAlignment="Left" Margin="-250,0,0,0" Background="{StaticResource BackgroundColour}" Opacity="0.9" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3">
+        <Grid x:Name="GridMenu" Width="250" Panel.ZIndex="1000" HorizontalAlignment="Left" Margin="-250,0,0,0" Background="{DynamicResource BackgroundColour}" Opacity="0.9" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -183,12 +183,12 @@
                         <materialDesign:PackIcon Kind="Menu" Width="21" Height="20" Foreground="#FF086BBD" Margin="-110 0 0 0" VerticalAlignment="Center" RenderTransformOrigin="-2.55,0.55"/>
                     </Button>
                 </DockPanel>
-                <ListView Foreground="{StaticResource ForegroundColour}" FontFamily="Champagne &amp; Limousines" FontSize="18">
+                <ListView Foreground="{DynamicResource ForegroundColour}" FontFamily="Champagne &amp; Limousines" FontSize="18">
                     <ListViewItem Height="45" Padding="0">
                         <Button Name="ButtonMysongs" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowMyMusic">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
                                 <materialDesign:PackIcon Kind="Music" Width="20" Height="20" Foreground="#FF086BBD" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="My songs" Foreground="{StaticResource ForegroundColour}"/>
+                                <TextBlock Text="My songs" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
                     </ListViewItem>
@@ -196,7 +196,7 @@
                         <Button Name="ButtonPlaylists" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowPlayList">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
                                 <materialDesign:PackIcon Kind="PlaylistPlus" Width="20" Height="20" Foreground="#FF086BBD" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Playlists" Foreground="{StaticResource ForegroundColour}"/>
+                                <TextBlock Text="Playlists" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
                     </ListViewItem>
@@ -204,7 +204,7 @@
                         <Button Name="ButtonNowplaying" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowNowPlaying">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
                                 <materialDesign:PackIcon Kind="MusicNote"  Width="20" Height="20" Foreground="#FF086BBD" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Now playing" Foreground="{StaticResource ForegroundColour}"/>
+                                <TextBlock Text="Now playing" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
                     </ListViewItem>
@@ -212,7 +212,7 @@
                         <Button Name="ButtonSettings" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowSettings">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
                                 <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" Foreground="#FF0069C1" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Settings" Foreground="{StaticResource ForegroundColour}"/>
+                                <TextBlock Text="Settings" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
                     </ListViewItem>
