@@ -12,8 +12,8 @@
                 <DataTemplate>
                     <DockPanel Width="60">
                         <Image DockPanel.Dock="Top" Width="40" Height="40"/>
-                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="8" Foreground="LightSteelBlue"/>
-                        <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="LightSteelBlue"/>
+                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="8" Foreground="{StaticResource ForegroundColour}"/>
+                        <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="{StaticResource ForegroundColour}"/>
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

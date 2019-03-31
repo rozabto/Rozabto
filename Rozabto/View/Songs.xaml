@@ -12,7 +12,7 @@
                 <DataTemplate>
                     <StackPanel Orientation = "Horizontal" Margin="0 0 10 10">
                         <Image DockPanel.Dock="Top" Width="40" Height="40"/>
-                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="10" Foreground="LightSteelBlue"/>
+                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="10" Foreground="{StaticResource ForegroundColour}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
