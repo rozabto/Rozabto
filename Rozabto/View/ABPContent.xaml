@@ -12,7 +12,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid>
-            <Image DockPanel.Dock="Top" Margin="340,10,347,10"/>
+            <Image Source="/Rozabto;component/Image/newww.PNG" DockPanel.Dock="Top" Margin="340,10,347,10">
+                <Image.OpacityMask>
+                    <ImageBrush ImageSource="/Rozabto;component/Image/newww.PNG"/>
+                </Image.OpacityMask>
+            </Image>
             <Label Content="{Binding Name}" Margin="0,50,0,0" FontSize="20" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundColour}"/>
             <Label Content="{Binding TotalTime}" Margin="0,85,160,0" FontSize="15" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundColour}"/>
             <Label Content="{Binding SongsCount}" Margin="180 85 0 0" FontSize="15" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundColour}"/>
