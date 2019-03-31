@@ -241,7 +241,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\CIRCLE.png" />
+    <Resource Include="Image\music_icon_1538660773.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\NEW12.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
