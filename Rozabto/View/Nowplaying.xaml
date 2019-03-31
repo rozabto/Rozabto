@@ -37,9 +37,9 @@
                     </RadialGradientBrush>
                 </Ellipse.Fill>
             </Ellipse>
-            <Ellipse Margin="84,45,15,-10" Grid.ColumnSpan="2">
+            <Ellipse Margin="85,46,14,-11" Grid.ColumnSpan="2">
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="/Rozabto;component/Image/Logo.PNG"/>
+                    <ImageBrush ImageSource="/Rozabto;component/Image/newww.PNG"/>
                 </Ellipse.Fill>
             </Ellipse>
         </Grid>
