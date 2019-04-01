@@ -118,6 +118,7 @@
     <Grid Background="{DynamicResource BackgroundColour}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="0" Name="SongsLoading"/>
             <RowDefinition/>
             <RowDefinition Height="0" Name="RowDef"/>
         </Grid.RowDefinitions>
@@ -220,7 +221,8 @@
             </StackPanel>
         </Grid>
 
-        <Grid Name="GridPrincipal" Grid.Row="1"/>
-        <Grid Name="Playing" Grid.Row="2"/>
+        <Grid Name="GridSongsLoading" Grid.Row="1"/>
+        <Grid Name="GridPrincipal" Grid.Row="2"/>
+        <Grid Name="Playing" Grid.Row="3"/>
     </Grid>
 </Window>

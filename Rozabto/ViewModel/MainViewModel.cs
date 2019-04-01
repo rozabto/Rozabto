@@ -71,9 +71,7 @@ namespace Rozabto.ViewModel {
         /// <summary>
         /// Добавяме песни към базата данни.
         /// </summary>
-        public static async Task AddSongs(string[] songs) {
-            // Даваме пътеките към песните на класът MusicInformation.
-            await MusicInformation.SearchMusic(songs);
+        public static void AddSongs() {
             SetCollection();
             // Обновяваме всичко.
             NowPlaying.OnPropertyChanged("Songs");

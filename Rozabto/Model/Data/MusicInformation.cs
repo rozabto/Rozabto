@@ -8,24 +8,19 @@ using System.Threading.Tasks;
 using TagLib;
 using TagFile = TagLib.File;
 
-namespace Rozabto.Model.Data
-{
+namespace Rozabto.Model.Data {
     /// <summary>
     /// Класът MusicInformation извлича всички песни и ги превръща в код.
     /// </summary>
-    public static class MusicInformation
-    {
-        public class FileTagLib : TagFile.IFileAbstraction
-        {
+    public class MusicInformation {
+        public class FileTagLib : TagFile.IFileAbstraction {
             private readonly FileInfo file;
-            public FileTagLib(FileInfo file)
-            {
+            public FileTagLib(FileInfo file) {
                 this.file = file;
             }
 
 
-            public void CloseStream(Stream stream)
-            {
+            public void CloseStream(Stream stream) {
                 stream.Close();
             }
 
@@ -35,121 +30,100 @@ namespace Rozabto.Model.Data
 
         }
 
-        public static async Task SearchMusic(string[] paths)
-        {
+        public async Task SearchMusic(string path) {
             var context = new BlogDBContext();
-            Random random = new Random();
 
-            foreach (var path in paths)
-            { 
-                var file = new FileInfo(path);
-                TagFile tagLibFile = null;
-                try
-                {
-                    // Прочитаме музикалния файл.
-                    tagLibFile = TagFile.Create(path);
-                }
-                catch (Exception)
-                {
-                    // Ако не можем да го прочетем отиваме на следващия.
-                    continue;
-                }
-                using (tagLibFile)
-                {
-                    BandEF band = null;
-                    Song song = null;
-                    AlbumEF album = null;
-                    var tag = tagLibFile.Tag;
-                    // Взимаме името на бандата.
-                    var bandName = tag.FirstAlbumArtist ?? tag.FirstPerformer ?? tag.FirstComposer ?? "Unknown";
-
-                    // Ако tag.Title е null взимаме името на файла.           
-                    if (tag.Title is null)
-                        tag.Title = Path.GetFileNameWithoutExtension(file.Name);
-                    //  Взимаме името на албума.
-                    var albumName = tag.Album ?? "Unknown";
-                    song = context.Songs.FirstOrDefault(s => s.Name == tag.Title);
-
-                    // Опитваме да видим дали има песен със същото име.
-                    // Ако има такава песен отиваме на следващата.
-                    if (song != null)
-                        continue;
-
-                    // Ако няма банда с това име, създаваме нова.
-                    band = context.Bands.FirstOrDefault(f => f.Name == bandName);
-                    if (band is null)
-                    {
-                        band = new BandEF
-                        {
-                            Name = bandName
-                        };
-                        context.Bands.Add(band);
-                    }
-                    // Ако няма албум с това име, създаваме нов.
-                    album = context.Albums.FirstOrDefault(f => f.Name == albumName);
-                    if (album is null)
-                    {
-                        album = new AlbumEF
-                        {
-                            Name = albumName
-                        };
-                        context.Albums.Add(album);
-                    }
-
-                    //Създаваме песента с нейната информация.
-                    song = new Song
-                    {
-                        Name = tag.Title,
-                        Duration = tagLibFile.Properties.Duration,
-                        Location = file.FullName,
-                        Volume = GetSongVolume(path)
-                    };
-
-
-                    // Добавяме песента към SQL базата данни.                  
-                    context.Songs.Add(song);
-                    // Запазваме песента.
-                    await context.SaveChangesAsync();
-                    // SQL създава ID на песента и я взимаме обратно.
-                    song = context.Songs.FirstOrDefault(f => f.Name == song.Name);
-                    // Добавяме албум с тази песен.
-                    context.AlbumsSongs.Add(new AlbumSongsEF
-                    {
-                        AlbumID = context.Albums.FirstOrDefault(f => f.Name == albumName).ID,
-                        SongID = song.ID
-                    });
-                    // Добавяме банда с тази песен.
-                    context.BandsSongs.Add(new BandSongsEF
-                    {
-                        BandID = context.Bands.FirstOrDefault(f => f.Name == bandName).ID,
-                        SongID = song.ID
-                    });
-                }
+            var file = new FileInfo(path);
+            TagFile tagLibFile = null;
+            try {
+                // Прочитаме музикалния файл.
+                tagLibFile = TagFile.Create(path);
+            } catch (Exception) {
+                // Ако не можем да го прочетем отиваме на следващия.
+                return;
             }
-           
+            using (tagLibFile) {
+                BandEF band = null;
+                Song song = null;
+                AlbumEF album = null;
+                var tag = tagLibFile.Tag;
+                // Взимаме името на бандата.
+                var bandName = tag.FirstAlbumArtist ?? tag.FirstPerformer ?? tag.FirstComposer ?? "Unknown";
+
+                // Ако tag.Title е null взимаме името на файла.           
+                if (tag.Title is null)
+                    tag.Title = Path.GetFileNameWithoutExtension(file.Name);
+                //  Взимаме името на албума.
+                var albumName = tag.Album ?? "Unknown";
+                song = context.Songs.FirstOrDefault(s => s.Name == tag.Title);
+
+                // Опитваме да видим дали има песен със същото име.
+                // Ако има такава песен отиваме на следващата.
+                if (song != null)
+                    return;
+
+                // Ако няма банда с това име, създаваме нова.
+                band = context.Bands.FirstOrDefault(f => f.Name == bandName);
+                if (band is null) {
+                    band = new BandEF {
+                        Name = bandName
+                    };
+                    context.Bands.Add(band);
+                }
+                // Ако няма албум с това име, създаваме нов.
+                album = context.Albums.FirstOrDefault(f => f.Name == albumName);
+                if (album is null) {
+                    album = new AlbumEF {
+                        Name = albumName
+                    };
+                    context.Albums.Add(album);
+                }
+
+                //Създаваме песента с нейната информация.
+                song = new Song {
+                    Name = tag.Title,
+                    Duration = tagLibFile.Properties.Duration,
+                    Location = file.FullName,
+                    Volume = GetSongVolume(path)
+                };
+
+
+                // Добавяме песента към SQL базата данни.                  
+                context.Songs.Add(song);
+                // Запазваме песента.
+                await context.SaveChangesAsync();
+                // SQL създава ID на песента и я взимаме обратно.
+                song = context.Songs.FirstOrDefault(f => f.Name == song.Name);
+                // Добавяме албум с тази песен.
+                context.AlbumsSongs.Add(new AlbumSongsEF {
+                    AlbumID = context.Albums.FirstOrDefault(f => f.Name == albumName).ID,
+                    SongID = song.ID
+                });
+                // Добавяме банда с тази песен.
+                context.BandsSongs.Add(new BandSongsEF {
+                    BandID = context.Bands.FirstOrDefault(f => f.Name == bandName).ID,
+                    SongID = song.ID
+                });
+            }
+
         }
 
         /// <summary>
         /// Получава мястото на песента и прочита силата на звука. След това връща силата на звука.
         /// </summary>
-        private static float GetSongVolume(string path)
-        {
+        private float GetSongVolume(string path) {
             // Ако AudioFileReader не може да разпознае формата хвърля exception.
-            try
-            {
+            try {
                 float max = 0;
                 // Четем файла.
-                using (var reader = new AudioFileReader(path))
-                {
+                using (var reader = new AudioFileReader(path)) {
                     // Взимаме дължината на песента и създаваме масив.
                     float[] buffer = new float[reader.WaveFormat.SampleRate];
                     int read;
-                    do
-                    {
+                    do {
                         // Четем песента.
                         read = reader.Read(buffer, 0, buffer.Length);
-                        for (int n = 0; n < read; n++)
-                        {
+                        for (int n = 0; n < read; n++) {
                             // Превръщаме звукът във float число от 0 до 1.
                             var abs = Math.Abs(buffer[n]);
                             // Ако числото е над 0.95 го връщаме като 1.
@@ -160,9 +134,7 @@ namespace Rozabto.Model.Data
                     } while (read > 0);
                 }
                 return max;
-            }
-            catch
-            {
+            } catch {
                 return 1;
             }
         }
