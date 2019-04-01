@@ -13,9 +13,9 @@ namespace Rozabto.ViewModel {
     public static class MainViewModel {
         public static Collection Collection { get; private set; }
         public static MediaPlayer Player { get; }
-        public static MySongsNotify MySongs { get; }
-        public static NowPlayingNotify NowPlaying { get; }
-        public static PlayListsNotify PlayList { get; }
+        public static MySongsNotify MySongs { get; private set; }
+        public static NowPlayingNotify NowPlaying { get; private set; }
+        public static PlayListsNotify PlayList { get; private set; }
         public static ABPNotify ABP { get; private set; }
         public static SongStatus Status { get; set; }
         public static VolumeState Volume { get; set; }
@@ -26,7 +26,6 @@ namespace Rozabto.ViewModel {
             SetCollection();
             MySongs = new MySongsNotify(Collection);
             NowPlaying = new NowPlayingNotify(Collection);
-            NowPlaying.CurrentSong = Song.EmptySong;
             PlayList = new PlayListsNotify(Collection);
             Volume = VolumeState.On;
         }
@@ -59,23 +58,52 @@ namespace Rozabto.ViewModel {
             var playlist = new PlayList(name);
             // Добавяме плейлиста към базата данни, която четем в момента.
             Collection.PlayLists.Add(playlist);
-            try
-            {
+            try {
                 // Добавяме плейлиста към SQL базата данни.
                 context.PlayLists.Add(new PlayListEF { Name = name });
                 context.SaveChanges();
-            }
-            catch { }
+            } catch { }
             // Обновяваме листа с плейлистите.
             PlayList.OnPropertyChanged("PlayList");
         }
 
+        public static void RemoveSong(string songName) {
+            var context = new BlogDBContext();
+            var song = context.Songs.FirstOrDefault(f => f.Name == songName);
+            if (song is null) return;
+            var albumSong = context.AlbumsSongs.FirstOrDefault(f => f.SongID == song.ID);
+            var bandSong = context.BandsSongs.FirstOrDefault(f => f.SongID == song.ID);
+            var playListSong = context.PlayListsSongs.FirstOrDefault(f => f.SongID == song.ID);
+            context.AlbumsSongs.Remove(albumSong);
+            context.BandsSongs.Remove(bandSong);
+            if (playListSong != null)
+                context.PlayListsSongs.Remove(playListSong);
+            context.SaveChanges();
+            var albumsSongs = context.AlbumsSongs.ToArray();
+            var bandsSongs = context.BandsSongs.ToArray();
+            var playListsSongs = context.PlayListsSongs.ToArray();
+            var album = context.Albums.ToArray().FirstOrDefault(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) == null);
+            var band = context.Bands.ToArray().FirstOrDefault(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) == null);
+            var playList = context.PlayLists.ToArray().FirstOrDefault(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) == null);
+            if (album != null)
+                context.Albums.Remove(album);
+            if (band != null)
+                context.Bands.Remove(band);
+            if (playList != null)
+                context.PlayLists.Remove(playList);
+            context.Songs.Remove(song);
+            context.SaveChanges();
+            RefreshDataBase();
+        }
+
         /// <summary>
-        /// Добавяме песни към базата данни.
+        /// Обновява базата данни.
         /// </summary>
-        public static void AddSongs() {
+        public static void RefreshDataBase() {
             SetCollection();
-            // Обновяваме всичко.
+            MySongs = new MySongsNotify(Collection);
+            NowPlaying = new NowPlayingNotify(Collection);
+            PlayList = new PlayListsNotify(Collection);
             NowPlaying.OnPropertyChanged("Songs");
             MySongs.OnPropertyChanged("Bands");
             MySongs.OnPropertyChanged("Albums");
@@ -113,8 +141,7 @@ namespace Rozabto.ViewModel {
         /// </summary>
         static void SetCollection() {
             var context = new BlogDBContext();
-            try
-            {
+            try {
                 // Взимаме песните и ги превръщаме в лист.
                 var songs = context.Songs.ToList();
                 // Взимаме песните на бандите и ги превръщаме в масив.
@@ -137,9 +164,7 @@ namespace Rozabto.ViewModel {
                     .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
                 // Даваме всичко нужно на класа Collection.
                 Collection = new Collection(albums, bands, playLists, songs);
-            }
-            catch
-            {
+            } catch {
                 Collection = new Collection(new List<Album>(), new List<Band>(), new List<PlayList>(), new List<Song>());
             }
         }

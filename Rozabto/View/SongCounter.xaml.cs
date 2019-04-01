@@ -32,7 +32,7 @@ namespace Rozabto.View {
                 await SongCompleted(paths[i]);
                 await factory.SearchMusic(paths[i]);
             }
-            ViewModel.MainViewModel.AddSongs();
+            ViewModel.MainViewModel.RefreshDataBase();
             ((MainWindow)Application.Current.MainWindow).HideCounter();
         }
 

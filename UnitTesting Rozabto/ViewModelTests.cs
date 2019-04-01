@@ -34,7 +34,7 @@ namespace UnitTesting_Rozabto
             MainViewModel.ActivateABP(new Album("test"));
             MainViewModel.ActivateABP(new PlayList("test"));
             MainViewModel.AddPlayList("Test");
-            MainViewModel.AddSongs();
+            MainViewModel.RefreshDataBase();
             MainViewModel.Play();
             MainViewModel.Status = Rozabto.Model.SongStatus.Playing;
             MainViewModel.Play();
