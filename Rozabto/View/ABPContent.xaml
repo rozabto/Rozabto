@@ -14,7 +14,7 @@
         <Grid>
             <Image Source="/Rozabto;component/Image/newww.PNG" DockPanel.Dock="Top" Margin="340,10,347,10">
                 <Image.OpacityMask>
-                    <ImageBrush ImageSource="/Rozabto;component/Image/newww.PNG"/>
+                    <ImageBrush ImageSource="/Rozabto;component/Image/logo09.png"/>
                 </Image.OpacityMask>
             </Image>
             <Label Content="{Binding Name}" Margin="0,50,0,0" FontSize="20" HorizontalAlignment="Center" Foreground="{DynamicResource ForegroundColour}"/>

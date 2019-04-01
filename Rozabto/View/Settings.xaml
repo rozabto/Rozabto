@@ -6,8 +6,15 @@
              xmlns:local="clr-namespace:Rozabto.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ToggleButton Click="ChangeColor"/>
-    </Grid>
+    <ListBox>
+        <ListBoxItem>
+            <DockPanel>
+                <TextBlock Text="Тема" DockPanel.Dock="Top" FontSize="25" Foreground="{DynamicResource ForegroundColour}"/>
+                <TextBlock Text="Промени цвета като натиснеш бутона" DockPanel.Dock="Top" FontSize="10" Foreground="{DynamicResource ForegroundColour}"/>
+                <ToggleButton Click="ChangeColor" RenderTransformOrigin="0.401,0.398" Height="30" DockPanel.Dock="Left" />
+                <TextBlock Name="ColorText" Text="Black" DockPanel.Dock="Right" Foreground="{DynamicResource ForegroundColour}" Margin="5"/>
+            </DockPanel>
+        </ListBoxItem>
+    </ListBox>
 
 </UserControl>
