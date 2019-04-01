@@ -28,8 +28,8 @@
                             <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                         </materialDesign:PopupBox.ToggleContent>
                         <StackPanel Background="Black">
-                            <Button Content="Add to playlist" Foreground="{DynamicResource ForegroundColour}"/>
-                            <Button Content="Remove song" Foreground="{DynamicResource ForegroundColour}"/>
+                            <Button Content="Добави в плейлист" Foreground="{DynamicResource ForegroundColour}"/>
+                            <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}"/>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </StackPanel>
