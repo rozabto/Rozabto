@@ -27,7 +27,7 @@ namespace Rozabto {
             Application.Current.Shutdown();
         }
 
-        private async void GetNewSongs(object sender, RoutedEventArgs e) {
+        private void GetNewSongs(object sender, RoutedEventArgs e) {
             // Отваряме диалог, в който могат да се изберат нови песни.
             var fileDialog = new OpenFileDialog {
                 Filter = "mp3|*.mp3",
@@ -40,7 +40,13 @@ namespace Rozabto {
             // Ако са избрани песни или диалогът е затворен даваме на Model да ги прочете. 
             if (result == true && string.IsNullOrWhiteSpace(fileDialog.FileName) || result == false)
                 return;
-            await MainViewModel.AddSongs(fileDialog.FileNames);
+            SongsLoading.Height = new GridLength(30);
+            GridSongsLoading.Children.Add(new SongCounter(fileDialog.FileNames));
+        }
+
+        public void HideCounter() {
+            SongsLoading.Height = new GridLength(0);
+            GridSongsLoading.Children.Clear();
         }
 
         private void ChangeWindowPosition(object sender, MouseButtonEventArgs e) {
