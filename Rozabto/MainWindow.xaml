@@ -188,7 +188,7 @@
                         <Button Name="ButtonMysongs" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowMyMusic">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
                                 <materialDesign:PackIcon Kind="Music" Width="20" Height="20" Foreground="#FF086BBD" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="My songs" Foreground="{DynamicResource ForegroundColour}"/>
+                                <TextBlock Text="Песни" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
                     </ListViewItem>
@@ -196,7 +196,7 @@
                         <Button Name="ButtonPlaylists" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowPlayList">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
                                 <materialDesign:PackIcon Kind="PlaylistPlus" Width="20" Height="20" Foreground="#FF086BBD" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Playlists" Foreground="{DynamicResource ForegroundColour}"/>
+                                <TextBlock Text="Плейлисти" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
                     </ListViewItem>
@@ -204,7 +204,7 @@
                         <Button Name="ButtonNowplaying" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowNowPlaying">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
                                 <materialDesign:PackIcon Kind="MusicNote"  Width="20" Height="20" Foreground="#FF086BBD" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Now playing" Foreground="{DynamicResource ForegroundColour}"/>
+                                <TextBlock Text="Изпълнява се" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
                     </ListViewItem>
@@ -212,7 +212,7 @@
                         <Button Name="ButtonSettings" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowSettings">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
                                 <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" Foreground="#FF0069C1" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Settings" Foreground="{DynamicResource ForegroundColour}"/>
+                                <TextBlock Text="Настройки" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
                     </ListViewItem>

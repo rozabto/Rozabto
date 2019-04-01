@@ -17,9 +17,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Foreground="{DynamicResource ForegroundColour}" Text="Album" FontSize="15" Margin="10" MouseLeftButtonDown="Album"/>
-            <TextBlock Foreground="{DynamicResource ForegroundColour}" Grid.Column="1" Text="Songs" FontSize="15" Margin="10" MouseLeftButtonDown="Song"/>
-            <TextBlock Foreground="{DynamicResource ForegroundColour}" Grid.Column="2" Text="Bands" FontSize="15" Margin="10" MouseLeftButtonDown="Band"/>
+            <TextBlock Foreground="{DynamicResource ForegroundColour}" Text="Албуми" FontSize="15" Margin="10" MouseLeftButtonDown="Album"/>
+            <TextBlock Foreground="{DynamicResource ForegroundColour}" Grid.Column="1" Text="Песни" FontSize="15" Margin="10" MouseLeftButtonDown="Song"/>
+            <TextBlock Foreground="{DynamicResource ForegroundColour}" Grid.Column="2" Text="Банди" FontSize="15" Margin="10" MouseLeftButtonDown="Band"/>
         </Grid>
         <Grid Name="GridPrincipal" Grid.Row="1"/>
     </Grid>

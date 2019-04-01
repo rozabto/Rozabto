@@ -18,9 +18,9 @@
         <materialDesign:DialogHost Name="Playlistdialog" CloseOnClickAway="True">
             <materialDesign:DialogHost.DialogContent>
                 <DockPanel>
-                    <Label Content="Add playlist" DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Center"/>
+                    <Label Content="Добави плейлист" DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Center"/>
                     <TextBox Name="Playlist" Margin="5" DockPanel.Dock="Top"/>
-                    <Button Content="Add playlist" Margin="5" DockPanel.Dock="Left" Click="AddPlayList">
+                    <Button Content="Добави" Margin="5" DockPanel.Dock="Left" Click="AddPlayList">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                                 <GradientStop Color="#FF2727F0"/>
@@ -29,7 +29,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="5" Content="Cancel" DockPanel.Dock="Right">
+                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="5" Content="Прекрати" DockPanel.Dock="Right">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                                 <GradientStop Color="#FF2727F0"/>
@@ -42,7 +42,7 @@
                 </DockPanel>
             </materialDesign:DialogHost.DialogContent>
 
-            <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Add playlist" FontSize="6"
+            <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Добави" FontSize="8"
                HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,5,0,15" Height="20" Width="68" >
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
