@@ -11,7 +11,6 @@
         <Label DockPanel.Dock="Left" Name="Counter" Content="0" Foreground="LightSteelBlue"/>
         <Label DockPanel.Dock="Left" Content="/" Foreground="LightSteelBlue"/>
         <Label DockPanel.Dock="Left" Name="Max" Content="101" Foreground="LightSteelBlue"/>
-        <Label DockPanel.Dock="Left" Content="Now Loading:" Foreground="LightSteelBlue"/>
         <Label DockPanel.Dock="Left" Name="Loading" Content="Kuva" Foreground="LightSteelBlue"/>
     </DockPanel>
 
