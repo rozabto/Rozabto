@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 
 namespace Rozabto.View {
     public partial class Album : UserControl {
+        private string SelectedAlbumName;
         public Album() {
             InitializeComponent();
             DataContext = MainViewModel.MySongs;
@@ -29,6 +30,26 @@ namespace Rozabto.View {
             // Активираме ABP с избрания албум от листа.
             MainViewModel.ActivateABP(MainViewModel.Collection.Albums[listbox.SelectedIndex]);
             grid.Children.Add(new ABPContent());
+        }
+
+        private void SelectedAlbum(object sender, MouseEventArgs e) {
+            SelectedAlbumName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
+        }
+
+        private void AddToPlayList(object sender, RoutedEventArgs e) {
+            //var objBlur = new System.Windows.Media.Effects.BlurEffect();
+            //((MainWindow)Application.Current.MainWindow).Effect = objBlur;
+            //var add = new AddToPlayList(SelectedSongName);
+            //add.Show();
+            //add.Closed += Add_Closed;
+        }
+
+        private void Add_Closed(object sender, EventArgs e) {
+            ((MainWindow)Application.Current.MainWindow).Effect = null;
+        }
+
+        private void RemoveAlbum(object sender, RoutedEventArgs e) {
+            MainViewModel.RemoveAlbum(SelectedAlbumName);
         }
     }
 }

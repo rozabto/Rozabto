@@ -49,6 +49,62 @@ namespace Rozabto.ViewModel {
             }
         }
 
+        public static void RemoveAlbum(string albumName) {
+            var context = new BlogDBContext();
+            var album = context.Albums.FirstOrDefault(f => f.Name == albumName);
+            if (album is null)
+                return;
+            var albumSongs = context.AlbumsSongs.ToArray().Where(w => w.AlbumID == album.ID).ToArray();
+            var songs = context.Songs.ToArray().Where(w => albumSongs.FirstOrDefault(f => f.SongID == w.ID) != null);
+            var bandSongs = context.BandsSongs.ToArray().Where(w => songs.FirstOrDefault(f => f.ID == w.SongID) != null);
+            var playListSongs = context.PlayListsSongs.ToArray().Where(w => songs.FirstOrDefault(f => f.ID == w.SongID) != null);
+            context.BandsSongs.RemoveRange(bandSongs);
+            context.AlbumsSongs.RemoveRange(albumSongs);
+            context.PlayListsSongs.RemoveRange(playListSongs);
+            context.SaveChanges();
+            var albumsSongs = context.AlbumsSongs.ToArray();
+            var bandsSongs = context.BandsSongs.ToArray();
+            var playListsSongs = context.PlayListsSongs.ToArray();
+            var band = context.Bands.ToArray().FirstOrDefault(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) == null);
+            var playList = context.PlayLists.ToArray().FirstOrDefault(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) == null);
+            context.Albums.Remove(album);
+            if (band != null)
+                context.Bands.Remove(band);
+            if (playList != null)
+                context.PlayLists.Remove(playList);
+            context.Songs.RemoveRange(songs);
+            context.SaveChanges();
+            RefreshDataBase();
+        }
+
+        public static void RemoveBand(string bandName) {
+            var context = new BlogDBContext();
+            var band = context.Bands.FirstOrDefault(f => f.Name == bandName);
+            if (band is null)
+                return;
+            var bandSongs = context.BandsSongs.ToArray().Where(w => w.BandID == band.ID).ToArray();
+            var songs = context.Songs.ToArray().Where(w => bandSongs.FirstOrDefault(f => f.SongID == w.ID) != null);
+            var albumSongs = context.AlbumsSongs.ToArray().Where(w => songs.FirstOrDefault(f => f.ID == w.SongID) != null);
+            var playListSongs = context.PlayListsSongs.ToArray().Where(w => songs.FirstOrDefault(f => f.ID == w.SongID) != null);
+            context.BandsSongs.RemoveRange(bandSongs);
+            context.AlbumsSongs.RemoveRange(albumSongs);
+            context.PlayListsSongs.RemoveRange(playListSongs);
+            context.SaveChanges();
+            var albumsSongs = context.AlbumsSongs.ToArray();
+            var bandsSongs = context.BandsSongs.ToArray();
+            var playListsSongs = context.PlayListsSongs.ToArray();
+            var album = context.Albums.ToArray().FirstOrDefault(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) == null);
+            var playList = context.PlayLists.ToArray().FirstOrDefault(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) == null);
+            if (album != null)
+                context.Albums.Remove(album);
+            context.Bands.Remove(band);
+            if (playList != null)
+                context.PlayLists.Remove(playList);
+            context.Songs.RemoveRange(songs);
+            context.SaveChanges();
+            RefreshDataBase();
+        }
+
         /// <summary>
         /// Добавя нов плейлист към базата данни.
         /// </summary>
