@@ -212,7 +212,7 @@
                     <ListViewItem Height="45" Padding="0">
                         <Button Name="ButtonSettings" Background="{x:Null}" BorderBrush="{x:Null}" Click="ShowSettings">
                             <StackPanel Orientation="Horizontal" Margin="10 0">
-                                <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" Foreground="#FF0069C1" Margin="5" VerticalAlignment="Center"/>
+                                <materialDesign:PackIcon Kind="Settings" Width="20" Height="20" Foreground="#FF0069C1" Margin="5" VerticalAlignment="Center" RenderTransformOrigin="0.444,0.12"/>
                                 <TextBlock Text="Настройки" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>
                         </Button>
