@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 
-namespace Rozabto.ViewModel {
+namespace Rozabto.ViewModel
+{
     /// <summary>
     /// Прави връзка между View и Model.
     /// </summary>
-    public static class MainViewModel {
+    public static class MainViewModel
+    {
         public static Collection Collection { get; private set; }
         public static MediaPlayer Player { get; }
         public static MySongsNotify MySongs { get; private set; }
@@ -21,7 +23,8 @@ namespace Rozabto.ViewModel {
         public static VolumeState Volume { get; set; }
         public static bool Theme { get; set; }
 
-        static MainViewModel() {
+        static MainViewModel()
+        {
             Player = new MediaPlayer();
             SetCollection();
             MySongs = new MySongsNotify(Collection);
@@ -33,23 +36,28 @@ namespace Rozabto.ViewModel {
         /// <summary>
         /// Връща лист с песните и информация.
         /// </summary>
-        public static void ActivateABP(object type) {
+        public static void ActivateABP(object type)
+        {
             // type е банда,албум или плейлист.
-            if (type.GetType() == typeof(Band)) {
+            if (type.GetType() == typeof(Band))
+            {
                 var band = type as Band;
                 ABP = new ABPNotify(band.Songs, band.Name);
             }
-            else if (type.GetType() == typeof(Album)) {
+            else if (type.GetType() == typeof(Album))
+            {
                 var album = type as Album;
                 ABP = new ABPNotify(album.Songs, album.Name);
             }
-            else if (type.GetType() == typeof(PlayList)) {
+            else if (type.GetType() == typeof(PlayList))
+            {
                 var playlist = type as PlayList;
                 ABP = new ABPNotify(playlist.Songs, playlist.Name);
             }
         }
 
-        public static void RemoveAlbum(string albumName) {
+        public static void RemoveAlbum(string albumName)
+        {
             var context = new BlogDBContext();
             var album = context.Albums.FirstOrDefault(f => f.Name == albumName);
             if (album is null)
@@ -77,7 +85,8 @@ namespace Rozabto.ViewModel {
             RefreshDataBase();
         }
 
-        public static void RemoveBand(string bandName) {
+        public static void RemoveBand(string bandName)
+        {
             var context = new BlogDBContext();
             var band = context.Bands.FirstOrDefault(f => f.Name == bandName);
             if (band is null)
@@ -108,22 +117,22 @@ namespace Rozabto.ViewModel {
         /// <summary>
         /// Добавя нов плейлист към базата данни.
         /// </summary>
-        public static void AddPlayList(string name) {
+        public static void AddPlayList(string name)
+        {
             var context = new BlogDBContext();
             // Създаваме нов плейлист с името.
             var playlist = new PlayList(name);
             // Добавяме плейлиста към базата данни, която четем в момента.
             Collection.PlayLists.Add(playlist);
-            try {
-                // Добавяме плейлиста към SQL базата данни.
-                context.PlayLists.Add(new PlayListEF { Name = name });
-                context.SaveChanges();
-            } catch { }
+            // Добавяме плейлиста към SQL базата данни.
+            context.PlayLists.Add(new PlayListEF { Name = name });
+            context.SaveChanges();
             // Обновяваме листа с плейлистите.
             PlayList.OnPropertyChanged("PlayList");
         }
 
-        public static void RemoveSong(string songName) {
+        public static void RemoveSong(string songName)
+        {
             var context = new BlogDBContext();
             var song = context.Songs.FirstOrDefault(f => f.Name == songName);
             if (song is null) return;
@@ -155,7 +164,8 @@ namespace Rozabto.ViewModel {
         /// <summary>
         /// Обновява базата данни.
         /// </summary>
-        public static void RefreshDataBase() {
+        public static void RefreshDataBase()
+        {
             SetCollection();
             MySongs = new MySongsNotify(Collection);
             NowPlaying = new NowPlayingNotify(Collection);
@@ -169,13 +179,16 @@ namespace Rozabto.ViewModel {
         /// <summary>
         /// Пуска, прекъсва или спира песните.
         /// </summary>
-        public static void Play() {
-            switch (Status) {
+        public static void Play()
+        {
+            switch (Status)
+            {
                 case SongStatus.Stopped:
                     // Спираме песента.
                     Player.Close();
                     // Ако песента не е празна, пускаме нова песен.
-                    if (NowPlaying.CurrentSong != Song.EmptySong) {
+                    if (NowPlaying.CurrentSong != Song.EmptySong)
+                    {
                         Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
                         Player.Play();
                         Status = SongStatus.Playing;
@@ -195,34 +208,31 @@ namespace Rozabto.ViewModel {
         /// <summary>
         /// Превръща данните от SQL към данни, които плеърът може да чете.
         /// </summary>
-        static void SetCollection() {
+        static void SetCollection()
+        {
             var context = new BlogDBContext();
-            try {
-                // Взимаме песните и ги превръщаме в лист.
-                var songs = context.Songs.ToList();
-                // Взимаме песните на бандите и ги превръщаме в масив.
-                var bandsSongs = context.BandsSongs.ToArray();
-                // Създаваме лист от всички банди като вземем всички песни от масива от песни.
-                var bands = context.Bands.ToArray().Select(s => new Band(s.Name,
-                    songs.Where(w => bandsSongs.Where(wh => wh.BandID == s.ID)
-                    .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
-                // Взимаме песните от албумите и ги превръщаме в масив.
-                var albumsSongs = context.AlbumsSongs.ToArray();
-                // Създаваме лист от всички албуми като вземем всички песни от масива от песни.
-                var albums = context.Albums.ToArray().Select(s => new Album(s.Name,
-                    songs.Where(w => albumsSongs.Where(wh => wh.AlbumID == s.ID)
-                    .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
-                // Взимаме песните от плейлистите и ги превръщаме в масив.
-                var playListsSongs = context.PlayListsSongs.ToArray();
-                // Създаваме лист от всички плейлисти като вземем всички песни от масива от песни.
-                var playLists = context.PlayLists.ToArray().Select(s => new PlayList(s.Name,
-                    songs.Where(w => playListsSongs.Where(wh => wh.PlayListID == s.ID)
-                    .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
-                // Даваме всичко нужно на класа Collection.
-                Collection = new Collection(albums, bands, playLists, songs);
-            } catch {
-                Collection = new Collection(new List<Album>(), new List<Band>(), new List<PlayList>(), new List<Song>());
-            }
+            // Взимаме песните и ги превръщаме в лист.
+            var songs = context.Songs.ToList();
+            // Взимаме песните на бандите и ги превръщаме в масив.
+            var bandsSongs = context.BandsSongs.ToArray();
+            // Създаваме лист от всички банди като вземем всички песни от масива от песни.
+            var bands = context.Bands.ToArray().Select(s => new Band(s.Name,
+                songs.Where(w => bandsSongs.Where(wh => wh.BandID == s.ID)
+                .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
+            // Взимаме песните от албумите и ги превръщаме в масив.
+            var albumsSongs = context.AlbumsSongs.ToArray();
+            // Създаваме лист от всички албуми като вземем всички песни от масива от песни.
+            var albums = context.Albums.ToArray().Select(s => new Album(s.Name,
+                songs.Where(w => albumsSongs.Where(wh => wh.AlbumID == s.ID)
+                .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
+            // Взимаме песните от плейлистите и ги превръщаме в масив.
+            var playListsSongs = context.PlayListsSongs.ToArray();
+            // Създаваме лист от всички плейлисти като вземем всички песни от масива от песни.
+            var playLists = context.PlayLists.ToArray().Select(s => new PlayList(s.Name,
+                songs.Where(w => playListsSongs.Where(wh => wh.PlayListID == s.ID)
+                .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
+            // Даваме всичко нужно на класа Collection.
+            Collection = new Collection(albums, bands, playLists, songs);
         }
     }
 }

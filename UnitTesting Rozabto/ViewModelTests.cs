@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -60,7 +61,17 @@ namespace UnitTesting_Rozabto
             var songscount = MainViewModel.ABP.SongsCount;
             var songs = MainViewModel.ABP.Songs;
 
+            var context = new BlogDBContext();
 
+            var factory = new MusicInformation();
+            foreach (var song in Directory.EnumerateFiles(@"D:\song"))
+            {
+                factory.SearchMusic(song).Wait();
+            }
+
+            MainViewModel.RemoveSong("My Heart");
+            MainViewModel.RemoveAlbum(context.Albums.First().Name);
+            MainViewModel.RemoveBand(context.Bands.First().Name);
         }
 
         [TestMethod]

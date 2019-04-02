@@ -13,23 +13,6 @@ namespace Rozabto.Model.Data {
     /// Класът MusicInformation извлича всички песни и ги превръща в код.
     /// </summary>
     public class MusicInformation {
-        public class FileTagLib : TagFile.IFileAbstraction {
-            private readonly FileInfo file;
-            public FileTagLib(FileInfo file) {
-                this.file = file;
-            }
-
-
-            public void CloseStream(Stream stream) {
-                stream.Close();
-            }
-
-            public string Name => file.Name;
-            public Stream ReadStream => file.OpenRead();
-            public Stream WriteStream => file.OpenWrite();
-
-        }
-
         public async Task SearchMusic(string path) {
             var context = new BlogDBContext();
 
