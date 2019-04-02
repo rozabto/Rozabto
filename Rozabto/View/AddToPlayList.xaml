@@ -11,7 +11,7 @@
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <ListBox Name="PlayListList" ItemsSource="{Binding PlayListsSet}" MouseDoubleClick="SelectAlbum">
+        <ListBox Name="PlayListList" ItemsSource="{Binding PlayListsSet}">
             <ListBox.Template>
                 <ControlTemplate>
                     <WrapPanel IsItemsHost="True"/>
@@ -27,6 +27,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Cancel" HorizontalAlignment="Center" Grid.Row="1" Background="{x:Null}" Foreground="Aqua" Click="CancelPlayListCreation"/>
+        <Button Content="Cancel" HorizontalAlignment="Center" Grid.Row="1" Background="{x:Null}" Foreground="Aqua"/>
     </Grid>
 </Window>

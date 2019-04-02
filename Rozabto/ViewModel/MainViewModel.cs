@@ -205,7 +205,7 @@ namespace Rozabto.ViewModel
             }
         }
 
-        /// <summary>
+        /// <summary>    
         /// Превръща данните от SQL към данни, които плеърът може да чете.
         /// </summary>
         static void SetCollection()
