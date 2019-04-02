@@ -21,8 +21,8 @@ namespace Rozabto.View {
             InitializeComponent();
             DataContext = MainViewModel.MySongs;
         }
-
-        private void SelectAlbum(object sender, SelectionChangedEventArgs e) {
+         
+        public void SelectAlbum(object sender, SelectionChangedEventArgs e) {
             var listbox = sender as ListBox;
             // Взимаме grid който показва страницата от MainWindow.
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
@@ -32,11 +32,11 @@ namespace Rozabto.View {
             grid.Children.Add(new ABPContent());
         }
 
-        private void SelectedAlbum(object sender, MouseEventArgs e) {
+        public void SelectedAlbum(object sender, MouseEventArgs e) {
             SelectedAlbumName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
         }
 
-        private void AddToPlayList(object sender, RoutedEventArgs e) {
+        public void AddToPlayList(object sender, RoutedEventArgs e) {
             //var objBlur = new System.Windows.Media.Effects.BlurEffect();
             //((MainWindow)Application.Current.MainWindow).Effect = objBlur;
             //var add = new AddToPlayList(SelectedSongName);
@@ -44,11 +44,11 @@ namespace Rozabto.View {
             //add.Closed += Add_Closed;
         }
 
-        private void Add_Closed(object sender, EventArgs e) {
+        public void Add_Closed(object sender, EventArgs e) {
             ((MainWindow)Application.Current.MainWindow).Effect = null;
         }
 
-        private void RemoveAlbum(object sender, RoutedEventArgs e) {
+        public void RemoveAlbum(object sender, RoutedEventArgs e) {
             MainViewModel.RemoveAlbum(SelectedAlbumName);
         }
     }
