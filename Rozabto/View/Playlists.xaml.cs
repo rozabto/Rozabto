@@ -21,7 +21,7 @@ namespace Rozabto.View {
             DataContext = MainViewModel.PlayList;
         }
 
-        private void AddPlayList(object sender, RoutedEventArgs e) {
+        public void AddPlayList(object sender, RoutedEventArgs e) {
             // Добавяме нов плейлист с името, което сме дали.
             var text = Playlist.Text;
             if (string.IsNullOrWhiteSpace(text) || text.Length < 5 || text.Length > 20)
@@ -30,7 +30,7 @@ namespace Rozabto.View {
             Playlistdialog.IsOpen = false;
         }
 
-        private void SelectPlayList(object sender, SelectionChangedEventArgs e) {
+        public void SelectPlayList(object sender, SelectionChangedEventArgs e) {
             var listbox = sender as ListBox;
             // Взимаме grid който показва страницата от MainWindow.
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;

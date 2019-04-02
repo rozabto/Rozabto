@@ -21,11 +21,11 @@ namespace Rozabto.View {
             DataContext = MainViewModel.NowPlaying;
         }
 
-        private void PlayPause(object sender, RoutedEventArgs e) {
+        public void PlayPause(object sender, RoutedEventArgs e) {
             MediaViewModel.Play();
         }
 
-        private void MoveBackSong(object sender, RoutedEventArgs e) {
+        public void MoveBackSong(object sender, RoutedEventArgs e) {
             // Преместваме с една песен назад.
             if (MainViewModel.NowPlaying.Songs.Count <= 1 || --MainViewModel.NowPlaying.CurrentSongPos == -1) {
                 MediaViewModel.Stop();
@@ -36,7 +36,7 @@ namespace Rozabto.View {
             MediaViewModel.Play();
         }
 
-        private void MoveSongForward(object sender, RoutedEventArgs e) {
+        public void MoveSongForward(object sender, RoutedEventArgs e) {
             // Преместваме с една песен напред.
             if (MainViewModel.NowPlaying.Songs.Count <= 1) {
                 MediaViewModel.Stop();

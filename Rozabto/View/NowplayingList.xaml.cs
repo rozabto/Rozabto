@@ -22,7 +22,7 @@ namespace Rozabto.View {
             InitializeComponent();
             DataContext = MainViewModel.NowPlaying;
         }
-        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+        public void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
             // Пускаме песента, избрана от листа.
             var playListBox = sender as ListBox;
             var song = playListBox.SelectedItem as Song;
@@ -33,15 +33,15 @@ namespace Rozabto.View {
             MediaViewModel.Play();
         }
 
-        private void FocusOnSelectedItem(object sender, SelectionChangedEventArgs e) {
+        public void FocusOnSelectedItem(object sender, SelectionChangedEventArgs e) {
             SongsList.ScrollIntoView(SongsList.SelectedItem);
         }
 
-        private void SelectedSong(object sender, MouseEventArgs e) {
+        public void SelectedSong(object sender, MouseEventArgs e) {
             SelectedSongName = ((sender as StackPanel).Children[2] as TextBlock).Text;
         }
 
-        private void AddToPlayList(object sender, RoutedEventArgs e) {
+        public void AddToPlayList(object sender, RoutedEventArgs e) {
             //var objBlur = new System.Windows.Media.Effects.BlurEffect();
             //((MainWindow)Application.Current.MainWindow).Effect = objBlur;
             //var add = new AddToPlayList(SelectedSongName);
@@ -49,11 +49,11 @@ namespace Rozabto.View {
             //add.Closed += Add_Closed;
         }
 
-        private void Add_Closed(object sender, EventArgs e) {
+        public void Add_Closed(object sender, EventArgs e) {
             ((MainWindow)Application.Current.MainWindow).Effect = null;
         }
 
-        private void RemoveSong(object sender, RoutedEventArgs e) {
+        public void RemoveSong(object sender, RoutedEventArgs e) {
             MainViewModel.RemoveSong(SelectedSongName);
         }
     }

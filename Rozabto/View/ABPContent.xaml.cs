@@ -21,7 +21,7 @@ namespace Rozabto.View {
             DataContext = MainViewModel.ABP;
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

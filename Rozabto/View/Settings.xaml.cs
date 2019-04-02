@@ -25,7 +25,7 @@ namespace Rozabto.View {
             ColorText.Text = MainViewModel.Theme ? "Светло" : "Тъмно";
         }
 
-        private void ChangeColor(object sender, RoutedEventArgs e) {
+        public void ChangeColor(object sender, RoutedEventArgs e) {
             var dirs = Application.Current.Resources.MergedDictionaries;
             dirs.RemoveAt(dirs.Count - 1);
             if (MainViewModel.Theme) {

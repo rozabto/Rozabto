@@ -26,7 +26,7 @@ namespace Rozabto.View {
             Counter.Content = songCount;
         }
 
-        private async void CounterLoaded(object sender, RoutedEventArgs e) {
+        public async void CounterLoaded(object sender, RoutedEventArgs e) {
             var factory = new MusicInformation();
             for (int i = 0; i < paths.Length; i++) {
                 await SongCompleted(paths[i]);
@@ -36,7 +36,7 @@ namespace Rozabto.View {
             ((MainWindow)Application.Current.MainWindow).HideCounter();
         }
 
-        private Task SongCompleted(string songName) {
+        public Task SongCompleted(string songName) {
             Loading.Content = System.IO.Path.GetFileNameWithoutExtension(songName);
             Counter.Content = ++songCount;
             return Task.CompletedTask;

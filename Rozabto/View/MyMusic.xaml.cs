@@ -20,17 +20,17 @@ namespace Rozabto.View {
             GridPrincipal.Children.Add(new Bands());
         }
 
-        private void Album(object sender, MouseButtonEventArgs e) {
+        public void Album(object sender, MouseButtonEventArgs e) {
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Album());
         }
 
-        private void Song(object sender, MouseButtonEventArgs e) {
+        public void Song(object sender, MouseButtonEventArgs e) {
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Songs());
         }
 
-        private void Band(object sender, MouseButtonEventArgs e) {
+        public void Band(object sender, MouseButtonEventArgs e) {
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Bands());
         }

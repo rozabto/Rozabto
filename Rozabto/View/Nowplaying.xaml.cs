@@ -37,24 +37,24 @@ namespace Rozabto.View {
             return track;
         }
 
-        private void SliderControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+        public void SliderControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             var track = GetSliderTrack(MusicSlider);
             double value = track.ValueFromPoint(e.GetPosition(track));
             MusicSlider.Value = value;
             MainViewModel.Player.Position = TimeSpan.FromSeconds(MusicSlider.Value);
         }
 
-        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+        public void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             // Променяме звука.
             VolumeLabel.Changed(VolumeGrid, VolumeSlider.Value);
             MediaViewModel.SetVolumeToPlayer();
         }
 
-        private void PlayPause(object sender, RoutedEventArgs e) {
+        public void PlayPause(object sender, RoutedEventArgs e) {
             MediaViewModel.Play();
         }
 
-        private void MusicSlider_DragCompleted(object sender, DragCompletedEventArgs e) {
+        public void MusicSlider_DragCompleted(object sender, DragCompletedEventArgs e) {
             // Сменяме позицията на песента.
             MediaViewModel.SliderDragging = false;
             MainViewModel.Player.Position = TimeSpan.FromSeconds(MusicSlider.Value);
@@ -62,13 +62,13 @@ namespace Rozabto.View {
                 MediaViewModel.Play();
         }
 
-        private void MusicSlider_DragStarted(object sender, DragStartedEventArgs e) {
+        public void MusicSlider_DragStarted(object sender, DragStartedEventArgs e) {
             MediaViewModel.SliderDragging = true;
             if (MainViewModel.Status == SongStatus.Playing)
                 MediaViewModel.Play(); // Пауза
         }
 
-        private void MoveBackSong(object sender, RoutedEventArgs e) {
+        public void MoveBackSong(object sender, RoutedEventArgs e) {
             // Местим песента с една назад.
             if (MainViewModel.NowPlaying.Songs.Count <= 1 || --MainViewModel.NowPlaying.CurrentSongPos == -1) {
                 MediaViewModel.Stop();
@@ -79,7 +79,7 @@ namespace Rozabto.View {
             MediaViewModel.Play();
         }
 
-        private void MoveSongForward(object sender, RoutedEventArgs e) {
+        public void MoveSongForward(object sender, RoutedEventArgs e) {
             // Местим песента с една напред.
             if (MainViewModel.NowPlaying.Songs.Count <= 1) {
                 MediaViewModel.Stop();
@@ -96,29 +96,29 @@ namespace Rozabto.View {
             MediaViewModel.Play();
         }
 
-       
-        private void Randomizer(object sender, RoutedEventArgs e) {
+
+        public void Randomizer(object sender, RoutedEventArgs e) {
             MainViewModel.NowPlaying.ShuffleSongs = !MainViewModel.NowPlaying.ShuffleSongs;
         }
 
-        private void Repeater(object sender, RoutedEventArgs e) {
+        public void Repeater(object sender, RoutedEventArgs e) {
             MainViewModel.NowPlaying.RepeatSong = !MainViewModel.NowPlaying.RepeatSong;
         }
 
-        private void SaveVolumeSliderValue(object sender, RoutedEventArgs e) {
+        public void SaveVolumeSliderValue(object sender, RoutedEventArgs e) {
             MediaViewModel.SaveVolume();
         }
 
-        private void ShowVolumeNumber(object sender, MouseButtonEventArgs e) {
+        public void ShowVolumeNumber(object sender, MouseButtonEventArgs e) {
             VolumeLabel.Show(VolumeGrid, VolumeSlider.Value);
             MainViewModel.Volume = VolumeState.On;
         }
 
-        private void HideVolumeNumber(object sender, MouseButtonEventArgs e) {
+        public void HideVolumeNumber(object sender, MouseButtonEventArgs e) {
             VolumeLabel.Hide(VolumeGrid);
         }
 
-        private void MuteButton(object sender, RoutedEventArgs e) {
+        public void MuteButton(object sender, RoutedEventArgs e) {
             if (MainViewModel.Volume != VolumeState.Mute) {
                 MainViewModel.Player.Volume = 0;
                 MainViewModel.Volume = VolumeState.Mute;
