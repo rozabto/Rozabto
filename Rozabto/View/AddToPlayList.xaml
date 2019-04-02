@@ -3,15 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Rozabto.View"
-        mc:Ignorable="d"
-        Title="AddToPlayList" Height="450" Width="800">
+        mc:Ignorable="d" Background="{DynamicResource BackgroundColour}" WindowStyle="None" ResizeMode="NoResize"
+        Title="AddToPlayList" Height="500" Width="300" Foreground="{DynamicResource ForegroundColour}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <ListBox Name="PlayListList" ItemsSource="{Binding PlayListsSet}">
+        <ListBox Name="PlayListList" ItemsSource="{Binding PlayList}" MouseDoubleClick="ChoosePlayList">
             <ListBox.Template>
                 <ControlTemplate>
                     <WrapPanel IsItemsHost="True"/>
@@ -20,13 +19,13 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel>
-                        <Label DockPanel.Dock="Top" Foreground="LightSteelBlue" Content="{Binding Name}"/>
-                        <Label DockPanel.Dock="Bottom" Foreground="LightSteelBlue" Content="{Binding SongsCount}"/>
-                        <Separator DockPanel.Dock="Bottom" Height="3" Foreground="LightSteelBlue"/>
+                        <Label DockPanel.Dock="Top" Content="{Binding Name}" Foreground="{StaticResource ForegroundColour}"/>
+                        <Label DockPanel.Dock="Bottom" Content="{Binding SongsCount}"/>
+                        <Separator DockPanel.Dock="Bottom" Height="3"/>
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Cancel" HorizontalAlignment="Center" Grid.Row="1" Background="{x:Null}" Foreground="Aqua"/>
+        <Button Content="Cancel" HorizontalAlignment="Center" Grid.Row="1" Background="{x:Null}" Foreground="Aqua" Click="CancelPlayListCreation"/>
     </Grid>
 </Window>

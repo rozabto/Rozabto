@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Rozabto.ViewModel.Notify {
     public class NowPlayingNotify : INotifyPropertyChanged {
-        public virtual Collection Collection { get; }
+        public Collection Collection { get; }
         public ObservableCollection<Song> Songs => new ObservableCollection<Song>(Collection.Songs);
 
         public string SongBand => Collection.Bands.FirstOrDefault(f => f.Songs.Contains(_currentSong))?.Name;

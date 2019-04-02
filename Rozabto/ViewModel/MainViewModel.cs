@@ -6,13 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 
-namespace Rozabto.ViewModel
-{
+namespace Rozabto.ViewModel {
     /// <summary>
     /// Прави връзка между View и Model.
     /// </summary>
-    public static class MainViewModel
-    {
+    public static class MainViewModel {
         public static Collection Collection { get; private set; }
         public static MediaPlayer Player { get; }
         public static MySongsNotify MySongs { get; private set; }
@@ -23,8 +21,7 @@ namespace Rozabto.ViewModel
         public static VolumeState Volume { get; set; }
         public static bool Theme { get; set; }
 
-        static MainViewModel()
-        {
+        static MainViewModel() {
             Player = new MediaPlayer();
             SetCollection();
             MySongs = new MySongsNotify(Collection);
@@ -36,30 +33,66 @@ namespace Rozabto.ViewModel
         /// <summary>
         /// Връща лист с песните и информация.
         /// </summary>
-        public static void ActivateABP(object type)
-        {
+        public static void ActivateABP(object type) {
             // type е банда,албум или плейлист.
-            if (type.GetType() == typeof(Band))
-            {
+            if (type.GetType() == typeof(Band)) {
                 var band = type as Band;
                 ABP = new ABPNotify(band.Songs, band.Name);
             }
-            else if (type.GetType() == typeof(Album))
-            {
+            else if (type.GetType() == typeof(Album)) {
                 var album = type as Album;
                 ABP = new ABPNotify(album.Songs, album.Name);
             }
-            else if (type.GetType() == typeof(PlayList))
-            {
+            else if (type.GetType() == typeof(PlayList)) {
                 var playlist = type as PlayList;
                 ABP = new ABPNotify(playlist.Songs, playlist.Name);
             }
         }
-
-        public static void RemoveAlbum(string albumName)
-        {
+        public static void AddSongsToPlayList(string name, Song[] songs) {
             var context = new BlogDBContext();
-            var album = context.Albums.FirstOrDefault(f => f.Name == albumName);
+            var playListEF = context.PlayLists.FirstOrDefault(f => f.Name == name);
+            if (playListEF is null)
+                return;
+            var addSongs = songs.Select(s => new PlayListSongsEF {
+                PlayListID = playListEF.ID,
+                SongID = s.ID
+            });
+            addSongs = addSongs.Where(w => context.PlayListsSongs.FirstOrDefault(f => f.PlayListID == playListEF.ID && f.SongID == w.SongID) is null);
+            context.PlayListsSongs.AddRange(addSongs);
+            context.SaveChanges();
+            var playList = Collection.PlayLists.FirstOrDefault(f => f.Name == name);
+            playList.Songs.AddRange(songs.Where(w => playList.Songs.FirstOrDefault(f => f.ID == w.ID) is null));
+            PlayList.OnPropertyChanged("PlayList");
+        }
+
+
+        public static Song[] GetSongsFromBand(string name) {
+            var context = new BlogDBContext();
+            var band = context.Bands.FirstOrDefault(f => f.Name == name);
+            if (band is null)
+                return null;
+            var bandSongs = context.BandsSongs.Where(w => w.BandID == band.ID);
+            return context.Songs.Where(w => bandSongs.FirstOrDefault(f => f.SongID == w.ID) != null).ToArray();
+        }
+
+        public static Song[] GetSongsFromAlbum(string name) {
+            var context = new BlogDBContext();
+            var album = context.Albums.FirstOrDefault(f => f.Name == name);
+            if (album is null)
+                return null;
+            var albumSongs = context.AlbumsSongs.Where(w => w.AlbumID == album.ID);
+            return context.Songs.Where(w => albumSongs.FirstOrDefault(f => f.SongID == w.ID) != null).ToArray();
+        }
+
+        public static Song[] GetSongFromName(string name) {
+            var context = new BlogDBContext();
+            var song = context.Songs.FirstOrDefault(f => f.Name == name);
+            return song is null ? null : (new[] { song });
+        }
+
+        public static void RemoveAlbum(string name) {
+            var context = new BlogDBContext();
+            var album = context.Albums.FirstOrDefault(f => f.Name == name);
             if (album is null)
                 return;
             var albumSongs = context.AlbumsSongs.ToArray().Where(w => w.AlbumID == album.ID).ToArray();
@@ -82,11 +115,11 @@ namespace Rozabto.ViewModel
                 context.PlayLists.Remove(playList);
             context.Songs.RemoveRange(songs);
             context.SaveChanges();
+            SetCollection();
             RefreshDataBase();
         }
 
-        public static void RemoveBand(string bandName)
-        {
+        public static void RemoveBand(string bandName) {
             var context = new BlogDBContext();
             var band = context.Bands.FirstOrDefault(f => f.Name == bandName);
             if (band is null)
@@ -111,14 +144,14 @@ namespace Rozabto.ViewModel
                 context.PlayLists.Remove(playList);
             context.Songs.RemoveRange(songs);
             context.SaveChanges();
+            SetCollection();
             RefreshDataBase();
         }
 
         /// <summary>
         /// Добавя нов плейлист към базата данни.
         /// </summary>
-        public static void AddPlayList(string name)
-        {
+        public static void AddPlayList(string name) {
             var context = new BlogDBContext();
             // Създаваме нов плейлист с името.
             var playlist = new PlayList(name);
@@ -131,8 +164,7 @@ namespace Rozabto.ViewModel
             PlayList.OnPropertyChanged("PlayList");
         }
 
-        public static void RemoveSong(string songName)
-        {
+        public static void RemoveSong(string songName) {
             var context = new BlogDBContext();
             var song = context.Songs.FirstOrDefault(f => f.Name == songName);
             if (song is null) return;
@@ -158,18 +190,14 @@ namespace Rozabto.ViewModel
                 context.PlayLists.Remove(playList);
             context.Songs.Remove(song);
             context.SaveChanges();
+            SetCollection();
             RefreshDataBase();
         }
 
         /// <summary>
         /// Обновява базата данни.
         /// </summary>
-        public static void RefreshDataBase()
-        {
-            SetCollection();
-            MySongs = new MySongsNotify(Collection);
-            NowPlaying = new NowPlayingNotify(Collection);
-            PlayList = new PlayListsNotify(Collection);
+        public static void RefreshDataBase() {
             NowPlaying.OnPropertyChanged("Songs");
             MySongs.OnPropertyChanged("Bands");
             MySongs.OnPropertyChanged("Albums");
@@ -179,16 +207,13 @@ namespace Rozabto.ViewModel
         /// <summary>
         /// Пуска, прекъсва или спира песните.
         /// </summary>
-        public static void Play()
-        {
-            switch (Status)
-            {
+        public static void Play() {
+            switch (Status) {
                 case SongStatus.Stopped:
                     // Спираме песента.
                     Player.Close();
                     // Ако песента не е празна, пускаме нова песен.
-                    if (NowPlaying.CurrentSong != Song.EmptySong)
-                    {
+                    if (NowPlaying.CurrentSong != Song.EmptySong) {
                         Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
                         Player.Play();
                         Status = SongStatus.Playing;
@@ -208,8 +233,7 @@ namespace Rozabto.ViewModel
         /// <summary>    
         /// Превръща данните от SQL към данни, които плеърът може да чете.
         /// </summary>
-        static void SetCollection()
-        {
+        private static void SetCollection() {
             var context = new BlogDBContext();
             // Взимаме песните и ги превръщаме в лист.
             var songs = context.Songs.ToList();
@@ -232,7 +256,44 @@ namespace Rozabto.ViewModel
                 songs.Where(w => playListsSongs.Where(wh => wh.PlayListID == s.ID)
                 .FirstOrDefault(f => f.SongID == w.ID) != null).ToList())).ToList();
             // Даваме всичко нужно на класа Collection.
-            Collection = new Collection(albums, bands, playLists, songs);
+            if (Collection is null)
+                Collection = new Collection(albums, bands, playLists, songs);
+            else {
+                if (Collection.Albums.Count > albums.Count)
+                    Collection.Albums.RemoveAll(r => !albums.Contains(r));
+                else if (Collection.Albums.Count < albums.Count)
+                    Collection.Albums.AddRange(albums.Where(w => !Collection.Albums.Contains(w)));
+                else
+                    for (int i = 0; i < albums.Count; i++)
+                        if (Collection.Albums[i].Songs.Count > albums[i].Songs.Count)
+                            Collection.Albums[i].Songs.RemoveAll(r => !albums[i].Songs.Contains(r));
+                        else if (Collection.Albums[i].Songs.Count < albums[i].Songs.Count)
+                            Collection.Albums[i].Songs.AddRange(albums[i].Songs.Where(w => !Collection.Albums[i].Songs.Contains(w)));
+                if (Collection.Bands.Count > bands.Count)
+                    Collection.Bands.RemoveAll(r => !bands.Contains(r));
+                else if (Collection.Bands.Count < bands.Count)
+                    Collection.Bands.AddRange(bands.Where(w => !Collection.Bands.Contains(w)));
+                else
+                    for (int i = 0; i < bands.Count; i++)
+                        if (Collection.Bands[i].Songs.Count > bands[i].Songs.Count)
+                            Collection.Bands[i].Songs.RemoveAll(r => !bands[i].Songs.Contains(r));
+                        else if (Collection.Bands[i].Songs.Count < bands[i].Songs.Count)
+                            Collection.Bands[i].Songs.AddRange(bands[i].Songs.Where(w => !Collection.Bands[i].Songs.Contains(w)));
+                if (Collection.PlayLists.Count > playLists.Count)
+                    Collection.PlayLists.RemoveAll(r => !playLists.Contains(r));
+                else if (Collection.PlayLists.Count < playLists.Count)
+                    Collection.PlayLists.AddRange(playLists.Where(w => !Collection.PlayLists.Contains(w)));
+                else
+                    for (int i = 0; i < playLists.Count; i++)
+                        if (Collection.PlayLists[i].Songs.Count > playLists[i].Songs.Count)
+                            Collection.PlayLists[i].Songs.RemoveAll(r => !playLists[i].Songs.Contains(r));
+                        else if (Collection.PlayLists[i].Songs.Count < playLists[i].Songs.Count)
+                            Collection.PlayLists[i].Songs.AddRange(playLists[i].Songs.Where(w => !Collection.PlayLists[i].Songs.Contains(w)));
+                if (Collection.Songs.Count > songs.Count)
+                    Collection.Songs.RemoveAll(r => !songs.Contains(r));
+                else if (Collection.Songs.Count < songs.Count)
+                    Collection.Songs.AddRange(songs.Where(w => !Collection.Songs.Contains(w)));
+            }
         }
     }
 }

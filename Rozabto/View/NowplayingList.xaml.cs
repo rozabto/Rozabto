@@ -42,15 +42,10 @@ namespace Rozabto.View {
         }
 
         public void AddToPlayList(object sender, RoutedEventArgs e) {
-            //var objBlur = new System.Windows.Media.Effects.BlurEffect();
-            //((MainWindow)Application.Current.MainWindow).Effect = objBlur;
-            //var add = new AddToPlayList(SelectedSongName);
-            //add.Show();
-            //add.Closed += Add_Closed;
-        }
-
-        public void Add_Closed(object sender, EventArgs e) {
-            ((MainWindow)Application.Current.MainWindow).Effect = null;
+            var add = new AddToPlayList(MainViewModel.GetSongFromName(SelectedSongName)) {
+                Owner = (MainWindow)Application.Current.MainWindow
+            };
+            add.Show();
         }
 
         public void RemoveSong(object sender, RoutedEventArgs e) {

@@ -1,4 +1,5 @@
 ﻿using NAudio.Wave;
+using Rozabto.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,6 +52,7 @@ namespace Rozabto.Model.Data {
                     band = new BandEF {
                         Name = bandName
                     };
+                    MainViewModel.Collection.Bands.Add(new Band(bandName));
                     context.Bands.Add(band);
                 }
                 // Ако няма албум с това име, създаваме нов.
@@ -59,6 +61,7 @@ namespace Rozabto.Model.Data {
                     album = new AlbumEF {
                         Name = albumName
                     };
+                    MainViewModel.Collection.Albums.Add(new Album(albumName));
                     context.Albums.Add(album);
                 }
 
@@ -69,7 +72,7 @@ namespace Rozabto.Model.Data {
                     Location = file.FullName,
                     Volume = GetSongVolume(path)
                 };
-
+                MainViewModel.Collection.Songs.Add(song);
 
                 // Добавяме песента към SQL базата данни.                  
                 context.Songs.Add(song);
