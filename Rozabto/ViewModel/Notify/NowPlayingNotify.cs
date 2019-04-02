@@ -53,6 +53,7 @@ namespace Rozabto.ViewModel.Notify {
             Collection = collection;
             PauseButton = PackIconKind.Pause;
             MuteButton = PackIconKind.VolumeHigh;
+            CurrentSong = Song.EmptySong;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

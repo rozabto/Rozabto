@@ -104,6 +104,7 @@ namespace Rozabto.Model.Data {
                     BandID = context.Bands.FirstOrDefault(f => f.Name == bandName).ID,
                     SongID = song.ID
                 });
+                await context.SaveChangesAsync();
             }
 
         }

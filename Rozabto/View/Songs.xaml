@@ -11,16 +11,18 @@
         <ListBox ItemsSource="{Binding Songs}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation = "Horizontal" Margin="0 0 10 10">
+                    <StackPanel Orientation = "Horizontal" Margin="0 0 10 10" MouseEnter="SelectedSong">
                         <Image DockPanel.Dock="Top" Width="40" Height="40"/>
                         <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="10" Foreground="{DynamicResource ForegroundColour}"/>
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Visibility="Visible">
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                             </materialDesign:PopupBox.ToggleContent>
-                            <StackPanel Background="{DynamicResource BackgroundColour}">
-                                <Button Content="Добави в плейлист" Foreground="{DynamicResource ForegroundColour}"/>
-                                <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}"/>
+
+                                <StackPanel Background="{DynamicResource BackgroundColour}">
+                                <Button Content="Добави в плейлист" Foreground="{DynamicResource ForegroundColour}" Click="AddToPlayList"/>
+                                <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}" Click="RemoveSong"/>
+
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>

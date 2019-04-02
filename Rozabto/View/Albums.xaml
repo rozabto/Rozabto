@@ -11,7 +11,7 @@
         <ListBox ItemsSource="{Binding Albums}" SelectionChanged="SelectAlbum">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel Width="60">
+                    <DockPanel Width="60" MouseEnter="SelectedAlbum">
                         <Image DockPanel.Dock="Top" Width="40" Height="40"/>
                         <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="8" Foreground="{DynamicResource ForegroundColour}"/>
                         <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="{DynamicResource ForegroundColour}"/>
@@ -19,9 +19,11 @@
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                             </materialDesign:PopupBox.ToggleContent>
-                            <StackPanel Background="{DynamicResource BackgroundColour}">
-                                <Button Content="Добави в плейлист" Foreground="{DynamicResource ForegroundColour}"/>
-                                <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}"/>
+
+                                <StackPanel Background="{DynamicResource BackgroundColour}">
+                                <Button Content="Добави в плейлист" Foreground="{DynamicResource ForegroundColour}" Click="AddToPlayList"/>
+                                <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}" Click="RemoveAlbum"/>
+
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </DockPanel>

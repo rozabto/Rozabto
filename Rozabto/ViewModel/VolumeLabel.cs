@@ -36,8 +36,7 @@ namespace Rozabto.ViewModel {
         /// Променяме позицията и числото в етиката.
         /// </summary>
         public static void Changed(Grid volumeGrid, double value) {
-            if (volumeGrid.Children.Count <= pos || !(volumeGrid.Children[pos] is Label)) return;
-            var label = volumeGrid.Children[pos] as Label;
+            if (volumeGrid.Children.Count <= pos || !(volumeGrid.Children[pos] is Label label)) return;
             label.Width = 16 + (value < 10 ? 0 : value == 100 ? 13 : 7);
             label.Margin = new Thickness(0, 0, -(value / 1.35) - 15, -30);
             label.Content = value;

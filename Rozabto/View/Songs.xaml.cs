@@ -14,14 +14,32 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Rozabto.View
-{
-    public partial class Songs : UserControl
-    {
-        public Songs()
-        {
+namespace Rozabto.View {
+    public partial class Songs : UserControl {
+        private string SelectedSongName;
+        public Songs() {
             InitializeComponent();
             DataContext = MainViewModel.MySongs;
+        }
+
+        private void SelectedSong(object sender, MouseEventArgs e) {
+            SelectedSongName = ((sender as StackPanel).Children[1] as Label).Content.ToString();
+        }
+
+        private void AddToPlayList(object sender, RoutedEventArgs e) {
+            //var objBlur = new System.Windows.Media.Effects.BlurEffect();
+            //((MainWindow)Application.Current.MainWindow).Effect = objBlur;
+            //var add = new AddToPlayList(SelectedSongName);
+            //add.Show();
+            //add.Closed += Add_Closed;
+        }
+
+        private void Add_Closed(object sender, EventArgs e) {
+            ((MainWindow)Application.Current.MainWindow).Effect = null;
+        }
+
+        private void RemoveSong(object sender, RoutedEventArgs e) {
+            MainViewModel.RemoveSong(SelectedSongName);
         }
     }
 }

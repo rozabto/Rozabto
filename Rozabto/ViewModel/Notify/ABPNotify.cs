@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Rozabto.ViewModel.Notify {
-    public class ABPNotify : INotifyPropertyChanged {
+    public class ABPNotify {
         public string Name { get; }
         public ObservableCollection<Song> Songs { get; }
         public int SongsCount => Songs.Count;
@@ -21,12 +21,6 @@ namespace Rozabto.ViewModel.Notify {
         public ABPNotify(List<Song> songs, string name) {
             Songs = new ObservableCollection<Song>(songs);
             Name = name;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string property) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }
 }

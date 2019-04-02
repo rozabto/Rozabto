@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 
 namespace Rozabto.View {
     public partial class Bands : UserControl {
+        private string SelectedBandName;
         public Bands() {
             InitializeComponent();
             DataContext = MainViewModel.MySongs;
@@ -29,6 +30,26 @@ namespace Rozabto.View {
             // Активираме ABP с избраната банда от листа.
             MainViewModel.ActivateABP(MainViewModel.Collection.Bands[listbox.SelectedIndex]);
             grid.Children.Add(new ABPContent());
+        }
+
+        private void SelectedBand(object sender, MouseEventArgs e) {
+            SelectedBandName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
+        }
+
+        private void AddToPlayList(object sender, RoutedEventArgs e) {
+            //var objBlur = new System.Windows.Media.Effects.BlurEffect();
+            //((MainWindow)Application.Current.MainWindow).Effect = objBlur;
+            //var add = new AddToPlayList(SelectedSongName);
+            //add.Show();
+            //add.Closed += Add_Closed;
+        }
+
+        private void Add_Closed(object sender, EventArgs e) {
+            ((MainWindow)Application.Current.MainWindow).Effect = null;
+        }
+
+        private void RemoveBand(object sender, RoutedEventArgs e) {
+            MainViewModel.RemoveBand(SelectedBandName);
         }
     }
 }
