@@ -19,7 +19,7 @@
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                             </materialDesign:PopupBox.ToggleContent>
-                            <StackPanel Background="Black">
+                            <StackPanel Background="{DynamicResource BackgroundColour}">
                                 <Button Content="Добави в плейлист" Foreground="{DynamicResource ForegroundColour}"/>
                                 <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}"/>
                             </StackPanel>

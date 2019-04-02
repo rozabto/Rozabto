@@ -115,6 +115,9 @@
     <Compile Include="View\ABPContent.xaml.cs">
       <DependentUpon>ABPContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AddToPlayList.xaml.cs">
+      <DependentUpon>AddToPlayList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Albums.xaml.cs">
       <DependentUpon>Albums.xaml</DependentUpon>
     </Compile>
@@ -161,6 +164,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\ABPContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddToPlayList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
