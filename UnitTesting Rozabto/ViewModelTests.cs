@@ -78,6 +78,12 @@ namespace UnitTesting_Rozabto
             VolumeLabel.Hide(grid);
             VolumeLabel.Changed(grid, 1);
         }
+        [TestMethod]
+        public void TestMethod_Properties()
+        {
+            var propertie = Rozabto.Properties.Settings.Default;
+
+        }
 
     }
 }
