@@ -42,8 +42,8 @@
                 </DockPanel>
             </materialDesign:DialogHost.DialogContent>
 
-            <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Добави" FontSize="8"
-               HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,5,0,15" Height="20" Width="68" >
+            <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Добави" FontSize="10"
+               HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,5,0,10" Height="25" Width="70" >
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                         <GradientStop Color="#FF2727F0"/>
@@ -61,7 +61,7 @@
                 <DataTemplate>
                     <DockPanel Width="60">
                         <Image DockPanel.Dock="Top" Width="40" Height="40"/>
-                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="8" Foreground="{StaticResource ForegroundColour}"/>
+                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="12" Foreground="{StaticResource ForegroundColour}"/>
                         <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="{StaticResource ForegroundColour}"/>
 
                     </DockPanel>

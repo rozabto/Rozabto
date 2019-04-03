@@ -24,11 +24,11 @@ namespace Rozabto.View {
             DataContext = MainViewModel.PlayList;
         }
 
-        private void CancelPlayListCreation(object sender, RoutedEventArgs e) {
+        public void CancelPlayListCreation(object sender, RoutedEventArgs e) {
             Close();
         }
 
-        private void ChoosePlayList(object sender, MouseButtonEventArgs e) {
+        public void ChoosePlayList(object sender, MouseButtonEventArgs e) {
             MainViewModel.AddSongsToPlayList((PlayListList.SelectedItem as PlayList).Name, songs);
             Close();
         }

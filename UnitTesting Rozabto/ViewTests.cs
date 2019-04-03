@@ -17,8 +17,8 @@ namespace UnitTesting_Rozabto
         {
             var songs = new Songs();
             songs.AddToPlayList(null, null);
-            songs.RemoveSong(null, null);
-            songs.Add_Closed(null, null);
+          
+           
         }
 
         [TestMethod]
@@ -26,9 +26,8 @@ namespace UnitTesting_Rozabto
         {
             var album = new Rozabto.View.Album();
             album.AddToPlayList(null, null);
-            album.RemoveAlbum(null, null);
-            album.SelectAlbum(new ListBox(), null);
-            album.Add_Closed(null, null);
+
+ 
         }
 
         [TestMethod]
@@ -44,9 +43,7 @@ namespace UnitTesting_Rozabto
         {
             var band = new Rozabto.View.Bands();
             band.AddToPlayList(null, null);
-            band.RemoveBand(null, null);
-            band.SelectBand(new ListBox(), null);
-            band.Add_Closed(null, null);
+           
         }
 
         [TestMethod]
@@ -68,10 +65,7 @@ namespace UnitTesting_Rozabto
         {
             var nowplayingList = new NowplayingList();
             nowplayingList.AddToPlayList(null, null);
-            nowplayingList.FocusOnSelectedItem(null, null);
-            nowplayingList.AddToPlayList(null, null);
-            nowplayingList.RemoveSong(null, null);
-            nowplayingList.ListBox_MouseDoubleClick(new ListBox(), null);
+     
 
 
         }
@@ -80,21 +74,7 @@ namespace UnitTesting_Rozabto
         public void TestMethod_Nowplaying()
         {
             var nowplaying = new Nowplaying();
-            nowplaying.SliderControl_PreviewMouseLeftButtonDown(null, new MouseButtonEventArgs(null, 0, MouseButton.Right));
-            nowplaying.VolumeSlider_ValueChanged(null, null);
-            nowplaying.PlayPause(null, null);
-            nowplaying.MusicSlider_DragCompleted(null, null);
-            nowplaying.MusicSlider_DragStarted(null, null);
-            nowplaying.MoveBackSong(null, null);
-            nowplaying.MoveSongForward(null, null);
-            nowplaying.Randomizer(null, null);
-            nowplaying.Repeater(null, null);
-            nowplaying.SaveVolumeSliderValue(null, null);
-            nowplaying.ShowVolumeNumber(null, null);
-            nowplaying.HideVolumeNumber(null, null);
-            nowplaying.MuteButton(null, null);
-
-
+       
         }
 
 
@@ -112,9 +92,7 @@ namespace UnitTesting_Rozabto
         public void TestMethod_MiniNowplaying()
         {
             var miniNowPlaying = new MiniNowplaying();
-            miniNowPlaying.PlayPause(null, null);
-            miniNowPlaying.MoveBackSong(null, null);
-            miniNowPlaying.MoveSongForward(null, null);
+          
 
         }
 
@@ -124,6 +102,16 @@ namespace UnitTesting_Rozabto
         {
             var abpContent = new ABPContent();
             abpContent.ListBox_SelectionChanged(null, null);
+
+        }
+
+
+        [TestMethod]
+        public void TestMethod_AddToPlayList()
+        {
+            var addToPlayList = new AddToPlayList(null);
+            addToPlayList.CancelPlayListCreation(null, null);
+            addToPlayList.ChoosePlayList(null, null);
 
         }
 

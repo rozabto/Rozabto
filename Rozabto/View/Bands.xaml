@@ -11,9 +11,9 @@
         <ListBox ItemsSource="{Binding Bands}" SelectionChanged="SelectBand">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel Width="60" MouseEnter="SelectedBand">
+                    <DockPanel Width="100" MouseEnter="SelectedBand">
                         <Image DockPanel.Dock="Top" Width="40" Height="40" />
-                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="8" Foreground="{DynamicResource ForegroundColour}"/>
+                        <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="12" Foreground="{DynamicResource ForegroundColour}"/>
                         <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="{DynamicResource ForegroundColour}"/>
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Visibility="Visible">
                             <materialDesign:PopupBox.ToggleContent>
