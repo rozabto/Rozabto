@@ -5,24 +5,21 @@ namespace Rozabto.Migrations
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
-    
+
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
     public sealed partial class ChangedABP : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedABP));
-        
-        string IMigrationMetadata.Id
-        {
+
+        string IMigrationMetadata.Id {
             get { return "201903160928200_ChangedABP"; }
         }
-        
-        string IMigrationMetadata.Source
-        {
+
+        string IMigrationMetadata.Source {
             get { return null; }
         }
-        
-        string IMigrationMetadata.Target
-        {
+
+        string IMigrationMetadata.Target {
             get { return Resources.GetString("Target"); }
         }
     }

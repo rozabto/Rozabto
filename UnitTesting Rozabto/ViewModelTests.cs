@@ -33,8 +33,9 @@ namespace UnitTesting_Rozabto
             Assert.AreEqual(MainViewModel.PlayList.PlayList.Count, MainViewModel.PlayList.PlayList.Count);
             MainViewModel.ActivateABP(new Band("test"));
             MainViewModel.ActivateABP(new Album("test"));
-            MainViewModel.ActivateABP(new PlayList("test"));
+            MainViewModel.ActivateABP(new PlayList("test", new System.Collections.Generic.List<Song> { new Song { Duration = TimeSpan.FromSeconds(120) } }));
             MainViewModel.AddPlayList("Test");
+            MainViewModel.AddSongsToPlayList("Test", new Song[] { Song.EmptySong });
             MainViewModel.RefreshDataBase();
             MainViewModel.Play();
             MainViewModel.Status = Rozabto.Model.SongStatus.Playing;
