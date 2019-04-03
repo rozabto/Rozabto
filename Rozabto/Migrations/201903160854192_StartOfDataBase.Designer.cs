@@ -10,12 +10,11 @@ namespace Rozabto.Migrations
     public sealed partial class StartOfDataBase : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(StartOfDataBase));
-        
-        string IMigrationMetadata.Id
-        {
+
+        string IMigrationMetadata.Id {
             get { return "201903160854192_StartOfDataBase"; }
         }
-        
+
         string IMigrationMetadata.Source
         {
             get { return null; }

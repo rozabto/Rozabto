@@ -98,7 +98,7 @@ namespace Rozabto.Model.Data {
         /// <summary>
         /// Получава мястото на песента и прочита силата на звука. След това връща силата на звука.
         /// </summary>
-        private float GetSongVolume(string path) {
+        public float GetSongVolume(string path) {
             // Ако AudioFileReader не може да разпознае формата хвърля exception.
             try {
                 float max = 0;

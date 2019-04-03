@@ -10,12 +10,12 @@ namespace Rozabto.Migrations
     public sealed partial class Volume : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(Volume));
-        
+
         string IMigrationMetadata.Id
         {
             get { return "201903301352252_Volume"; }
         }
-        
+
         string IMigrationMetadata.Source
         {
             get { return null; }

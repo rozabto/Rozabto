@@ -132,7 +132,8 @@ namespace UnitTesting_Rozabto
             Assert.AreEqual(song.Volume, Song.EmptySong.Volume);
             Assert.AreEqual(song.ID, 42);
             Assert.AreEqual(song.DurationString, Song.EmptySong.DurationString);
-          
+            song = new Song { Duration = TimeSpan.FromDays(1) };
+            var duration = song.DurationString;
         }
 
 
