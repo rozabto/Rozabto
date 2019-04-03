@@ -26,7 +26,7 @@
         <ListBox ItemsSource="{Binding Songs}" Grid.Row="1" RenderTransformOrigin="0.485,0.492">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation = "Horizontal" Margin="0 0 10 10">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 10 10" MouseEnter="RemoveSong">
                         <Image DockPanel.Dock="Top" Width="40" Height="40"/>
                         <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="10" Foreground="{DynamicResource ForegroundColour}"/>
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Visibility="Visible">
@@ -35,8 +35,8 @@
                             </materialDesign:PopupBox.ToggleContent>
 
                             <StackPanel Background="{DynamicResource BackgroundColour}">
-                                
-                                <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}" />
+
+                                <Button Content="Премахни" Foreground="{DynamicResource ForegroundColour}" Click="RemoveSong"/>
 
                             </StackPanel>
                         </materialDesign:PopupBox>

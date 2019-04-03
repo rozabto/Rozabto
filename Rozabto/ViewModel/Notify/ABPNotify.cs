@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Rozabto.ViewModel.Notify {
-    public class ABPNotify {
+    public class ABPNotify : INotifyPropertyChanged {
+        public bool IsPlayList { get; }
         public string Name { get; }
         public ObservableCollection<Song> Songs { get; }
         public int SongsCount => Songs.Count;
@@ -18,9 +19,16 @@ namespace Rozabto.ViewModel.Notify {
 
         private TimeSpan _totalTime;
 
-        public ABPNotify(List<Song> songs, string name) {
+        public ABPNotify(List<Song> songs, string name, bool isPlayList = false) {
+            IsPlayList = isPlayList;
             Songs = new ObservableCollection<Song>(songs);
             Name = name;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string property) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }
 }

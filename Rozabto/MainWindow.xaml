@@ -221,7 +221,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Name="GridSongsLoading" Grid.Row="1"/>
+        <Grid Name="GridSongsLoading" HorizontalAlignment="Stretch" Grid.Row="1"/>
         <Grid Name="GridPrincipal" Grid.Row="2"/>
         <Grid Name="Playing" Grid.Row="3"/>
     </Grid>

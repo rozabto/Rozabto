@@ -2,7 +2,6 @@
 using Rozabto.Model.Data;
 using Rozabto.ViewModel.Notify;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 
@@ -13,9 +12,9 @@ namespace Rozabto.ViewModel {
     public static class MainViewModel {
         public static Collection Collection { get; private set; }
         public static MediaPlayer Player { get; }
-        public static MySongsNotify MySongs { get; private set; }
-        public static NowPlayingNotify NowPlaying { get; private set; }
-        public static PlayListsNotify PlayList { get; private set; }
+        public static MySongsNotify MySongs { get; }
+        public static NowPlayingNotify NowPlaying { get; }
+        public static PlayListsNotify PlayList { get; }
         public static ABPNotify ABP { get; private set; }
         public static SongStatus Status { get; set; }
         public static VolumeState Volume { get; set; }
@@ -30,22 +29,53 @@ namespace Rozabto.ViewModel {
             Volume = VolumeState.On;
         }
 
+        public static void RemoveSongFromPlayList(string name) {
+            var context = new BlogDBContext();
+            var song = context.Songs.FirstOrDefault(f => f.Name == name);
+            var playList = context.PlayLists.FirstOrDefault(f => f.Name == ABP.Name);
+            if (song is null || playList is null)
+                return;
+            var playListSong = context.PlayListsSongs.FirstOrDefault(f => f.PlayListID == playList.ID && f.SongID == song.ID);
+            context.PlayListsSongs.Remove(playListSong);
+            context.SaveChanges();
+            ABP.Songs.Remove(ABP.Songs.FirstOrDefault(f => f.Name == name));
+            ABP.OnPropertyChanged("Songs");
+            var collectionPlayList = Collection.PlayLists.FirstOrDefault(f => f.Name == ABP.Name);
+            var removeSong = collectionPlayList.Songs.FirstOrDefault(f => f.Name == name);
+            collectionPlayList.Songs.Remove(removeSong);
+            RefreshDataBase();
+        }
+
+        public static void RemovePlayList(string name) {
+            var context = new BlogDBContext();
+            var playList = context.PlayLists.FirstOrDefault(f => f.Name == name);
+            if (playList is null)
+                return;
+            var playListSongs = context.PlayListsSongs.Where(w => w.PlayListID == playList.ID);
+            context.PlayListsSongs.RemoveRange(playListSongs);
+            context.PlayLists.Remove(playList);
+            context.SaveChanges();
+            SetCollection();
+            RefreshDataBase();
+        }
+
         /// <summary>
         /// Връща лист с песните и информация.
         /// </summary>
         public static void ActivateABP(object type) {
             // type е банда,албум или плейлист.
-            if (type.GetType() == typeof(Band)) {
+            var objType = type.GetType();
+            if (objType == typeof(Band)) {
                 var band = type as Band;
                 ABP = new ABPNotify(band.Songs, band.Name);
             }
-            else if (type.GetType() == typeof(Album)) {
+            else if (objType == typeof(Album)) {
                 var album = type as Album;
                 ABP = new ABPNotify(album.Songs, album.Name);
             }
-            else if (type.GetType() == typeof(PlayList)) {
+            else if (objType == typeof(PlayList)) {
                 var playlist = type as PlayList;
-                ABP = new ABPNotify(playlist.Songs, playlist.Name);
+                ABP = new ABPNotify(playlist.Songs, playlist.Name, true);
             }
         }
         public static void AddSongsToPlayList(string name, Song[] songs) {
@@ -110,10 +140,8 @@ namespace Rozabto.ViewModel {
             var playLists = context.PlayLists.ToArray().Where(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) == null);
             var albums = context.Albums.ToArray().Where(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) == null);
             context.Albums.RemoveRange(albums);
-            if (bands.Count() != 0)
-                context.Bands.RemoveRange(bands);
-            if (playLists.Count() != 0)
-                context.PlayLists.RemoveRange(playLists);
+            context.Bands.RemoveRange(bands);
+            context.PlayLists.RemoveRange(playLists);
             context.Songs.RemoveRange(songs);
             context.SaveChanges();
             SetCollection();
@@ -139,11 +167,9 @@ namespace Rozabto.ViewModel {
             var albums = context.Albums.ToArray().Where(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) == null);
             var playLists = context.PlayLists.ToArray().Where(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) == null);
             var bands = context.Bands.ToArray().Where(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) == null);
-            if (albums.Count() != 0)
-                context.Albums.RemoveRange(albums);
+            context.Albums.RemoveRange(albums);
             context.Bands.RemoveRange(bands);
-            if (playLists.Count() != 0)
-                context.PlayLists.RemoveRange(playLists);
+            context.PlayLists.RemoveRange(playLists);
             context.Songs.RemoveRange(songs);
             context.SaveChanges();
             SetCollection();
@@ -166,9 +192,9 @@ namespace Rozabto.ViewModel {
             PlayList.OnPropertyChanged("PlayList");
         }
 
-        public static void RemoveSong(string songName) {
+        public static void RemoveSong(string name, bool isAbp = false) {
             var context = new BlogDBContext();
-            var song = context.Songs.FirstOrDefault(f => f.Name == songName);
+            var song = context.Songs.FirstOrDefault(f => f.Name == name);
             if (song is null) return;
             var albumSong = context.AlbumsSongs.FirstOrDefault(f => f.SongID == song.ID);
             var bandSong = context.BandsSongs.FirstOrDefault(f => f.SongID == song.ID);
@@ -177,20 +203,21 @@ namespace Rozabto.ViewModel {
             context.BandsSongs.Remove(bandSong);
             if (playListSong != null)
                 context.PlayListsSongs.Remove(playListSong);
+            if (isAbp) {
+                ABP.Songs.Remove(ABP.Songs.FirstOrDefault(f => f.Name == name));
+                ABP.OnPropertyChanged("Songs");
+            }
+            context.Songs.Remove(song);
             context.SaveChanges();
             var albumsSongs = context.AlbumsSongs.ToArray();
             var bandsSongs = context.BandsSongs.ToArray();
             var playListsSongs = context.PlayListsSongs.ToArray();
-            var album = context.Albums.ToArray().FirstOrDefault(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) == null);
-            var band = context.Bands.ToArray().FirstOrDefault(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) == null);
-            var playList = context.PlayLists.ToArray().FirstOrDefault(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) == null);
-            if (album != null)
-                context.Albums.Remove(album);
-            if (band != null)
-                context.Bands.Remove(band);
-            if (playList != null)
-                context.PlayLists.Remove(playList);
-            context.Songs.Remove(song);
+            var albums = context.Albums.ToArray().Where(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) is null);
+            var bands = context.Bands.ToArray().Where(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) is null);
+            var playLists = context.PlayLists.ToArray().Where(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) is null);
+            context.Albums.RemoveRange(albums);
+            context.Bands.RemoveRange(bands);
+            context.PlayLists.RemoveRange(playLists);
             context.SaveChanges();
             SetCollection();
             RefreshDataBase();
@@ -204,6 +231,7 @@ namespace Rozabto.ViewModel {
             MySongs.OnPropertyChanged("Bands");
             MySongs.OnPropertyChanged("Albums");
             MySongs.OnPropertyChanged("Songs");
+            PlayList.OnPropertyChanged("PlayList");
         }
 
         /// <summary>
@@ -235,7 +263,7 @@ namespace Rozabto.ViewModel {
         /// <summary>    
         /// Превръща данните от SQL към данни, които плеърът може да чете.
         /// </summary>
-        private static void SetCollection() {
+        public static void SetCollection() {
             var context = new BlogDBContext();
             // Взимаме песните и ги превръщаме в лист.
             var songs = context.Songs.ToList();
@@ -264,37 +292,34 @@ namespace Rozabto.ViewModel {
                 if (Collection.Albums.Count > albums.Count)
                     Collection.Albums.RemoveAll(r => albums.FirstOrDefault(f => f.Name == r.Name) is null);
                 else if (Collection.Albums.Count < albums.Count)
-                    Collection.Albums.AddRange(albums.Where(w => !Collection.Albums.Contains(w)));
-                else
-                    for (int i = 0; i < albums.Count; i++)
+                    Collection.Albums.AddRange(albums.Where(w => Collection.Albums.FirstOrDefault(f => f.Name == w.Name) is null));
+                else for (int i = 0; i < albums.Count; i++)
                         if (Collection.Albums[i].Songs.Count > albums[i].Songs.Count)
-                            Collection.Albums[i].Songs.RemoveAll(r => !albums[i].Songs.Contains(r));
+                            Collection.Albums[i].Songs.RemoveAll(r => albums[i].Songs.FirstOrDefault(f => f.ID == r.ID) is null);
                         else if (Collection.Albums[i].Songs.Count < albums[i].Songs.Count)
-                            Collection.Albums[i].Songs.AddRange(albums[i].Songs.Where(w => !Collection.Albums[i].Songs.Contains(w)));
+                            Collection.Albums[i].Songs.AddRange(albums[i].Songs.Where(w => Collection.Albums[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
                 if (Collection.Bands.Count > bands.Count)
                     Collection.Bands.RemoveAll(r => bands.FirstOrDefault(f => f.Name == r.Name) is null);
                 else if (Collection.Bands.Count < bands.Count)
-                    Collection.Bands.AddRange(bands.Where(w => !Collection.Bands.Contains(w)));
-                else
-                    for (int i = 0; i < bands.Count; i++)
+                    Collection.Bands.AddRange(bands.Where(w => Collection.Bands.FirstOrDefault(f => f.Name == w.Name) is null));
+                else for (int i = 0; i < bands.Count; i++)
                         if (Collection.Bands[i].Songs.Count > bands[i].Songs.Count)
-                            Collection.Bands[i].Songs.RemoveAll(r => !bands[i].Songs.Contains(r));
+                            Collection.Bands[i].Songs.RemoveAll(r => bands[i].Songs.FirstOrDefault(f => f.ID == r.ID) is null);
                         else if (Collection.Bands[i].Songs.Count < bands[i].Songs.Count)
-                            Collection.Bands[i].Songs.AddRange(bands[i].Songs.Where(w => !Collection.Bands[i].Songs.Contains(w)));
+                            Collection.Bands[i].Songs.AddRange(bands[i].Songs.Where(w => Collection.Bands[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
                 if (Collection.PlayLists.Count > playLists.Count)
                     Collection.PlayLists.RemoveAll(r => playLists.FirstOrDefault(f => f.Name == r.Name) is null);
                 else if (Collection.PlayLists.Count < playLists.Count)
-                    Collection.PlayLists.AddRange(playLists.Where(w => !Collection.PlayLists.Contains(w)));
-                else
-                    for (int i = 0; i < playLists.Count; i++)
+                    Collection.PlayLists.AddRange(playLists.Where(w => Collection.PlayLists.FirstOrDefault(f => f.Name == w.Name) is null));
+                else for (int i = 0; i < playLists.Count; i++)
                         if (Collection.PlayLists[i].Songs.Count > playLists[i].Songs.Count)
-                            Collection.PlayLists[i].Songs.RemoveAll(r => !playLists[i].Songs.Contains(r));
+                            Collection.PlayLists[i].Songs.RemoveAll(r => playLists[i].Songs.FirstOrDefault(f => f.ID == r.ID) is null);
                         else if (Collection.PlayLists[i].Songs.Count < playLists[i].Songs.Count)
-                            Collection.PlayLists[i].Songs.AddRange(playLists[i].Songs.Where(w => !Collection.PlayLists[i].Songs.Contains(w)));
+                            Collection.PlayLists[i].Songs.AddRange(playLists[i].Songs.Where(w => Collection.PlayLists[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
                 if (Collection.Songs.Count > songs.Count)
                     Collection.Songs.RemoveAll(r => songs.FirstOrDefault(f => f.ID == r.ID) is null);
                 else if (Collection.Songs.Count < songs.Count)
-                    Collection.Songs.AddRange(songs.Where(w => !Collection.Songs.Contains(w)));
+                    Collection.Songs.AddRange(songs.Where(w => Collection.Songs.FirstOrDefault(f => f.ID == w.ID) is null));
             }
         }
     }

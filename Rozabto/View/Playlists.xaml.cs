@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 
 namespace Rozabto.View {
     public partial class Playlists : UserControl {
+        private string SelectedPlayListName;
         public Playlists() {
             InitializeComponent();
             DataContext = MainViewModel.PlayList;
@@ -38,6 +39,14 @@ namespace Rozabto.View {
             // Активираме ABP с избрания плейлист от листа.
             MainViewModel.ActivateABP(MainViewModel.Collection.PlayLists[listbox.SelectedIndex]);
             grid.Children.Add(new ABPContent());
+        }
+
+        private void RemovePlayList(object sender, RoutedEventArgs e) {
+            MainViewModel.RemovePlayList(SelectedPlayListName);
+        }
+
+        private void SelectPlayList(object sender, MouseEventArgs e) {
+            SelectedPlayListName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
         }
     }
 }
