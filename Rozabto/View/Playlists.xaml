@@ -63,7 +63,17 @@
                         <Image DockPanel.Dock="Top" Width="40" Height="40"/>
                         <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="12" Foreground="{StaticResource ForegroundColour}"/>
                         <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="{StaticResource ForegroundColour}"/>
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Visibility="Visible">
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
+                            </materialDesign:PopupBox.ToggleContent>
 
+                            <StackPanel Background="{DynamicResource BackgroundColour}">
+
+                                <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}" />
+
+                            </StackPanel>
+                        </materialDesign:PopupBox>
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
