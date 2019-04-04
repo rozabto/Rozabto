@@ -6,8 +6,61 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Rozabto" Height="500" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="{DynamicResource ForegroundColour}">
-    <Window.Resources>
-        <Storyboard x:Key="CloseMenu">
+    
+         <Window.Resources>
+      
+            <Style TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
+                  Padding="{TemplateBinding Control.Padding}"
+                  BorderBrush="{TemplateBinding Border.BorderBrush}"
+                  Background="{TemplateBinding Panel.Background}"
+                  Name="Bd"
+                  SnapsToDevicePixels="True">
+                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
+                               ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                               ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
+                               HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                               VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                               SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                    <Condition Property="Selector.IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Panel.Background" TargetName="Bd" Value="Transparent"/>
+                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                    <Condition Property="Selector.IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Panel.Background" TargetName="Bd" Value="Transparent"/>
+                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
+                            </MultiTrigger>
+                            <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                <Setter Property="Panel.Background" TargetName="Bd" Value="#4CDA8C31"/>
+                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
+                            </Trigger>
+                            <Trigger Property="UIElement.IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="Bd">
+                                    <Setter.Value>
+                                        <DynamicResource ResourceKey="{x:Static SystemColors.GrayTextBrushKey}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+            
+            <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
@@ -96,56 +149,7 @@
         </Style>
     </Window.Resources>
          
-         <Style TargetType="ListBoxItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
-                  Padding="{TemplateBinding Control.Padding}"
-                  BorderBrush="{TemplateBinding Border.BorderBrush}"
-                  Background="{TemplateBinding Panel.Background}"
-                  Name="Bd"
-                  SnapsToDevicePixels="True">
-                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
-                               ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
-                               ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
-                               HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-                               VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                               SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
-                                    <Condition Property="Selector.IsSelected" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Panel.Background" TargetName="Bd" Value="Transparent"/>
-                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="True"/>
-                                    <Condition Property="Selector.IsSelected" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Panel.Background" TargetName="Bd" Value="Transparent"/>
-                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
-                            </MultiTrigger>
-                            <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                <Setter Property="Panel.Background" TargetName="Bd" Value="#4CDA8C31"/>
-                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
-                            </Trigger>
-                            <Trigger Property="UIElement.IsEnabled" Value="False">
-                                <Setter Property="TextElement.Foreground" TargetName="Bd">
-                                    <Setter.Value>
-                                        <DynamicResource ResourceKey="{x:Static SystemColors.GrayTextBrushKey}"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
          
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
