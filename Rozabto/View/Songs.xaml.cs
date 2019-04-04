@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 
 namespace Rozabto.View {
     public partial class Songs : UserControl {
+        private bool isOpened;
         private string SelectedSongName;
         public Songs() {
             InitializeComponent();
@@ -23,7 +24,8 @@ namespace Rozabto.View {
         }
 
         public void SelectedSong(object sender, MouseEventArgs e) {
-            SelectedSongName = ((sender as StackPanel).Children[1] as Label).Content.ToString();
+            if (!isOpened)
+                SelectedSongName = ((sender as StackPanel).Children[0] as Label).Content.ToString();
         }
 
         public void AddToPlayList(object sender, RoutedEventArgs e) {
@@ -31,10 +33,16 @@ namespace Rozabto.View {
                 Owner = (MainWindow)Application.Current.MainWindow
             };
             add.Show();
+            isOpened = false;
         }
 
         public void RemoveSong(object sender, RoutedEventArgs e) {
             MainViewModel.RemoveSong(SelectedSongName);
+            isOpened = false;
+        }
+
+        private void PopupBox_Opened(object sender, RoutedEventArgs e) {
+            isOpened = true;
         }
     }
 }

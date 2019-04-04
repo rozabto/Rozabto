@@ -8,38 +8,27 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ListBox Name="SongsList" ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentSong, Mode=OneWay}" MouseDoubleClick="ListBox_MouseDoubleClick" Foreground="{DynamicResource ForegroundColour}" SelectionChanged="FocusOnSelectedItem">
-
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <StackPanel MouseEnter="SelectedSong" Orientation="Horizontal">
-
-                    <TextBlock Text="01" Margin="5" VerticalAlignment="Center"/>
                     <Ellipse Width="30" Height="30">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="/Rozabto;component/Image/logo09.png"/>
                         </Ellipse.Fill>
                     </Ellipse>
-                    <TextBlock Text="{Binding Name}" Margin="10,0" VerticalAlignment="Center" Width="100" TextTrimming="CharacterEllipsis"/>
-                    <TextBlock Text="{Binding Volume}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Name}" Margin="10,0" VerticalAlignment="Center" Width="150" TextTrimming="CharacterEllipsis"/>
                     <TextBlock Text="{Binding DurationString}" Margin="10,0" VerticalAlignment="Center"/>
-
                     <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                         <materialDesign:PopupBox.ToggleContent>
                             <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                         </materialDesign:PopupBox.ToggleContent>
-
-                            <StackPanel Background="{DynamicResource BackgroundColour}">
+                        <StackPanel Background="{DynamicResource BackgroundColour}">
                             <Button Content="Добави в плейлист" Foreground="{DynamicResource ForegroundColour}" Click="AddToPlayList"/>
                             <Button Content="Изтрий" Foreground="{DynamicResource ForegroundColour}" Click="RemoveSong"/>
-
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </StackPanel>
-              
-                                        
             </DataTemplate>
         </ListBox.ItemTemplate>
-        
     </ListBox>
-    
 </UserControl>

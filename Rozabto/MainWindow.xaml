@@ -6,10 +6,10 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Rozabto" Height="500" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="{DynamicResource ForegroundColour}">
-    
-         <Window.Resources>
-      
-            <Style TargetType="ListBoxItem">
+
+    <Window.Resources>
+
+        <Style TargetType="ListBoxItem">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -33,7 +33,7 @@
                                     <Condition Property="Selector.IsSelected" Value="True"/>
                                 </MultiTrigger.Conditions>
                                 <Setter Property="Panel.Background" TargetName="Bd" Value="Transparent"/>
-                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
+                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Blue"/>
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -41,11 +41,11 @@
                                     <Condition Property="Selector.IsSelected" Value="True"/>
                                 </MultiTrigger.Conditions>
                                 <Setter Property="Panel.Background" TargetName="Bd" Value="Transparent"/>
-                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
+                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Blue"/>
                             </MultiTrigger>
                             <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                <Setter Property="Panel.Background" TargetName="Bd" Value="#4CDA8C31"/>
-                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Orange"/>
+                                <Setter Property="Panel.Background" TargetName="Bd" Value="{DynamicResource HoverColour}"/>
+                                <Setter Property="Border.BorderBrush" TargetName="Bd" Value="Blue"/>
                             </Trigger>
                             <Trigger Property="UIElement.IsEnabled" Value="False">
                                 <Setter Property="TextElement.Foreground" TargetName="Bd">
@@ -59,8 +59,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-            
-            <Storyboard x:Key="CloseMenu">
+
+        <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
@@ -148,9 +148,6 @@
             </Setter>
         </Style>
     </Window.Resources>
-         
-        
-         
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
             <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>

@@ -2,4 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="BackgroundColour" Color="Black"/>
     <SolidColorBrush x:Key="ForegroundColour" Color="LightSteelBlue"/>
+    <SolidColorBrush x:Key="HoverColour" Color="#0f0f30"/>
 </ResourceDictionary>
