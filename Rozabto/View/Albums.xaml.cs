@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 
 namespace Rozabto.View {
     public partial class Album : UserControl {
-        private string SelectedAlbumName;
+        public string SelectedAlbumName { get; set; }
         public Album() {
             InitializeComponent();
             DataContext = MainViewModel.MySongs;

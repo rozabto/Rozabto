@@ -19,7 +19,7 @@
             <materialDesign:DialogHost.DialogContent>
                 <DockPanel>
                     <Label Content="Добави плейлист" DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Center"/>
-                    <TextBox Name="Playlist" Margin="5" DockPanel.Dock="Top"/>
+                    <TextBox Name="Playlist" x:FieldModifier="public" Margin="5" DockPanel.Dock="Top"/>
                     <Button Content="Добави" Margin="5" DockPanel.Dock="Left" Click="AddPlayList">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">

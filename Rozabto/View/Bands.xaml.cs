@@ -14,15 +14,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Rozabto.View {
-    public partial class Bands : UserControl {
-        private string SelectedBandName;
-        public Bands() {
+namespace Rozabto.View
+{
+    public partial class Bands : UserControl
+    {
+        public string SelectedBandName { get; set; }
+        public Bands()
+        {
             InitializeComponent();
             DataContext = MainViewModel.MySongs;
         }
 
-        public void SelectBand(object sender, SelectionChangedEventArgs e) {
+        public void SelectBand(object sender, SelectionChangedEventArgs e)
+        {
             var listbox = sender as ListBox;
             // Взимаме grid който показва страницата от MainWindow.
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
@@ -32,18 +36,22 @@ namespace Rozabto.View {
             grid.Children.Add(new ABPContent());
         }
 
-        public void SelectedBand(object sender, MouseEventArgs e) {
+        public void SelectedBand(object sender, MouseEventArgs e)
+        {
             SelectedBandName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
         }
 
-        public void AddToPlayList(object sender, RoutedEventArgs e) {
-            var add = new AddToPlayList(MainViewModel.GetSongsFromBand(SelectedBandName)) {
+        public void AddToPlayList(object sender, RoutedEventArgs e)
+        {
+            var add = new AddToPlayList(MainViewModel.GetSongsFromBand(SelectedBandName))
+            {
                 Owner = (MainWindow)Application.Current.MainWindow
             };
             add.Show();
         }
 
-        public void RemoveBand(object sender, RoutedEventArgs e) {
+        public void RemoveBand(object sender, RoutedEventArgs e) 
+        {
             MainViewModel.RemoveBand(SelectedBandName);
         }
     }

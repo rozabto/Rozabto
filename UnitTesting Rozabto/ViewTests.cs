@@ -17,33 +17,43 @@ namespace UnitTesting_Rozabto
         {
             var songs = new Songs();
             songs.AddToPlayList(null, null);
-          
-           
+            Assert.Fail();
+
         }
 
         [TestMethod]
         public void TestMethod_Album()
         {
             var album = new Rozabto.View.Album();
+            album.SelectedAlbumName = "The Spectre";
+            album.RemoveAlbum(null, null);
+            album.SelectedAlbumName = "Sweetener";
             album.AddToPlayList(null, null);
+            Assert.Fail();
 
- 
         }
 
         [TestMethod]
         public void TestMethod_PlayLists()
         {
             var playLists = new Rozabto.View.Playlists();
+            playLists.Playlist.Text = "Testers";
             playLists.AddPlayList(null, null);
-            playLists.SelectPlayList(new ListBox(), null);
+            playLists.SelectedPlayListName = "Testers";
+            playLists.RemovePlayList(null , null);
+            Assert.Fail();
         }
 
         [TestMethod]
         public void TestMethod_Band()
         {
             var band = new Rozabto.View.Bands();
+            band.SelectedBandName = "Nerv";
+            band.RemoveBand(null, null);
+            band.SelectedBandName = "Like a Storm"; 
             band.AddToPlayList(null, null);
-           
+            Assert.Fail();
+
         }
 
         [TestMethod]
@@ -51,6 +61,7 @@ namespace UnitTesting_Rozabto
         {
             var settings = new Settings();
             settings.ChangeColor(null, null);
+            Assert.Fail();
         }
 
         [TestMethod]
@@ -65,7 +76,7 @@ namespace UnitTesting_Rozabto
         {
             var nowplayingList = new NowplayingList();
             nowplayingList.AddToPlayList(null, null);
-     
+            Assert.Fail();
 
 
         }
@@ -74,7 +85,7 @@ namespace UnitTesting_Rozabto
         public void TestMethod_Nowplaying()
         {
             var nowplaying = new Nowplaying();
-       
+            Assert.Fail();
         }
 
 
@@ -92,8 +103,8 @@ namespace UnitTesting_Rozabto
         public void TestMethod_MiniNowplaying()
         {
             var miniNowPlaying = new MiniNowplaying();
-          
-
+            Assert.Fail();
+  
         }
 
 
@@ -101,8 +112,6 @@ namespace UnitTesting_Rozabto
         public void TestMethod_ABPContent()
         {
             var abpContent = new ABPContent();
-            abpContent.ListBox_SelectionChanged(null, null);
-
         }
 
 
@@ -111,8 +120,7 @@ namespace UnitTesting_Rozabto
         {
             var addToPlayList = new AddToPlayList(null);
             addToPlayList.CancelPlayListCreation(null, null);
-            addToPlayList.ChoosePlayList(null, null);
-
+      
         }
 
     }

@@ -14,15 +14,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Rozabto.View {
-    public partial class Playlists : UserControl {
-        private string SelectedPlayListName;
-        public Playlists() {
+namespace Rozabto.View
+{
+    public partial class Playlists : UserControl
+    {
+        public string SelectedPlayListName { get; set; }
+        public Playlists()
+        {
             InitializeComponent();
             DataContext = MainViewModel.PlayList;
         }
 
-        public void AddPlayList(object sender, RoutedEventArgs e) {
+        public void AddPlayList(object sender, RoutedEventArgs e)
+        {
             // Добавяме нов плейлист с името, което сме дали.
             var text = Playlist.Text;
             if (string.IsNullOrWhiteSpace(text) || text.Length < 5 || text.Length > 20)
@@ -31,7 +35,8 @@ namespace Rozabto.View {
             Playlistdialog.IsOpen = false;
         }
 
-        public void SelectPlayList(object sender, SelectionChangedEventArgs e) {
+        public void SelectPlayList(object sender, SelectionChangedEventArgs e)
+        {
             var listbox = sender as ListBox;
             // Взимаме grid който показва страницата от MainWindow.
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
@@ -41,11 +46,13 @@ namespace Rozabto.View {
             grid.Children.Add(new ABPContent());
         }
 
-        private void RemovePlayList(object sender, RoutedEventArgs e) {
+        public void RemovePlayList(object sender, RoutedEventArgs e)
+        {
             MainViewModel.RemovePlayList(SelectedPlayListName);
         }
 
-        private void SelectPlayList(object sender, MouseEventArgs e) {
+        public void SelectPlayList(object sender, MouseEventArgs e)
+        {
             SelectedPlayListName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
         }
     }

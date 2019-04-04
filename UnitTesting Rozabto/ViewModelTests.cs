@@ -71,12 +71,12 @@ namespace UnitTesting_Rozabto
                 factory.SearchMusic(song).Wait();
             }
 
-            MainViewModel.RemoveSong("My Heart");
+            MainViewModel.RemoveSong("My Heart", true);
             MainViewModel.RemoveAlbum(context.Albums.First().Name);
             MainViewModel.RemoveBand(context.Bands.First().Name);
 
             MainViewModel.RemoveSongFromPlayList("Test");
-            MainViewModel.RemovePlayList("Test");
+           
         }
 
         [TestMethod]
