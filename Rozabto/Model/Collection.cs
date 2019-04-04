@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Rozabto.Model
 {  
     /// <summary>
     /// Класът Collection съдържа базата данни, която се чете от View-то.
     /// </summary>
-
     public class Collection
     {
         public List<Album> Albums { get; }

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Rozabto.ViewModel.Notify {
-    public class ABPNotify : INotifyPropertyChanged {
+namespace Rozabto.ViewModel.Notify
+{
+    public class ABPNotify : INotifyPropertyChanged
+    {
         public bool IsPlayList { get; }
         public string Name { get; }
         public ObservableCollection<Song> Songs { get; }
@@ -19,7 +19,8 @@ namespace Rozabto.ViewModel.Notify {
 
         private TimeSpan _totalTime;
 
-        public ABPNotify(List<Song> songs, string name, bool isPlayList = false) {
+        public ABPNotify(List<Song> songs, string name, bool isPlayList = false)
+        {
             IsPlayList = isPlayList;
             Songs = new ObservableCollection<Song>(songs);
             Name = name;
@@ -27,7 +28,8 @@ namespace Rozabto.ViewModel.Notify {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged(string property) {
+        public void OnPropertyChanged(string property)
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }

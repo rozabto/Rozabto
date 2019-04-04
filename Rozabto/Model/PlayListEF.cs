@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Rozabto.Model
+﻿namespace Rozabto.Model
 {
     /// <summary>
     /// PlayListEF съдържа плейлистите, които после се дават на Playlist класът.

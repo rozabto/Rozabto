@@ -1,33 +1,28 @@
 ﻿using Rozabto.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace Rozabto.View {
-    public partial class MiniNowplaying : UserControl {
-        public MiniNowplaying() {
+namespace Rozabto.View
+{
+    public partial class MiniNowplaying : UserControl
+    {
+        public MiniNowplaying()
+        {
             InitializeComponent();
             DataContext = MainViewModel.NowPlaying;
         }
 
-        public void PlayPause(object sender, RoutedEventArgs e) {
+        public void PlayPause(object sender, RoutedEventArgs e)
+        {
             MediaViewModel.TimerPlay();
         }
 
-        public void MoveBackSong(object sender, RoutedEventArgs e) {
+        public void MoveBackSong(object sender, RoutedEventArgs e)
+        {
             // Преместваме с една песен назад.
-            if (MainViewModel.NowPlaying.Songs.Count <= 1 || --MainViewModel.NowPlaying.CurrentSongPos == -1) {
+            if (MainViewModel.NowPlaying.Songs.Count <= 1 || --MainViewModel.NowPlaying.CurrentSongPos == -1)
+            {
                 MediaViewModel.Stop();
                 return;
             }
@@ -36,9 +31,11 @@ namespace Rozabto.View {
             MediaViewModel.TimerPlay();
         }
 
-        public void MoveSongForward(object sender, RoutedEventArgs e) {
+        public void MoveSongForward(object sender, RoutedEventArgs e)
+        {
             // Преместваме с една песен напред.
-            if (MainViewModel.NowPlaying.Songs.Count <= 1) {
+            if (MainViewModel.NowPlaying.Songs.Count <= 1)
+            {
                 MediaViewModel.Stop();
                 return;
             }
