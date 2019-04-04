@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rozabto.Model;
 using Rozabto.Model.Data;
@@ -16,18 +17,18 @@ namespace UnitTesting_Rozabto
         public void TestMethod_MainViewModel()
         {
             var collection = MainViewModel.Collection;
-            var mediaPlayer = MainViewModel.Player;
+            var mediaPlayer = MediaViewModel.Player;
             var mySongsNotify = MainViewModel.MySongs;
             var nowPlayingNotify = MainViewModel.NowPlaying;
             var playlistNotify = MainViewModel.PlayList;
             var abpNotify = MainViewModel.ABP;
-            var songStatus = MainViewModel.Status;
-            var volumeState = MainViewModel.Volume;
+            var songStatus = MediaViewModel.Status;
+            var volumeState = MediaViewModel.Volume;
             var theme = MainViewModel.Theme;
 
 
-            MainViewModel.Status = Rozabto.Model.SongStatus.Paused;
-            MainViewModel.Volume = Rozabto.Model.VolumeState.High;
+            MediaViewModel.Status = Rozabto.Model.SongStatus.Paused;
+            MediaViewModel.Volume = Rozabto.Model.VolumeState.High;
             MainViewModel.Theme = false;
 
             Assert.AreEqual(MainViewModel.PlayList.PlayList.Count, MainViewModel.PlayList.PlayList.Count);
@@ -37,11 +38,11 @@ namespace UnitTesting_Rozabto
             MainViewModel.AddPlayList("Test");
             MainViewModel.AddSongsToPlayList("Test", new Song[] { Song.EmptySong });
             MainViewModel.RefreshDataBase();
-            MainViewModel.Play();
-            MainViewModel.Status = Rozabto.Model.SongStatus.Playing;
-            MainViewModel.Play();
-            MainViewModel.Status = Rozabto.Model.SongStatus.Stopped;
-            MainViewModel.Play();
+            MediaViewModel.Play();
+            MediaViewModel.Status = Rozabto.Model.SongStatus.Playing;
+            MediaViewModel.Play();
+            MediaViewModel.Status = Rozabto.Model.SongStatus.Stopped;
+            MediaViewModel.Play();
             Assert.AreEqual(MainViewModel.NowPlaying.Songs.Count, MainViewModel.NowPlaying.Songs.Count);
             var songband = MainViewModel.NowPlaying.SongBand;
             var pausebutton = MainViewModel.NowPlaying.PauseButton;
@@ -73,12 +74,28 @@ namespace UnitTesting_Rozabto
             MainViewModel.RemoveSong("My Heart");
             MainViewModel.RemoveAlbum(context.Albums.First().Name);
             MainViewModel.RemoveBand(context.Bands.First().Name);
+
+            MainViewModel.RemoveSongFromPlayList("Test");
+            MainViewModel.RemovePlayList("Test");
         }
 
         [TestMethod]
         public void TestMethod_MediaViewModel()
         {
             var slider = MediaViewModel.SliderDragging;
+            MediaViewModel.SliderDragging = true;
+
+            MediaViewModel.ConnectViewToViewModel(new Slider(), new Slider(), new Label());
+            MediaViewModel.Player_MediaFailed(null, null);
+            MediaViewModel.SliderTimer_Tick(null, null);
+            MediaViewModel.Player_MediaEnded(null, null);
+            MediaViewModel.Player_MediaOpened(new MediaPlayer (), null);
+            MediaViewModel.TimerPlay();
+            MediaViewModel.Play();
+            MediaViewModel.SetVolumeToPlayer();
+            MediaViewModel.Stop();
+            MediaViewModel.SaveVolume();
+
         }
 
         [TestMethod]
