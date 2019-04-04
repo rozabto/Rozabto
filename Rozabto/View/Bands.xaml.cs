@@ -5,8 +5,9 @@ using System.Windows.Input;
 
 namespace Rozabto.View
 {
-    public partial class Bands : UserControl
+    public partial class Bands : UserControl 
     {
+        private bool isOpened;
         public string SelectedBandName { get; set; }
         public Bands()
         {
@@ -27,7 +28,8 @@ namespace Rozabto.View
 
         public void SelectedBand(object sender, MouseEventArgs e)
         {
-            SelectedBandName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
+            if (!isOpened)
+                SelectedBandName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
         }
 
         public void AddToPlayList(object sender, RoutedEventArgs e)
@@ -37,11 +39,23 @@ namespace Rozabto.View
                 Owner = (MainWindow)Application.Current.MainWindow
             };
             add.Show();
+            isOpened = false;
         }
 
         public void RemoveBand(object sender, RoutedEventArgs e)
         {
             MainViewModel.RemoveBand(SelectedBandName);
+            isOpened = false;
+        }
+
+        private void PopupBox_Opened(object sender, RoutedEventArgs e) 
+        {
+            isOpened = true;
+        }
+
+        private void PopupBox_Closed(object sender, RoutedEventArgs e) 
+        {
+            isOpened = false;
         }
     }
 }

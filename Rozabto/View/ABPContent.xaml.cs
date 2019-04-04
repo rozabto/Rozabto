@@ -34,5 +34,10 @@ namespace Rozabto.View
         {
             isOpened = true;
         }
+
+        private void PopupBox_Closed(object sender, RoutedEventArgs e) 
+        {
+            isOpened = false;
+        }
     }
 }

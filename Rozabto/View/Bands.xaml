@@ -8,14 +8,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox ItemsSource="{Binding Bands}" SelectionChanged="SelectBand">
+        <ListBox ItemsSource="{Binding Bands}" HorizontalAlignment="Left" SelectionChanged="SelectBand">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Width="100" MouseEnter="SelectedBand">
                         <Image DockPanel.Dock="Top" Width="40" Height="40" />
                         <Label Content="{Binding Name}" DockPanel.Dock="Bottom" FontSize="12" Foreground="{DynamicResource ForegroundColour}"/>
                         <Label Content="{Binding SongsCount}" DockPanel.Dock="Bottom" Grid.Row="2" FontSize="8" Foreground="{DynamicResource ForegroundColour}"/>
-                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Visibility="Visible">
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Opened="PopupBox_Opened" Closed="PopupBox_Closed">
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                             </materialDesign:PopupBox.ToggleContent>

@@ -149,7 +149,7 @@
                     <Slider Name="VolumeSlider" Value="1" Grid.Column="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" ValueChanged="VolumeSlider_ValueChanged" PreviewMouseLeftButtonDown="ShowVolumeNumber" PreviewMouseLeftButtonUp="HideVolumeNumber"/>
                 </Grid>
             </materialDesign:PopupBox>
-            <Label Name="SongTime" Content="00:00" Margin="0,27,2,-20" Grid.Row="1" Grid.ColumnSpan="3" FontSize="8" Foreground="{DynamicResource ForegroundColour}" Grid.Column="2"/>
+            <Label Name="SongTime" Content="00:00" Margin="-10,27,2,-20" Grid.Row="1" Grid.ColumnSpan="3" FontSize="12" Foreground="{DynamicResource ForegroundColour}" Grid.Column="2"/>
             <Slider Name="MusicSlider" Value="{Binding Player.Position}" Grid.ColumnSpan="3" Grid.Column="4" Margin="17,28,43,-30" Grid.Row="1" MouseLeftButtonDown="SliderControl_PreviewMouseLeftButtonDown" Thumb.DragCompleted="MusicSlider_DragCompleted" Thumb.DragStarted="MusicSlider_DragStarted">
                 <Slider.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">

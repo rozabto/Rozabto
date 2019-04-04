@@ -28,7 +28,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" MouseEnter="SelectSong">
                         <Label Content="{Binding Name}" Width="240" FontSize="10" Foreground="{DynamicResource ForegroundColour}"/>
-                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Opened="PopupBox_Opened">
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Opened="PopupBox_Opened" Closed="PopupBox_Closed">
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                             </materialDesign:PopupBox.ToggleContent>

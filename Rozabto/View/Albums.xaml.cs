@@ -1,28 +1,22 @@
 ﻿using Rozabto.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace Rozabto.View {
-    public partial class Album : UserControl {
+namespace Rozabto.View 
+{
+    public partial class Album : UserControl 
+    {
+        private bool isOpened;
         public string SelectedAlbumName { get; set; }
-        public Album() {
+        public Album() 
+        {
             InitializeComponent();
             DataContext = MainViewModel.MySongs;
         }
          
-        public void SelectAlbum(object sender, SelectionChangedEventArgs e) {
+        public void SelectAlbum(object sender, SelectionChangedEventArgs e) 
+        {
             var listbox = sender as ListBox;
             // Взимаме grid който показва страницата от MainWindow.
             var grid = ((MainWindow)Application.Current.MainWindow).GridPrincipal;
@@ -32,19 +26,36 @@ namespace Rozabto.View {
             grid.Children.Add(new ABPContent());
         }
 
-        public void SelectedAlbum(object sender, MouseEventArgs e) {
-            SelectedAlbumName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
+        public void SelectedAlbum(object sender, MouseEventArgs e) 
+        {
+            if (!isOpened)
+                SelectedAlbumName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
         }
 
-        public void AddToPlayList(object sender, RoutedEventArgs e) {
-            var add = new AddToPlayList(MainViewModel.GetSongsFromAlbum(SelectedAlbumName)) {
+        public void AddToPlayList(object sender, RoutedEventArgs e) 
+        {
+            var add = new AddToPlayList(MainViewModel.GetSongsFromAlbum(SelectedAlbumName)) 
+            {
                 Owner = (MainWindow)Application.Current.MainWindow
             };
             add.Show();
+            isOpened = false;
         }
 
-        public void RemoveAlbum(object sender, RoutedEventArgs e) {
+        public void RemoveAlbum(object sender, RoutedEventArgs e) 
+        {
             MainViewModel.RemoveAlbum(SelectedAlbumName);
+            isOpened = false;
+        }
+
+        private void PopupBox_Opened(object sender, RoutedEventArgs e) 
+        {
+            isOpened = true;
+        }
+
+        private void PopupBox_Closed(object sender, RoutedEventArgs e) 
+        {
+            isOpened = false;
         }
     }
 }

@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Rozabto.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="3"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid>
@@ -17,10 +18,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Foreground="{DynamicResource ForegroundColour}" Text="Албуми" FontSize="15" Margin="10" MouseLeftButtonDown="Album"/>
-            <TextBlock Foreground="{DynamicResource ForegroundColour}" Grid.Column="1" Text="Песни" FontSize="15" Margin="10" MouseLeftButtonDown="Song"/>
-            <TextBlock Foreground="{DynamicResource ForegroundColour}" Grid.Column="2" Text="Банди" FontSize="15" Margin="10" MouseLeftButtonDown="Band"/>
+            <TextBlock Foreground="{DynamicResource ForegroundColour}" Padding="12 0 0 0" Text="Албуми" FontSize="15" Margin="10" MouseLeftButtonDown="Album"/>
+            <TextBlock Foreground="{DynamicResource ForegroundColour}" Padding="17 0 0 0" Grid.Column="1" Text="Песни" FontSize="15" Margin="10" MouseLeftButtonDown="Song"/>
+            <TextBlock Foreground="{DynamicResource ForegroundColour}" Padding="19 0 0 0" Grid.Column="2" Text="Банди" FontSize="15" Margin="10" MouseLeftButtonDown="Band"/>
         </Grid>
-        <Grid Name="GridPrincipal" Grid.Row="1"/>
+        <Rectangle Name="SelectedBlock" Width="100" VerticalAlignment="Stretch" Grid.Row="1" Fill="{DynamicResource ForegroundColour}" Margin="200 0 0 0"/>
+        <Grid Name="GridPrincipal" Grid.Row="2"/>
     </Grid>
 </UserControl>
