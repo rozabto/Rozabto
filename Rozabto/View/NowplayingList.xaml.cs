@@ -30,7 +30,7 @@ namespace Rozabto.View {
             MediaViewModel.Stop();
             MainViewModel.NowPlaying.CurrentSong = song;
             MainViewModel.NowPlaying.CurrentSongPos = playListBox.SelectedIndex;
-            MediaViewModel.Play();
+            MediaViewModel.TimerPlay();
         }
 
         public void FocusOnSelectedItem(object sender, SelectionChangedEventArgs e) {

@@ -22,7 +22,7 @@ namespace Rozabto.View {
         }
 
         public void PlayPause(object sender, RoutedEventArgs e) {
-            MediaViewModel.Play();
+            MediaViewModel.TimerPlay();
         }
 
         public void MoveBackSong(object sender, RoutedEventArgs e) {
@@ -33,7 +33,7 @@ namespace Rozabto.View {
             }
             MainViewModel.NowPlaying.CurrentSong = MainViewModel.NowPlaying.Songs[MainViewModel.NowPlaying.CurrentSongPos];
             MediaViewModel.Stop();
-            MediaViewModel.Play();
+            MediaViewModel.TimerPlay();
         }
 
         public void MoveSongForward(object sender, RoutedEventArgs e) {
@@ -49,7 +49,7 @@ namespace Rozabto.View {
             MainViewModel.NowPlaying.CurrentSong = MainViewModel.NowPlaying.Songs[pos];
             MainViewModel.NowPlaying.CurrentSongPos = pos;
             MediaViewModel.Stop();
-            MediaViewModel.Play();
+            MediaViewModel.TimerPlay();
         }
     }
 }

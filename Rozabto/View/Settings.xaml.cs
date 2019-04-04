@@ -23,6 +23,7 @@ namespace Rozabto.View {
         public Settings() {
             InitializeComponent();
             ColorText.Text = MainViewModel.Theme ? "Светло" : "Тъмно";
+            ButtonColor.IsChecked = MainViewModel.Theme;
         }
 
         public void ChangeColor(object sender, RoutedEventArgs e) {

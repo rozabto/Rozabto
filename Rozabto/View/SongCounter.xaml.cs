@@ -33,6 +33,7 @@ namespace Rozabto.View {
             for (int i = 0; i < paths.Length && running; i++) {
                 await SongCompleted(paths[i]);
                 await factory.SearchMusic(paths[i]);
+                await Task.Delay(0);
             }
             ViewModel.MainViewModel.SetCollection();
             ViewModel.MainViewModel.RefreshDataBase();

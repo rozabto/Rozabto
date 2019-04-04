@@ -1,10 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Rozabto.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,29 +11,33 @@ namespace Rozabto.ViewModel
     /// <summary>
     /// Контролира звукът.
     /// </summary>
-    public static class MediaViewModel
-    {
-        private static readonly DispatcherTimer SliderTimer;
-        private static Slider MusicSlider;
-        private static Slider VolumeSlider;
-        private static Label SongTime;
-        private static int VolumeValue;
+    public static class MediaViewModel {
+        public static MediaPlayer Player { get; }
+        public static VolumeState Volume { get; set; }
+        public static SongStatus Status { get; set; }
         public static bool SliderDragging { get; set; }
 
-        static MediaViewModel()
-        {
-            MainViewModel.Player.MediaFailed += Player_MediaFailed;
-            MainViewModel.Player.MediaOpened += Player_MediaOpened;
-            MainViewModel.Player.MediaEnded += Player_MediaEnded;
+        private static readonly DispatcherTimer _sliderTimer;
+        private static Slider _musicSlider;
+        private static Slider _volumeSlider;
+        private static Label _songTime;
+        private static int _volumeValue;
 
-            MainViewModel.Player.Volume = 0.5f;
-            VolumeValue = 50;
+        static MediaViewModel() {
+            Player = new MediaPlayer();
+            Player.MediaFailed += Player_MediaFailed;
+            Player.MediaOpened += Player_MediaOpened;
+            Player.MediaEnded += Player_MediaEnded;
 
-            SliderTimer = new DispatcherTimer
+            Player.Volume = 0.5f;
+            _volumeValue = 50;
+
+            _sliderTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(200)
             };
-            SliderTimer.Tick += SliderTimer_Tick;
+            _sliderTimer.Tick += SliderTimer_Tick;
+            Volume = VolumeState.On;
         }
 
         /// <summary>
@@ -45,10 +45,10 @@ namespace Rozabto.ViewModel
         /// </summary>
         public static void ConnectViewToViewModel(Slider musicSlider, Slider volumeSlider, Label songTime)
         {
-            MusicSlider = musicSlider;
-            VolumeSlider = volumeSlider;
-            SongTime = songTime;
-            VolumeSlider.Value = VolumeValue;
+            _musicSlider = musicSlider;
+            _volumeSlider = volumeSlider;
+            _songTime = songTime;
+            _volumeSlider.Value = _volumeValue;
         }
 
         private static void Player_MediaFailed(object sender, ExceptionEventArgs e)
@@ -61,43 +61,44 @@ namespace Rozabto.ViewModel
         private static void SliderTimer_Tick(object sender, EventArgs e)
         {
             // Ако не местим плъзгача за времетраенето на музиката,тогава той продължава да се движи заедно с песента.
-            if (SliderDragging || MusicSlider is null) return;
-            MusicSlider.Value = MainViewModel.Player.Position.TotalSeconds;
-            SongTime.Content = MainViewModel.Player.Position.ToString(@"mm\:ss");
+            if (SliderDragging || _musicSlider is null) return;
+            _musicSlider.Value = Player.Position.TotalSeconds;
+            _songTime.Content = Player.Position.ToString(@"mm\:ss");
         }
 
         private static void Player_MediaEnded(object sender, EventArgs e)
         {
             // Ако песента свърши този метод се извиква.
-            MusicSlider.Value = 0;
-            SongTime.Content = "";
-            SliderTimer.Stop();
-            MainViewModel.Status = SongStatus.Stopped;
+            _musicSlider.Value = 0;
+            _songTime.Content = "";
+            _sliderTimer.Stop();
+            Status = SongStatus.Stopped;
+            var nowPlaying = MainViewModel.NowPlaying;
             // Ако е зададен да започне нова песен тогава я пускаме.
-            if (MainViewModel.NowPlaying.RepeatSong)
+            if (nowPlaying.RepeatSong)
             {
-                Play();
+                TimerPlay();
                 return;
             }
-            if (MainViewModel.NowPlaying.Songs.Count <= 0)
+            if (nowPlaying.Songs.Count <= 0)
                 return;
             // Взимаме позицията на новата песен.
-            var pos = MainViewModel.NowPlaying.ShuffleSongs ? new Random().Next(MainViewModel.NowPlaying.Songs.Count)
-                : MainViewModel.NowPlaying.CurrentSongPos + 1;
-            if (pos >= MainViewModel.NowPlaying.Songs.Count)
-                pos -= MainViewModel.NowPlaying.Songs.Count;
+            var pos = nowPlaying.ShuffleSongs ? new Random().Next(nowPlaying.Songs.Count)
+                : nowPlaying.CurrentSongPos + 1;
+            if (pos >= nowPlaying.Songs.Count)
+                pos -= nowPlaying.Songs.Count;
             // Слагаме песента на позицията на новата песен.
-            MainViewModel.NowPlaying.CurrentSong = MainViewModel.NowPlaying.Songs[pos];
-            MainViewModel.NowPlaying.CurrentSongPos = pos;
-            Play();
+            nowPlaying.CurrentSong = nowPlaying.Songs[pos];
+            nowPlaying.CurrentSongPos = pos;
+            TimerPlay();
         }
 
         private static void Player_MediaOpened(object sender, EventArgs e)
         {
             var player = sender as MediaPlayer;
             player.Position = new TimeSpan(0, 0, 0);
-            MusicSlider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
-            MusicSlider.Minimum = 0;
+            _musicSlider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
+            _musicSlider.Minimum = 0;
             // Слагаме звукът на плеъра спрямо звука на новата песен.
             SetVolumeToPlayer();
             MainViewModel.NowPlaying.OnPropertyChanged("SongBand");
@@ -106,20 +107,46 @@ namespace Rozabto.ViewModel
         /// <summary>
         /// Пуска или спира движението на плъзгача.
         /// </summary>
-        public static void Play()
+        public static void TimerPlay()
         {
-            MainViewModel.Play();
-            switch (MainViewModel.Status)
+            Play();
+            switch (Status)
             {
                 case SongStatus.Playing:
-                    SliderTimer.Start();
+                    _sliderTimer.Start();
                     MainViewModel.NowPlaying.PauseButton = PackIconKind.Pause;
                     break;
                 case SongStatus.Paused:
                 // Ако е на пауза трябва да отиде на спряно.
                 case SongStatus.Stopped:
-                    SliderTimer.Stop();
+                    _sliderTimer.Stop();
                     MainViewModel.NowPlaying.PauseButton = PackIconKind.Play;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Пуска, прекъсва или спира песните.
+        /// </summary>
+        public static void Play() {
+            switch (Status) {
+                case SongStatus.Stopped:
+                    // Спираме песента.
+                    Player.Close();
+                    // Ако песента не е празна, пускаме нова песен.
+                    if (MainViewModel.NowPlaying.CurrentSong != Song.EmptySong) {
+                        Player.Open(new Uri(MainViewModel.NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
+                        Player.Play();
+                        Status = SongStatus.Playing;
+                    }
+                    break;
+                case SongStatus.Playing:
+                    Player.Pause();
+                    Status = SongStatus.Paused;
+                    break;
+                case SongStatus.Paused:
+                    Player.Play();
+                    Status = SongStatus.Playing;
                     break;
             }
         }
@@ -129,31 +156,32 @@ namespace Rozabto.ViewModel
         /// </summary>
         public static void SetVolumeToPlayer()
         {
-            if (MainViewModel.Volume == VolumeState.Mute) return;
+            if (Volume == VolumeState.Mute) return;
+            var nowPlaying = MainViewModel.NowPlaying;
             // Ако са null тогава няма да променяме звука (избягваме появата на exception).
-            if (VolumeSlider != null && MainViewModel.NowPlaying.CurrentSong != null)
+            if (_volumeSlider != null && nowPlaying.CurrentSong != null && nowPlaying.CurrentSong != Song.EmptySong)
                 // Поставяме звука на плеъра спрямо резултата от формулата.
-                MainViewModel.Player.Volume = Math.Round(Math.Pow(VolumeSlider.Value / 100d, 1.150515 - Math.Sin((1 - MainViewModel.NowPlaying.CurrentSong.Volume) / 2)), 3);
-            var volume = MainViewModel.Player.Volume;
-            if (volume == 0 && MainViewModel.Volume != VolumeState.Zero)
+                Player.Volume = Math.Round(Math.Pow(_volumeSlider.Value / 100d, 1.150515 - Math.Sin((1 - nowPlaying.CurrentSong.Volume) / 2)), 3);
+            var volume = Player.Volume;
+            if (volume == 0 && Volume != VolumeState.Zero)
             {
-                MainViewModel.Volume = VolumeState.Zero;
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMute;
+                Volume = VolumeState.Zero;
+                nowPlaying.MuteButton = PackIconKind.VolumeMute;
             }
-            else if (volume > 0 && volume <= 0.298 && MainViewModel.Volume != VolumeState.Low)
+            else if (volume > 0 && volume <= 0.298 && Volume != VolumeState.Low)
             {
-                MainViewModel.Volume = VolumeState.Low;
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeLow;
+                Volume = VolumeState.Low;
+                nowPlaying.MuteButton = PackIconKind.VolumeLow;
             }
-            else if (volume > 0.298 && volume <= 0.663 && MainViewModel.Volume != VolumeState.Medium)
+            else if (volume > 0.298 && volume <= 0.663 && Volume != VolumeState.Medium)
             {
-                MainViewModel.Volume = VolumeState.Medium;
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeMedium;
+                Volume = VolumeState.Medium;
+                nowPlaying.MuteButton = PackIconKind.VolumeMedium;
             }
-            else if (volume > 0.663 && MainViewModel.Volume != VolumeState.High)
+            else if (volume > 0.663 && Volume != VolumeState.High)
             {
-                MainViewModel.Volume = VolumeState.High;
-                MainViewModel.NowPlaying.MuteButton = PackIconKind.VolumeHigh;
+                Volume = VolumeState.High;
+                nowPlaying.MuteButton = PackIconKind.VolumeHigh;
             }
         }
 
@@ -162,11 +190,11 @@ namespace Rozabto.ViewModel
         /// </summary>
         public static void Stop()
         {
-            SliderTimer.Stop();
-            MainViewModel.Status = SongStatus.Stopped;
+            _sliderTimer.Stop();
+            Status = SongStatus.Stopped;
             MainViewModel.NowPlaying.PauseButton = PackIconKind.Pause;
-            MusicSlider.Value = 0;
-            MainViewModel.Player.Stop();
+            _musicSlider.Value = 0;
+            Player.Stop();
         }
 
         /// <summary>
@@ -174,7 +202,7 @@ namespace Rozabto.ViewModel
         /// </summary>
         public static void SaveVolume()
         {
-            VolumeValue = (int)VolumeSlider.Value;
+            _volumeValue = (int)_volumeSlider.Value;
         }
     }
 }

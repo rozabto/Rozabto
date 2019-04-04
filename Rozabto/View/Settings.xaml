@@ -11,7 +11,7 @@
             <DockPanel>
                 <TextBlock Text="Тема" DockPanel.Dock="Top" FontSize="25" Foreground="{DynamicResource ForegroundColour}"/>
                 <TextBlock Text="Промени цвета като натиснеш бутона" DockPanel.Dock="Top" FontSize="12" Foreground="{DynamicResource ForegroundColour}"/>
-                <ToggleButton Click="ChangeColor" RenderTransformOrigin="0.401,0.398" Height="30" DockPanel.Dock="Left" />
+                <ToggleButton Name="ButtonColor" Click="ChangeColor" RenderTransformOrigin="0.401,0.398" Height="30" DockPanel.Dock="Left" />
                 <TextBlock Name="ColorText" Text="Тъмна" DockPanel.Dock="Right" Foreground="{DynamicResource ForegroundColour}" Margin="5"/>
             </DockPanel>
         </ListBoxItem>

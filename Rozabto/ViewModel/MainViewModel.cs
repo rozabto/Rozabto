@@ -1,9 +1,7 @@
 ﻿using Rozabto.Model;
 using Rozabto.Model.Data;
 using Rozabto.ViewModel.Notify;
-using System;
 using System.Linq;
-using System.Windows.Media;
 
 namespace Rozabto.ViewModel {
     /// <summary>
@@ -11,22 +9,17 @@ namespace Rozabto.ViewModel {
     /// </summary>
     public static class MainViewModel {
         public static Collection Collection { get; private set; }
-        public static MediaPlayer Player { get; }
         public static MySongsNotify MySongs { get; }
         public static NowPlayingNotify NowPlaying { get; }
         public static PlayListsNotify PlayList { get; }
         public static ABPNotify ABP { get; private set; }
-        public static SongStatus Status { get; set; }
-        public static VolumeState Volume { get; set; }
         public static bool Theme { get; set; }
 
         static MainViewModel() {
-            Player = new MediaPlayer();
             SetCollection();
             MySongs = new MySongsNotify(Collection);
             NowPlaying = new NowPlayingNotify(Collection);
             PlayList = new PlayListsNotify(Collection);
-            Volume = VolumeState.On;
         }
 
         public static void RemoveSongFromPlayList(string name) {
@@ -36,13 +29,17 @@ namespace Rozabto.ViewModel {
             if (song is null || playList is null)
                 return;
             var playListSong = context.PlayListsSongs.FirstOrDefault(f => f.PlayListID == playList.ID && f.SongID == song.ID);
-            context.PlayListsSongs.Remove(playListSong);
+            if (playListSong != null)
+                context.PlayListsSongs.Remove(playListSong);
             context.SaveChanges();
-            ABP.Songs.Remove(ABP.Songs.FirstOrDefault(f => f.Name == name));
+            var abpSong = ABP.Songs.FirstOrDefault(f => f.Name == name);
+            if (abpSong != null)
+                ABP.Songs.Remove(abpSong);
             ABP.OnPropertyChanged("Songs");
             var collectionPlayList = Collection.PlayLists.FirstOrDefault(f => f.Name == ABP.Name);
-            var removeSong = collectionPlayList.Songs.FirstOrDefault(f => f.Name == name);
-            collectionPlayList.Songs.Remove(removeSong);
+            var removeSong = collectionPlayList?.Songs.FirstOrDefault(f => f.Name == name);
+            if (removeSong != null)
+                collectionPlayList.Songs.Remove(removeSong);
             RefreshDataBase();
         }
 
@@ -78,6 +75,7 @@ namespace Rozabto.ViewModel {
                 ABP = new ABPNotify(playlist.Songs, playlist.Name, true);
             }
         }
+
         public static void AddSongsToPlayList(string name, Song[] songs) {
             var context = new BlogDBContext();
             var playListEF = context.PlayLists.FirstOrDefault(f => f.Name == name);
@@ -94,7 +92,6 @@ namespace Rozabto.ViewModel {
             playList.Songs.AddRange(songs.Where(w => playList.Songs.FirstOrDefault(f => f.ID == w.ID) is null));
             PlayList.OnPropertyChanged("PlayList");
         }
-
 
         public static Song[] GetSongsFromBand(string name) {
             var context = new BlogDBContext();
@@ -199,12 +196,14 @@ namespace Rozabto.ViewModel {
             var albumSong = context.AlbumsSongs.FirstOrDefault(f => f.SongID == song.ID);
             var bandSong = context.BandsSongs.FirstOrDefault(f => f.SongID == song.ID);
             var playListSong = context.PlayListsSongs.FirstOrDefault(f => f.SongID == song.ID);
-            context.AlbumsSongs.Remove(albumSong);
-            context.BandsSongs.Remove(bandSong);
+            if (albumSong != null)
+                context.AlbumsSongs.Remove(albumSong);
+            if (bandSong != null)
+                context.BandsSongs.Remove(bandSong);
             if (playListSong != null)
                 context.PlayListsSongs.Remove(playListSong);
-            if (isAbp) {
-                ABP.Songs.Remove(ABP.Songs.FirstOrDefault(f => f.Name == name));
+            if (isAbp && ABP.Songs.FirstOrDefault(f => f.Name == name) is Song abpSong) {
+                ABP.Songs.Remove(abpSong);
                 ABP.OnPropertyChanged("Songs");
             }
             context.Songs.Remove(song);
@@ -232,32 +231,6 @@ namespace Rozabto.ViewModel {
             MySongs.OnPropertyChanged("Albums");
             MySongs.OnPropertyChanged("Songs");
             PlayList.OnPropertyChanged("PlayList");
-        }
-
-        /// <summary>
-        /// Пуска, прекъсва или спира песните.
-        /// </summary>
-        public static void Play() {
-            switch (Status) {
-                case SongStatus.Stopped:
-                    // Спираме песента.
-                    Player.Close();
-                    // Ако песента не е празна, пускаме нова песен.
-                    if (NowPlaying.CurrentSong != Song.EmptySong) {
-                        Player.Open(new Uri(NowPlaying.CurrentSong.Location, UriKind.RelativeOrAbsolute));
-                        Player.Play();
-                        Status = SongStatus.Playing;
-                    }
-                    break;
-                case SongStatus.Playing:
-                    Player.Pause();
-                    Status = SongStatus.Paused;
-                    break;
-                case SongStatus.Paused:
-                    Player.Play();
-                    Status = SongStatus.Playing;
-                    break;
-            }
         }
 
         /// <summary>    
