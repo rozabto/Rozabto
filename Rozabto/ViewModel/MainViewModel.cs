@@ -70,8 +70,11 @@ namespace Rozabto.ViewModel
             context.PlayListsSongs.RemoveRange(playListSongs);
             context.PlayLists.Remove(playList);
             context.SaveChanges();
-            SetCollection();
-            RefreshDataBase();
+            var colPlayList = Collection.PlayLists.FirstOrDefault(f => f.Name == name);
+            if (colPlayList != null)
+                Collection.PlayLists.Remove(colPlayList);
+            // Обновяваме листа с плейлистите.
+            PlayList.OnPropertyChanged("PlayList");
         }
 
         /// <summary>
@@ -162,6 +165,20 @@ namespace Rozabto.ViewModel
         }
 
         /// <summary>
+        /// Проверява дали SQL базата данни садържа празни банди и албуми
+        /// </summary>
+        private static void CheckIfEmpty(BlogDBContext context) 
+        {
+            var albumsSongs = context.AlbumsSongs.ToArray();
+            var bandsSongs = context.BandsSongs.ToArray();
+            var bands = context.Bands.ToArray().Where(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) == null);
+            var albums = context.Albums.ToArray().Where(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) == null);
+            // Ако са празни ги махаме.
+            context.Albums.RemoveRange(albums);
+            context.Bands.RemoveRange(bands);
+        }
+
+        /// <summary>
         /// Премахваме албум.
         /// </summary>
         public static void RemoveAlbum(string name)
@@ -180,17 +197,7 @@ namespace Rozabto.ViewModel
             context.AlbumsSongs.RemoveRange(albumSongs);
             context.PlayListsSongs.RemoveRange(playListSongs);
             context.SaveChanges();
-            // Проверяваме дали някои банди, плейлистове или албуми са празни.
-            var albumsSongs = context.AlbumsSongs.ToArray();
-            var bandsSongs = context.BandsSongs.ToArray();
-            var playListsSongs = context.PlayListsSongs.ToArray();
-            var bands = context.Bands.ToArray().Where(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) == null);
-            var playLists = context.PlayLists.ToArray().Where(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) == null);
-            var albums = context.Albums.ToArray().Where(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) == null);
-            // Ако са празни ги махаме.
-            context.Albums.RemoveRange(albums);
-            context.Bands.RemoveRange(bands);
-            context.PlayLists.RemoveRange(playLists);
+            CheckIfEmpty(context);
             context.Songs.RemoveRange(songs);
             context.SaveChanges();
             SetCollection();
@@ -216,17 +223,7 @@ namespace Rozabto.ViewModel
             context.AlbumsSongs.RemoveRange(albumSongs);
             context.PlayListsSongs.RemoveRange(playListSongs);
             context.SaveChanges();
-            // Проверяваме дали някои банди, плейлистове или албуми са празни.
-            var albumsSongs = context.AlbumsSongs.ToArray();
-            var bandsSongs = context.BandsSongs.ToArray();
-            var playListsSongs = context.PlayListsSongs.ToArray();
-            var albums = context.Albums.ToArray().Where(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) == null);
-            var playLists = context.PlayLists.ToArray().Where(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) == null);
-            var bands = context.Bands.ToArray().Where(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) == null);
-            // Ако са празни ги махаме.
-            context.Albums.RemoveRange(albums);
-            context.Bands.RemoveRange(bands);
-            context.PlayLists.RemoveRange(playLists);
+            CheckIfEmpty(context);
             context.Songs.RemoveRange(songs);
             context.SaveChanges();
             SetCollection();
@@ -276,17 +273,7 @@ namespace Rozabto.ViewModel
             }
             context.Songs.Remove(song);
             context.SaveChanges();
-            // Проверяваме дали някои банди, плейлистове или албуми са празни.
-            var albumsSongs = context.AlbumsSongs.ToArray();
-            var bandsSongs = context.BandsSongs.ToArray();
-            var playListsSongs = context.PlayListsSongs.ToArray();
-            var albums = context.Albums.ToArray().Where(f => albumsSongs.FirstOrDefault(c => c.AlbumID == f.ID) is null);
-            var bands = context.Bands.ToArray().Where(f => bandsSongs.FirstOrDefault(c => c.BandID == f.ID) is null);
-            var playLists = context.PlayLists.ToArray().Where(f => playListsSongs.FirstOrDefault(c => c.PlayListID == f.ID) is null);
-            // Ако са празни ги махаме.
-            context.Albums.RemoveRange(albums);
-            context.Bands.RemoveRange(bands);
-            context.PlayLists.RemoveRange(playLists);
+            CheckIfEmpty(context);
             context.SaveChanges();
             SetCollection();
             RefreshDataBase();
@@ -367,14 +354,6 @@ namespace Rozabto.ViewModel
                         Collection.Bands[i].Songs.RemoveAll(r => band.Songs.FirstOrDefault(f => f.ID == r.ID) is null);
                     else if (Collection.Bands[i].Songs.Count < band.Songs.Count)
                         Collection.Bands[i].Songs.AddRange(band.Songs.Where(w => Collection.Bands[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
-                // Ако плейлистите в collection класа са повече от тези в sql базата, махаме
-                // тези които не са в collection класа.
-                if (Collection.PlayLists.Count > playLists.Count)
-                    Collection.PlayLists.RemoveAll(r => playLists.FirstOrDefault(f => f.Name == r.Name) is null);
-                // Ако плейлистите в collection класа са по-малко от тези в sql базата, добавяме
-                // тези които не са в collection класа.
-                else if (Collection.PlayLists.Count < playLists.Count)
-                    Collection.PlayLists.AddRange(playLists.Where(w => Collection.PlayLists.FirstOrDefault(f => f.Name == w.Name) is null));
                 // Проверяваме дали всички песни в плейлиста съвпадат с останалите.
                 for (int i = 0; i < Collection.PlayLists.Count; i++)
                     if (!(playLists.FirstOrDefault(f => f.Name == Collection.PlayLists[i].Name) is PlayList playList))
