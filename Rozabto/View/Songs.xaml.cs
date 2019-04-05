@@ -18,7 +18,7 @@ namespace Rozabto.View
         {
             var add = new AddToPlayList(MainViewModel.GetSongFromName(SelectedSongName))
             {
-                Owner = Application.Current?.MainWindow
+                Owner = Application.Current.MainWindow
             };
             add.Show();
         }
