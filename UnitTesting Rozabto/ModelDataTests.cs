@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rozabto.Model.Data;
 
@@ -27,7 +26,7 @@ namespace UnitTesting_Rozabto
             Assert.AreEqual(context.PlayLists.Count(), context.PlayLists.ToArray().Length);
             Assert.AreEqual(context.PlayListsSongs.Count(), context.PlayListsSongs.ToArray().Length);
             Assert.AreEqual(context.Songs.Count(), context.Songs.ToArray().Length);
-  
+
         }
     }
 }

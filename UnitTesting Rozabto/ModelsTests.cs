@@ -1,8 +1,6 @@
 ﻿using System;
-using MaterialDesignThemes.Wpf;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rozabto.Model;
-using Rozabto.ViewModel;
 
 namespace UnitTesting_Rozabto
 {
@@ -37,8 +35,8 @@ namespace UnitTesting_Rozabto
             var album = new AlbumSongsEF();
 
             album.ID = 42;
-            album.AlbumID = 25 ;
-            album.SongID = 20 ;
+            album.AlbumID = 25;
+            album.SongID = 20;
 
             Assert.AreEqual(album.ID, 42);
             Assert.AreEqual(album.AlbumID, 25);
@@ -158,8 +156,8 @@ namespace UnitTesting_Rozabto
         {
             var songList = new SongList();
             songList = new SongList(new System.Collections.Generic.List<Song>());
-            Assert.AreEqual(songList.Songs.Count, new System.Collections.Generic.List<Song> ().Count);
-     
+            Assert.AreEqual(songList.Songs.Count, new System.Collections.Generic.List<Song>().Count);
+
         }
 
     }

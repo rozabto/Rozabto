@@ -1,11 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using Rozabto.View;
-using Rozabto.ViewModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace UnitTesting_Rozabto
 {
@@ -40,7 +36,7 @@ namespace UnitTesting_Rozabto
             playLists.Playlist.Text = "Testers";
             playLists.AddPlayList(null, null);
             playLists.SelectedPlayListName = "Testers";
-            playLists.RemovePlayList(null , null);
+            playLists.RemovePlayList(null, null);
             Assert.Fail();
         }
 
@@ -50,7 +46,7 @@ namespace UnitTesting_Rozabto
             var band = new Rozabto.View.Bands();
             band.SelectedBandName = "Nerv";
             band.RemoveBand(null, null);
-            band.SelectedBandName = "Like a Storm"; 
+            band.SelectedBandName = "Like a Storm";
             band.AddToPlayList(null, null);
             Assert.Fail();
 
@@ -104,7 +100,7 @@ namespace UnitTesting_Rozabto
         {
             var miniNowPlaying = new MiniNowplaying();
             Assert.Fail();
-  
+
         }
 
 
@@ -120,7 +116,7 @@ namespace UnitTesting_Rozabto
         {
             var addToPlayList = new AddToPlayList(null);
             addToPlayList.CancelPlayListCreation(null, null);
-      
+
         }
 
     }
