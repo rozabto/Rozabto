@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Rozabto.View;
+using Rozabto.ViewModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -7,14 +8,18 @@ namespace Rozabto
 {
     public partial class MainWindow : Window
     {
+        private int _menuItem;
+
         public MainWindow()
         {
             InitializeComponent();
             GridPrincipal.Children.Add(new Nowplaying());
+            _menuItem = 3;
         }
 
         private void CloseApplication(object sender, RoutedEventArgs e)
         {
+            MediaViewModel.Stop();
             Application.Current.Shutdown();
         }
 
@@ -55,6 +60,7 @@ namespace Rozabto
 
         private void ShowMyMusic(object sender, RoutedEventArgs e)
         {
+            if (_menuItem == 1) return;
             // Ако се преместим от NowPlaying показваме един малък вариант на плеъра.
             if (Playing.Children.Count == 0)
             {
@@ -63,10 +69,12 @@ namespace Rozabto
             }
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new MyMusic());
+            _menuItem = 1;
         }
 
         private void ShowPlayList(object sender, RoutedEventArgs e)
         {
+            if (_menuItem == 2) return;
             // Ако се преместим от NowPlaying показваме един малък вариант на плеъра.
             if (Playing.Children.Count == 0)
             {
@@ -75,19 +83,23 @@ namespace Rozabto
             }
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Playlists());
+            _menuItem = 2;
         }
 
         private void ShowNowPlaying(object sender, RoutedEventArgs e)
         {
+            if (_menuItem == 3) return;
             // Ако малкия плеър е показан го скриваме.
             Playing.Children.Clear();
             RowDef.Height = new GridLength(0);
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Nowplaying());
+            _menuItem = 3;
         }
 
         private void ShowSettings(object sender, RoutedEventArgs e)
         {
+            if (_menuItem == 4) return;
             // Ако се преместим от NowPlaying показваме един малък вариант на плеъра.
             if (Playing.Children.Count == 0)
             {
@@ -96,6 +108,7 @@ namespace Rozabto
             }
             GridPrincipal.Children.Clear();
             GridPrincipal.Children.Add(new Settings());
+            _menuItem = 4;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Rozabto.Model;
+﻿using MaterialDesignThemes.Wpf;
+using Rozabto.Model;
 using Rozabto.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,16 +32,11 @@ namespace Rozabto.View
             SongsList.ScrollIntoView(SongsList.SelectedItem);
         }
 
-        public void SelectedSong(object sender, MouseEventArgs e)
-        {
-            SelectedSongName = ((sender as StackPanel).Children[2] as TextBlock).Text;
-        }
-
         public void AddToPlayList(object sender, RoutedEventArgs e)
         {
             var add = new AddToPlayList(MainViewModel.GetSongFromName(SelectedSongName))
             {
-                Owner = (MainWindow)Application.Current.MainWindow
+                Owner = (MainWindow)Application.Current?.MainWindow
             };
             add.Show();
         }
@@ -48,6 +44,11 @@ namespace Rozabto.View
         public void RemoveSong(object sender, RoutedEventArgs e)
         {
             MainViewModel.RemoveSong(SelectedSongName);
+        }
+
+        private void PopupBox_Opened(object sender, RoutedEventArgs e) 
+        {
+            SelectedSongName = (((sender as PopupBox).Parent as StackPanel).Children[1] as TextBlock).Text;
         }
     }
 }

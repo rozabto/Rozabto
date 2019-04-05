@@ -6,14 +6,14 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Rozabto.View"
              mc:Ignorable="d" Loaded="CounterLoaded"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="30" d:DesignWidth="300">
 
     <DockPanel Background="DarkCyan">
         <Label DockPanel.Dock="Left" Name="Counter" Content="0" Foreground="LightSteelBlue"/>
         <Label DockPanel.Dock="Left" Content="/" Foreground="LightSteelBlue"/>
         <Label DockPanel.Dock="Left" Name="Max" Content="101" Foreground="LightSteelBlue"/>
         <Label DockPanel.Dock="Left" Name="Loading" Content="Kuva" Foreground="LightSteelBlue" Width="175"/>
-        <Button Background="{x:Null}" BorderBrush="{x:Null}" DockPanel.Dock="Left" Click="StopLoading">
+        <Button Background="{x:Null}" BorderBrush="{x:Null}" DockPanel.Dock="Right" Width="60" Click="StopLoading">
             <materialDesign:PackIcon Kind="Close" VerticalAlignment="Center" Width="30" Height="30"/>
         </Button>
     </DockPanel>

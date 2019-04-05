@@ -10,7 +10,7 @@
     <ListBox Name="SongsList" ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentSong, Mode=OneWay}" MouseDoubleClick="ListBox_MouseDoubleClick" Foreground="{DynamicResource ForegroundColour}" SelectionChanged="FocusOnSelectedItem">
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <StackPanel MouseEnter="SelectedSong" Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
                     <Ellipse Width="30" Height="30">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="/Rozabto;component/Image/logo09.png"/>
@@ -18,7 +18,7 @@
                     </Ellipse>
                     <TextBlock Text="{Binding Name}" Margin="10,0" VerticalAlignment="Center" Width="150" TextTrimming="CharacterEllipsis"/>
                     <TextBlock Text="{Binding DurationString}" Margin="10,0" VerticalAlignment="Center"/>
-                    <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                    <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Opened="PopupBox_Opened">
                         <materialDesign:PopupBox.ToggleContent>
                             <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                         </materialDesign:PopupBox.ToggleContent>

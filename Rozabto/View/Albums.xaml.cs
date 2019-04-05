@@ -1,13 +1,12 @@
-﻿using Rozabto.ViewModel;
+﻿using MaterialDesignThemes.Wpf;
+using Rozabto.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Rozabto.View 
 {
     public partial class Album : UserControl 
     {
-        private bool isOpened;
         public string SelectedAlbumName { get; set; }
         public Album() 
         {
@@ -26,36 +25,23 @@ namespace Rozabto.View
             grid.Children.Add(new ABPContent());
         }
 
-        public void SelectedAlbum(object sender, MouseEventArgs e) 
-        {
-            if (!isOpened)
-                SelectedAlbumName = ((sender as DockPanel).Children[1] as Label).Content.ToString();
-        }
-
         public void AddToPlayList(object sender, RoutedEventArgs e) 
         {
             var add = new AddToPlayList(MainViewModel.GetSongsFromAlbum(SelectedAlbumName)) 
             {
-                Owner = (MainWindow)Application.Current.MainWindow
+                Owner = (MainWindow)Application.Current?.MainWindow
             };
             add.Show();
-            isOpened = false;
         }
 
         public void RemoveAlbum(object sender, RoutedEventArgs e) 
         {
             MainViewModel.RemoveAlbum(SelectedAlbumName);
-            isOpened = false;
         }
 
         private void PopupBox_Opened(object sender, RoutedEventArgs e) 
         {
-            isOpened = true;
-        }
-
-        private void PopupBox_Closed(object sender, RoutedEventArgs e) 
-        {
-            isOpened = false;
+            SelectedAlbumName = (((sender as PopupBox).Parent as DockPanel).Children[1] as Label).Content.ToString();
         }
     }
 }

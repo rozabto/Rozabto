@@ -26,9 +26,9 @@
         <ListBox ItemsSource="{Binding Songs}" Grid.Row="1" RenderTransformOrigin="0.485,0.492">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" MouseEnter="SelectSong">
+                    <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Name}" Width="240" FontSize="10" Foreground="{DynamicResource ForegroundColour}"/>
-                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Opened="PopupBox_Opened" Closed="PopupBox_Closed">
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Opened="PopupBox_Opened">
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="{DynamicResource ForegroundColour}"/>
                             </materialDesign:PopupBox.ToggleContent>

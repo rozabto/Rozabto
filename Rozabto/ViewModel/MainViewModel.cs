@@ -344,11 +344,13 @@ namespace Rozabto.ViewModel
                 else if (Collection.Albums.Count < albums.Count)
                     Collection.Albums.AddRange(albums.Where(w => Collection.Albums.FirstOrDefault(f => f.Name == w.Name) is null));
                 // Проверяваме дали всички песни в албума съвпадат с останалите.
-                else for (int i = 0; i < albums.Count; i++)
-                        if (Collection.Albums[i].Songs.Count > albums[i].Songs.Count)
-                            Collection.Albums[i].Songs.RemoveAll(r => albums[i].Songs.FirstOrDefault(f => f.ID == r.ID) is null);
-                        else if (Collection.Albums[i].Songs.Count < albums[i].Songs.Count)
-                            Collection.Albums[i].Songs.AddRange(albums[i].Songs.Where(w => Collection.Albums[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
+                for (int i = 0; i < Collection.Albums.Count; i++)
+                    if (!(albums.FirstOrDefault(f => f.Name == Collection.Albums[i].Name) is Album album))
+                        continue;
+                    else if (Collection.Albums[i].Songs.Count > album.Songs.Count)
+                        Collection.Albums[i].Songs.RemoveAll(r => album.Songs.FirstOrDefault(f => f.ID == r.ID) is null);
+                    else if (Collection.Albums[i].Songs.Count < album.Songs.Count)
+                        Collection.Albums[i].Songs.AddRange(album.Songs.Where(w => Collection.Albums[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
                 // Ако бандите в collection класа са повече от тези в sql базата, махаме
                 // тези които не са в collection класа.
                 if (Collection.Bands.Count > bands.Count)
@@ -358,11 +360,13 @@ namespace Rozabto.ViewModel
                 else if (Collection.Bands.Count < bands.Count)
                     Collection.Bands.AddRange(bands.Where(w => Collection.Bands.FirstOrDefault(f => f.Name == w.Name) is null));
                 // Проверяваме дали всички песни в бандата съвпадат с останалите.
-                else for (int i = 0; i < bands.Count; i++)
-                        if (Collection.Bands[i].Songs.Count > bands[i].Songs.Count)
-                            Collection.Bands[i].Songs.RemoveAll(r => bands[i].Songs.FirstOrDefault(f => f.ID == r.ID) is null);
-                        else if (Collection.Bands[i].Songs.Count < bands[i].Songs.Count)
-                            Collection.Bands[i].Songs.AddRange(bands[i].Songs.Where(w => Collection.Bands[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
+                for (int i = 0; i < Collection.Bands.Count; i++)
+                    if (!(bands.FirstOrDefault(f => f.Name == Collection.Bands[i].Name) is Band band))
+                        continue;
+                    else if (Collection.Bands[i].Songs.Count > band.Songs.Count)
+                        Collection.Bands[i].Songs.RemoveAll(r => band.Songs.FirstOrDefault(f => f.ID == r.ID) is null);
+                    else if (Collection.Bands[i].Songs.Count < band.Songs.Count)
+                        Collection.Bands[i].Songs.AddRange(band.Songs.Where(w => Collection.Bands[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
                 // Ако плейлистите в collection класа са повече от тези в sql базата, махаме
                 // тези които не са в collection класа.
                 if (Collection.PlayLists.Count > playLists.Count)
@@ -372,11 +376,13 @@ namespace Rozabto.ViewModel
                 else if (Collection.PlayLists.Count < playLists.Count)
                     Collection.PlayLists.AddRange(playLists.Where(w => Collection.PlayLists.FirstOrDefault(f => f.Name == w.Name) is null));
                 // Проверяваме дали всички песни в плейлиста съвпадат с останалите.
-                else for (int i = 0; i < playLists.Count; i++)
-                        if (Collection.PlayLists[i].Songs.Count > playLists[i].Songs.Count)
-                            Collection.PlayLists[i].Songs.RemoveAll(r => playLists[i].Songs.FirstOrDefault(f => f.ID == r.ID) is null);
-                        else if (Collection.PlayLists[i].Songs.Count < playLists[i].Songs.Count)
-                            Collection.PlayLists[i].Songs.AddRange(playLists[i].Songs.Where(w => Collection.PlayLists[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
+                for (int i = 0; i < Collection.PlayLists.Count; i++)
+                    if (!(playLists.FirstOrDefault(f => f.Name == Collection.PlayLists[i].Name) is PlayList playList))
+                        continue;
+                    else if (Collection.PlayLists[i].Songs.Count > playList.Songs.Count)
+                        Collection.PlayLists[i].Songs.RemoveAll(r => playList.Songs.FirstOrDefault(f => f.ID == r.ID) is null);
+                    else if (Collection.PlayLists[i].Songs.Count < playList.Songs.Count)
+                        Collection.PlayLists[i].Songs.AddRange(playList.Songs.Where(w => Collection.PlayLists[i].Songs.FirstOrDefault(f => f.ID == w.ID) is null));
                 // Ако песните в collection класа са повече от тези в sql базата, махаме
                 // тези които не са в collection класа.
                 if (Collection.Songs.Count > songs.Count)

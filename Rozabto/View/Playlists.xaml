@@ -56,7 +56,7 @@
         </materialDesign:DialogHost>
 
 
-        <ListBox Grid.Row="1" ItemsSource="{Binding PlayList}" SelectionChanged="SelectPlayList">
+        <ListBox Grid.Row="1" ItemsSource="{Binding PlayList}" SelectionChanged="SelectPlayList" HorizontalAlignment="Left">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Width="60" MouseEnter="SelectPlayList">
